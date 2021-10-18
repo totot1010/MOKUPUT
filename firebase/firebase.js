@@ -19,3 +19,42 @@ export const firestore = firebase.firestore()
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+
+export const signupWithEmailAndPassword = async(email, password) => {
+  try {
+    const user = await auth.createUserWithEmailAndPassword(email, password);
+    
+    await auth.currentUser.sendEmailVerification()
+
+  alert("登録成功")
+    return user
+  } catch (error) {
+    alert('登録失敗')
+    console.log(error)
+  }
+}
+
+export const signinWithEmailAndPassword = async(email, password) => {
+  try {
+    const user = await auth.signInWithEmailAndPassword(email, password);
+
+
+    alert("サインイン完了")
+    return user
+  } catch (error) {
+    alert('サインアウト失敗')
+    console.log(error)
+  }
+}
+export const signout = async() => {
+  const user1 = await auth.currentUser;
+  console.log('サインアウト前:', user1)
+
+  await auth.signOut()
+
+
+  const user2 = await auth.currentUser;
+  console.log('サインアウト後:', user2)
+
+
+}
