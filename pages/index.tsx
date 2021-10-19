@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "firebase/firestore";
 import { db } from "../firebase/firebase";
+import {BrowserRouter} from 'react-router-dom'
+
 
 // console.log(db)
 
@@ -20,6 +22,8 @@ const Home = () => {
   };
 
   console.log(fire)
+
+
 
   return (
     <>
