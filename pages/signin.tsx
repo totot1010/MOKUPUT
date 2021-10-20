@@ -9,7 +9,7 @@ const Signin = () => {
   const signin = async (e) => {
     e.preventDefault();
     const user = await signinWithEmailAndPassword(email, password);
-    console.log(user)
+    console.log(user);
     // setEmail('')
     // setPassword('')
   };

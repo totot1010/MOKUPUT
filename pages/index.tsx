@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import "firebase/firestore";
 import { db } from "../firebase/firebase";
-import {BrowserRouter} from 'react-router-dom'
-
-
-// console.log(db)
 
 const Home = () => {
   const [fire, setFire] = useState([]);
@@ -21,9 +17,7 @@ const Home = () => {
     return () => unSub();
   };
 
-  console.log(fire)
-
-
+  console.log(fire);
 
   return (
     <>

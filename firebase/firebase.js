@@ -1,8 +1,7 @@
-import "firebase/app";
-import "firebase/firestore";
-import fb from "firebase/app";
-import "firebase/auth";
-
+import 'firebase/app';
+import 'firebase/firestore';
+import fb from 'firebase/app';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,50 +10,48 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-export const firebase = !fb.apps.length ? fb.initializeApp(firebaseConfig) : fb.app()
-export const firestore = firebase.firestore()
+export const firebase = !fb.apps.length
+  ? fb.initializeApp(firebaseConfig)
+  : fb.app();
+export const firestore = firebase.firestore();
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-export const signupWithEmailAndPassword = async(email, password) => {
+export const signupWithEmailAndPassword = async (email, password) => {
   try {
     const user = await auth.createUserWithEmailAndPassword(email, password);
-    
-    await auth.currentUser.sendEmailVerification()
 
-  alert("登録成功")
-    return user
+    await auth.currentUser.sendEmailVerification();
+
+    alert('登録成功');
+    return user;
   } catch (error) {
-    alert('登録失敗')
-    console.log(error)
+    alert('登録失敗');
+    console.log(error);
   }
-}
+};
 
-export const signinWithEmailAndPassword = async(email, password) => {
+export const signinWithEmailAndPassword = async (email, password) => {
   try {
     const user = await auth.signInWithEmailAndPassword(email, password);
 
-
-    alert("サインイン完了")
-    return user
+    alert('サインイン完了');
+    return user;
   } catch (error) {
-    alert('サインアウト失敗')
-    console.log(error)
+    alert('サインアウト失敗');
+    console.log(error);
   }
-}
-export const signout = async() => {
+};
+export const signout = async () => {
   const user1 = await auth.currentUser;
-  console.log('サインアウト前:', user1)
+  console.log('サインアウト前:', user1);
 
-  await auth.signOut()
-
+  await auth.signOut();
 
   const user2 = await auth.currentUser;
-  console.log('サインアウト後:', user2)
-
-
-}
+  console.log('サインアウト後:', user2);
+};
