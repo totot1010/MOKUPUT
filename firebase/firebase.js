@@ -1,7 +1,7 @@
-import 'firebase/app';
-import 'firebase/firestore';
-import fb from 'firebase/app';
-import 'firebase/auth';
+import "firebase/app";
+import "firebase/firestore";
+import fb from "firebase/app";
+import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -27,10 +27,10 @@ export const signupWithEmailAndPassword = async (email, password) => {
 
     await auth.currentUser.sendEmailVerification();
 
-    alert('登録成功');
+    alert("登録成功");
     return user;
   } catch (error) {
-    alert('登録失敗');
+    alert("登録失敗");
     console.log(error);
   }
 };
@@ -39,19 +39,19 @@ export const signinWithEmailAndPassword = async (email, password) => {
   try {
     const user = await auth.signInWithEmailAndPassword(email, password);
 
-    alert('サインイン完了');
+    alert("サインイン完了");
     return user;
   } catch (error) {
-    alert('サインアウト失敗');
+    alert("サインアウト失敗");
     console.log(error);
   }
 };
 export const signout = async () => {
   const user1 = await auth.currentUser;
-  console.log('サインアウト前:', user1);
+  console.log("サインアウト前:", user1);
 
   await auth.signOut();
 
   const user2 = await auth.currentUser;
-  console.log('サインアウト後:', user2);
+  console.log("サインアウト後:", user2);
 };

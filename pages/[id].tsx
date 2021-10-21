@@ -11,24 +11,78 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import ListItemText from '@mui/material/ListItemText';
 
-// import { Checkbox, CheckboxGroup } from '@chakra-ui/core';
+//言語を複数選択する時に、画面いっぱいに広がらないように
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+//言語の種類
+const names = [
+  'HTML',
+  'CSS',
+  'JavaScript',
+  'Java',
+  'PHP',
+  'Ruby',
+  'React',
+  'Python',
+  'Go',
+
+];
+
+//挙動がイマイチ理解できていない。後回し
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 const UserId = ({ id }) => {
   const [user, setUser] = useState("");
   const [age, setAge] = useState("");
   const [experience, setExperience] = useState(false);
-  const [useLanguage, setUseLanguage] = useState("");
-  const [willLanguage, setWillLanguage] = useState("");
+  const [useLanguageArray, setUseLanguageArray] = useState([]);
+  const [willLanguageArray, setWillLanguageArray] = useState([]);
   const [users, setUsers] = useState([]);
+  const theme = useTheme();
 
-  console.log(users);
-  // console.log(user);
-  // console.log(age);
-  // console.log(experience)
-  // console.log(useLanguage);
-  // console.log(willLanguage);
+ //実務で使っている言語をstateで管理
+  const handleChangeLanguage = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setUseLanguageArray(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
+  //これから勉強する、勉強中の言語をstateで管理
+  const handleChangeWillLanguage = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setWillLanguageArray(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+ //画面遷移時にFirestoreからデータを取ってくる
   useEffect(() => {
     db.collection("users").onSnapshot((snapshot) => {
       setUsers(
@@ -43,33 +97,31 @@ const UserId = ({ id }) => {
   const handleChangeAge = (e) => {
     setAge(e.target.value);
   };
-  const handleChangeLanguage = (e) => {
-    setUseLanguage(e.target.value);
-  };
   const handleChangeExperience = (e) => {
     setExperience(e.target.value);
   };
-  const handleChangeWillLanguage = (e) => {
-    setWillLanguage(e.target.value);
-  };
 
+  //firesotreにユーザーデータを保存
   const clickRegister = async () => {
+    if(!user) return (alert('ユーザーネームを登録してください')) ;
     await db.collection("users").doc(id).update({
-      user: user,
+      user: user, 
       age: age,
       experience: experience,
-      useLanguage: useLanguage,
-      willLanguage: willLanguage,
+      useLanguage: useLanguageArray,
+      willLanguage: willLanguageArray,
     });
   };
 
   return (
-    <div>
-      <h1>○必須か必須じゃないか</h1>
-      <h1>○複数選択</h1>
+    <>
+      <h1>やること</h1>
+      <h3>○必須か必須じゃないか</h3>
+      <h3>○ユーザーネームのMin文字数、Max文字数</h3>
       <h1>１．ユーザーネームは？？</h1>
       <form>
         <TextField
+          required='true'
           id="standard"
           label="User Name"
           type="text"
@@ -159,59 +211,55 @@ const UserId = ({ id }) => {
       </FormControl>
       <h1>４．実務で使っている言語は？？</h1>
       <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
-        <InputLabel id="demo-simple-select-standard-label">
-          Programming language used in practice
-        </InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">Programming language used in practice</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={useLanguage}
+          labelId="demo-multiple-checkbox-label"
+          id="demo-multiple-checkbox"
+          multiple
+          value={useLanguageArray}
           onChange={handleChangeLanguage}
-          label="Age"
+          renderValue={(selected) => selected.join(', ')}
+          MenuProps={MenuProps}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="HTML">HTML</MenuItem>
-          <MenuItem value="CSS">CSS</MenuItem>
-          <MenuItem value="JavaScript">JavaScript</MenuItem>
+          {names.map((name) => (
+            <MenuItem key={name} value={name}>
+              <Checkbox checked={useLanguageArray.indexOf(name) > -1} />
+              <ListItemText primary={name} />
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <h1>５．これから勉強したい or 勉強中の言語は？？</h1>
-      <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
-        <InputLabel id="demo-simple-select-standard-label">
-          Programming language used in practice
+         <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
+        <InputLabel id="demo-multiple-checkbox-label">
+          Programming language you are studying or you want to study from now on
         </InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={willLanguage}
+          labelId="demo-multiple-checkbox-label"
+          id="demo-multiple-checkbox"
+          multiple
+          value={willLanguageArray}
           onChange={handleChangeWillLanguage}
-          label="Age"
+          renderValue={(selected) => selected.join(', ')}
+          MenuProps={MenuProps}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="HTML">HTML</MenuItem>
-          <MenuItem value="CSS">CSS</MenuItem>
-          <MenuItem value="JavaScript">JavaScript</MenuItem>
-          <MenuItem value="React">React</MenuItem>
+          {names.map((name) => (
+            <MenuItem key={name} value={name}>
+              <Checkbox checked={willLanguageArray.indexOf(name) > -1} />
+              <ListItemText primary={name} />
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
-      <Button variant="contained" disableElevation onClick={clickRegister}>
+      <Button
+        variant="contained"
+        disableElevation
+        onClick={clickRegister}
+        sx={{ ml: 3 }}
+      >
         ユーザー登録完了
       </Button>
-      {/* <CheckboxGroup
-        isInline
-        spacing={8}
-        variantColor='teal'
-        defaultValue={['itachi', 'kisame']}
-      >
-        <Checkbox value='itachi'>Itachi</Checkbox>
-        <Checkbox value='madara'>Madara</Checkbox>
-        <Checkbox value='kisame'>Kisame</Checkbox>
-      </CheckboxGroup> */}
-    </div>
+    </>
   );
 };
 
