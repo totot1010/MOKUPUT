@@ -20,6 +20,7 @@ export const firestore = firebase.firestore();
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+export const functions = firebase.functions();
 
 export const signupWithEmailAndPassword = async (email, password) => {
   try {

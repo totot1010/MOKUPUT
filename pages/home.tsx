@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {auth, db} from '../firebase/firebase'
-import Header from '../src/components/Header'
+import Header from '../components/Header'
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
