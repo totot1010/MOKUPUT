@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db, signupWithEmailAndPassword, auth } from "../firebase/firebase";
+import { db, signupWithEmailAndPassword } from "../firebase/firebase";
 import Link from "next/link";
 import Router from "next/router";
 
@@ -13,12 +13,10 @@ const Signup = () => {
     const user = await signupWithEmailAndPassword(email, password);
     const newUserId = user.user.uid;
     await firestoreAdd(newUserId);
-    (await user) && Router.push(`/${newUserId}`);
+    await user && Router.push(`/signup/${newUserId}`);
 
     setEmail("");
     setPassword("");
-    console.log(user);
-    console.log(auth.currentUser);
   };
 
   const firestoreAdd = (id) => {
