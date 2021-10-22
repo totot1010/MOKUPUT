@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { signinWithEmailAndPassword, signout } from "../firebase/firebase";
 import Link from "next/link";
+import Router from "next/router";
+
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -9,9 +11,7 @@ const Signin = () => {
   const signin = async (e) => {
     e.preventDefault();
     const user = await signinWithEmailAndPassword(email, password);
-    console.log(user);
-    // setEmail('')
-    // setPassword('')
+    await user && Router.push('/home');
   };
 
   return (

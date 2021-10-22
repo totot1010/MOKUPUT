@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../firebase/firebase";
+import { db, auth } from "../../firebase/firebase";
+import Link from "next/link";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -121,7 +122,6 @@ const UserId = ({ id }) => {
       <h1>１．ユーザーネームは？？</h1>
       <form>
         <TextField
-          required='true'
           id="standard"
           label="User Name"
           type="text"
@@ -257,7 +257,9 @@ const UserId = ({ id }) => {
         onClick={clickRegister}
         sx={{ ml: 3 }}
       >
+      <Link href='/signin'>
         ユーザー登録完了
+        </Link>
       </Button>
     </>
   );
