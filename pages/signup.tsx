@@ -13,7 +13,7 @@ const Signup = () => {
     const user = await signupWithEmailAndPassword(email, password);
     const newUserId = user.user.uid;
     await firestoreAdd(newUserId);
-    await user && Router.push(`/signup/${newUserId}`);
+    (await user) && Router.push(`/signup/${newUserId}`);
 
     setEmail("");
     setPassword("");

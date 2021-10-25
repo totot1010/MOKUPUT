@@ -8,11 +8,17 @@ const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
 const ALGOLIA_INDEX_NAME = "study-app";
 const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 
-exports.onProductCreated = functions.firestore
-  .document("users/{id}")
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    data.objectID = context.params.id;
-    const index = client.initIndex(ALGOLIA_INDEX_NAME);
-    return index.saveObject(data);
-  });
+exports.onProductCreated = functions.firestore.document("users/{id}").onCreate((snap, context) => {
+  const data = snap.data()  
+  data.objectID = context.params.id  
+  const index = client.initIndex(ALGOLIA_INDEX_NAME)
+  return index.saveObject(data)
+})
+exports.onProductUpdated = functions.firestore.document("users/{id}").onUpdate((change, context) => {
+  const data = change.after.data()  
+  data.objectID = change.after.id  
+  const index = client.initIndex(ALGOLIA_INDEX_NAME)
+  return index.saveObject(data)
+})
+// exports.onProductDeleted = functions.firestore.document("users/{id}").onDelete((snapshot) => index.deleteObject(snapshot.id))
+
