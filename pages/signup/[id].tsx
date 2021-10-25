@@ -106,7 +106,7 @@ const UserId = ({ id }) => {
   const clickRegister = async () => {
     if(!user) return (alert('ユーザーネームを登録してください')) ;
     await db.collection("users").doc(id).update({
-      user: user, 
+      name: user, 
       age: age,
       experience: experience,
       useLanguage: useLanguageArray,
@@ -118,6 +118,7 @@ const UserId = ({ id }) => {
     <>
       <h1>やること</h1>
       <h3>○必須か必須じゃないか</h3>
+      <h3>複数選択は３つまで</h3>
       <h3>○ユーザーネームのMin文字数、Max文字数</h3>
       <h1>１．ユーザーネームは？？</h1>
       <form>
