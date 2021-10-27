@@ -14,6 +14,16 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "firebase/firebase.js", "functions/lib/index.js", "functions/index.js", "components/SearchUser.js", "pages/home.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "firebase/firebase.js",
+    "functions/lib/index.js",
+    "functions/index.js",
+    "components/SearchUsers.js",
+    "pages/home.js",
+    "pages/_app.tsx"
+, "components/organism/user/UserDetailModal.js"  ],
   "exclude": ["node_modules"]
 }
