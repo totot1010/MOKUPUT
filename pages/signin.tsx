@@ -3,7 +3,6 @@ import { signinWithEmailAndPassword, signout } from "../firebase/firebase";
 import Link from "next/link";
 import Router from "next/router";
 
-
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +10,7 @@ const Signin = () => {
   const signin = async (e) => {
     e.preventDefault();
     const user = await signinWithEmailAndPassword(email, password);
-    await user && Router.push('/home');
+    (await user) && Router.push("/home");
   };
 
   return (
