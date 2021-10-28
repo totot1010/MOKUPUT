@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { db, signupWithEmailAndPassword } from "../firebase/firebase";
+import firebase from 'firebase/app';
+import { Timestamp } from "firebase/firestore";
+
 import Link from "next/link";
 import Router from "next/router";
 
@@ -7,9 +10,11 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
+  const [datetime, setDatetime] = useState('');
 
   const signup = async (e) => {
     e.preventDefault();
+    setDatetime(e.currentTarget.value)
     const user = await signupWithEmailAndPassword(email, password);
     const newUserId = user.user.uid;
     await firestoreAdd(newUserId);
@@ -20,10 +25,15 @@ const Signup = () => {
   };
 
   const firestoreAdd = (id) => {
-    db.collection("users").doc(id).set({
-      email: email,
-    });
+    db.collection("users")
+      .doc(id)
+      .set({
+        email: email,
+        createdAt: firebase.firestore.Timestamp.now(),
+        isOnline: true,
+      });
   };
+
 
   return (
     <>

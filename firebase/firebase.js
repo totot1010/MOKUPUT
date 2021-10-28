@@ -25,7 +25,7 @@ export const signupWithEmailAndPassword = async (email, password) => {
   try {
     const user = await auth.createUserWithEmailAndPassword(email, password);
 
-    await auth.currentUser.sendEmailVerification();
+    // await auth.currentUser.sendEmailVerification();
 
     alert("登録成功");
     return user;
