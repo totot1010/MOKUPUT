@@ -19,6 +19,8 @@ const SearchUser = (props) => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState();
 
+  console.log(users)
+
   useEffect(() => {
     db.collection("users").onSnapshot((snapshot) => {
       setUsers(

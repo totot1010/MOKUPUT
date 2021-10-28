@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signinWithEmailAndPassword, signout } from "../firebase/firebase";
+import { signinWithEmailAndPassword, signout, db } from "../firebase/firebase";
 import Link from "next/link";
 import Router from "next/router";
 
@@ -9,8 +9,10 @@ const Signin = () => {
 
   const signin = async (e) => {
     e.preventDefault();
-    const user = await signinWithEmailAndPassword(email, password);
-    (await user) && Router.push("/home");
+    const result = await signinWithEmailAndPassword(email, password);
+    console.log(result.user.uid)
+    await db.collection('users').doc(result.user.uid).update({isOnline: true});
+    // await result && Router.push("/home");
   };
 
   return (
