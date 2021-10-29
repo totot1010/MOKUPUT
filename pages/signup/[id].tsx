@@ -12,11 +12,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
-import { useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import ListItemText from '@mui/material/ListItemText';
+import { useTheme } from "@mui/material/styles";
+import ListItemText from "@mui/material/ListItemText";
 
 //言語を複数選択する時に、画面いっぱいに広がらないように
 const ITEM_HEIGHT = 48;
@@ -32,16 +30,15 @@ const MenuProps = {
 
 //言語の種類
 const names = [
-  'HTML',
-  'CSS',
-  'JavaScript',
-  'Java',
-  'PHP',
-  'Ruby',
-  'React',
-  'Python',
-  'Go',
-
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "Java",
+  "PHP",
+  "Ruby",
+  "React",
+  "Python",
+  "Go",
 ];
 
 //挙動がイマイチ理解できていない。後回し
@@ -63,14 +60,12 @@ const UserId = ({ id }) => {
   const [users, setUsers] = useState([]);
   const theme = useTheme();
 
- //実務で使っている言語をstateで管理
+  //実務で使っている言語をstateで管理
   const handleChangeLanguage = (event) => {
     const {
       target: { value },
     } = event;
-    setUseLanguageArray(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    setUseLanguageArray(typeof value === "string" ? value.split(",") : value);
   };
 
   //これから勉強する、勉強中の言語をstateで管理
@@ -78,12 +73,10 @@ const UserId = ({ id }) => {
     const {
       target: { value },
     } = event;
-    setWillLanguageArray(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    setWillLanguageArray(typeof value === "string" ? value.split(",") : value);
   };
 
- //画面遷移時にFirestoreからデータを取ってくる
+  //画面遷移時にFirestoreからデータを取ってくる
   useEffect(() => {
     db.collection("users").onSnapshot((snapshot) => {
       setUsers(
@@ -104,9 +97,9 @@ const UserId = ({ id }) => {
 
   //firesotreにユーザーデータを保存
   const clickRegister = async () => {
-    if(!user) return (alert('ユーザーネームを登録してください')) ;
+    if (!user) return alert("ユーザーネームを登録してください");
     await db.collection("users").doc(id).update({
-      name: user, 
+      name: user,
       age: age,
       experience: experience,
       useLanguage: useLanguageArray,
@@ -212,14 +205,16 @@ const UserId = ({ id }) => {
       </FormControl>
       <h1>４．実務で使っている言語は？？</h1>
       <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Programming language used in practice</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">
+          Programming language used in practice
+        </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
           value={useLanguageArray}
           onChange={handleChangeLanguage}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -231,7 +226,7 @@ const UserId = ({ id }) => {
         </Select>
       </FormControl>
       <h1>５．これから勉強したい or 勉強中の言語は？？</h1>
-         <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
+      <FormControl variant="standard" fullWidth sx={{ ml: 3 }}>
         <InputLabel id="demo-multiple-checkbox-label">
           Programming language you are studying or you want to study from now on
         </InputLabel>
@@ -241,7 +236,7 @@ const UserId = ({ id }) => {
           multiple
           value={willLanguageArray}
           onChange={handleChangeWillLanguage}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -258,9 +253,7 @@ const UserId = ({ id }) => {
         onClick={clickRegister}
         sx={{ ml: 3 }}
       >
-      <Link href='/signin'>
-        ユーザー登録完了
-        </Link>
+        <Link href="/signin">ユーザー登録完了</Link>
       </Button>
     </>
   );

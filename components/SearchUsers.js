@@ -11,10 +11,12 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
+import {useAllUsers} from "../hooks/useAllUsers"
 
 const SearchUser = (props) => {
   const { id, name, useLanguage, willLanguage, image } = props;
-  const [users, setUsers] = useState([]);
+  const { users, getUsers} = useAllUsers()
+
 
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState();
@@ -22,19 +24,7 @@ const SearchUser = (props) => {
   console.log(users)
 
   useEffect(() => {
-    db.collection("users").onSnapshot((snapshot) => {
-      setUsers(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          image: doc.data().image,
-          experience: doc.data().experience,
-          name: doc.data().name,
-          age: doc.data().age,
-          useLanguage: doc.data().useLanguage,
-          willLanguage: doc.data().willLanguage,
-        }))
-      );
-    });
+    getUsers()
   }, []);
 
   //ユーザーをクリックした時の挙動

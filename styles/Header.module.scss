@@ -44,4 +44,35 @@
   border-radius: 4px;
   padding: 8px;
 }
+.nameForm {
+  border:none;
+}
+.nameText {
+  border:1px solid;
+  border-color:rgba(0,0,0,0.5);
+  border-radius:4px;
+  padding:8px;
+  display:block;
+  width:100%;
+  font-weight:400;
+  font-size:1rem;
+  line-height:1.5;
+  letter-spacing:0.00938em;
+  box-sizing:border-box;
+  cursor: pointer;
+  &:hover {
+    background-color:rgb(250, 250, 250)
+  }
+}
+.saveButton { 
+  position: absolute;
+  right: 96px;
+  padding:8px 20px;
+  cursor:pointer;
+  border: 2px solid;
+  border-radius:1000px;
+  background-color: black;
+  color:white;
+  font-weight: bold;
+}
 
