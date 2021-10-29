@@ -17,7 +17,7 @@ const Home = () => {
   const  { user } = useContext(AuthContext)
  
   const handleClick = () => {
-    console.log(user);
+    console.log(user.uid);
   };
 
   const handleLogout = async () => {
@@ -47,6 +47,7 @@ const Home = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               WELCOME TO MOKUMOKUAPP
             </Typography>
+            <Button color='success'>Profile</Button>
             {user ? (
               <>
                 <Button color="inherit" onClick={handleLogout}>
@@ -66,7 +67,9 @@ const Home = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <h1>あああ</h1>
+      <p>データベースとストレージの違い</p>
+   
+      
       <button onClick={handleClick}>取得</button>
     </>
   );

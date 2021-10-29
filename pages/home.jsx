@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { auth, db } from "../firebase/firebase";
-import {Timestamp} from 'firebase/firestore'
 import Header from "../components/Header";
 import SearchUsers from "../components/SearchUsers";
 
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import Stack from "@mui/material/Stack";
 
-import classes from "../styles/home.module.scss";
+import classes from '../styles/home.module.scss'
+
 
 import algoliasearch from "algoliasearch";
 
@@ -39,9 +43,12 @@ const Home = () => {
       });
   };
 
+
+
   return (
     <>
       <Header onSearch={onSearch} />
+   
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {searchUsers.map((user) => {
           return (

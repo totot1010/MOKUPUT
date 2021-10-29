@@ -2,6 +2,7 @@ import "firebase/app";
 import "firebase/firestore";
 import fb from "firebase/app";
 import "firebase/auth";
+import "firebase/storage"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,6 +21,7 @@ export const firestore = firebase.firestore();
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+export const storage = firebase.storage()
 
 export const signupWithEmailAndPassword = async (email, password) => {
   try {
