@@ -23,7 +23,7 @@
     "functions/index.js",
     "components/SearchUsers.js",
     "pages/home.js",
-    "pages/_app.tsx"
+    "pages/_app.jsx"
 , "components/organism/user/UserDetailModal.js", "pages/signup.jsx", "pages/signin.jsx"  ],
   "exclude": ["node_modules"]
 }
