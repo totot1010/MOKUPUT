@@ -6,10 +6,6 @@ import SearchUsers from "../components/SearchUsers";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
-import Stack from "@mui/material/Stack";
 
 import classes from '../styles/home.module.scss'
 
@@ -48,7 +44,6 @@ const Home = () => {
   return (
     <>
       <Header onSearch={onSearch} />
-   
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {searchUsers.map((user) => {
           return (

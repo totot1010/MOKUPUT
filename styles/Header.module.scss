@@ -1,21 +1,21 @@
 .container {
   cursor: pointer;
   &:hover {
-    background-color:rgb(237, 232, 232)
+    background-color: rgb(237, 232, 232);
   }
 }
 .box {
   position: absolute;
-  top:50%;
-  left:50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
-  background-color: rgb(255,255,253);
+  background-color: rgb(255, 255, 253);
   border: 2px solid #000;
   box-shadow: 24px;
   border-radius: 8px;
-  border:none;
-  padding:24px 32px;
+  border: none;
+  padding: 24px 32px;
 }
 .title {
   font-family: Georgia, serif;
@@ -25,54 +25,93 @@
   position: absolute;
   top: 24px;
   right: 24px;
-  cursor:pointer;
+  cursor: pointer;
   border: 2px solid;
-  border-radius:4px;
-  border-color:rgb(182, 220, 249)
+  border-radius: 4px;
+  border-color: rgb(182, 220, 249);
 }
 .typography {
-  font-size:16px;
+  font-size: 16px;
   font-family: Georgia, serif;
   letter-spacing: 2px;
-&:first-child {
-  margin-top:24px;
 }
+
+.typograpphy_name {
+  width: 30%;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  letter-spacing: 2px;
 }
+
+.profile {
+  display: flex;
+  justify-content: center;
+}
+
+.img_container {
+  position:relative;
+  &:hover .image{
+    opacity:0.4;
+  }
+  &:hover .overlay {
+    opacity:1;
+  }
+}
+
+.image {
+  top: 12px;
+  width: 100px;
+  height: 100px;
+  transition: 0.5s ease-in-out all;
+}
+
+.overlay {
+  transition: 0.5s ease;
+  opacity:0;
+  position: absolute;
+  top:65%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  text-align:center; 
+}
+
 .input {
   border: 1px solid;
-  border-color:rgba(0,0,0,0.5);
+  border-color: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 8px;
 }
+
 .nameForm {
-  border:none;
-}
-.nameText {
-  border:1px solid;
-  border-color:rgba(0,0,0,0.5);
-  border-radius:4px;
-  padding:8px;
-  display:block;
-  width:100%;
-  font-weight:400;
-  font-size:1rem;
-  line-height:1.5;
-  letter-spacing:0.00938em;
-  box-sizing:border-box;
-  cursor: pointer;
-  &:hover {
-    background-color:rgb(250, 250, 250)
-  }
-}
-.saveButton { 
-  position: absolute;
-  right: 96px;
-  padding:8px 20px;
-  cursor:pointer;
-  border: 2px solid;
-  border-radius:1000px;
-  background-color: black;
-  color:white;
-  font-weight: bold;
+  border: none;
 }
 
+.nameText {
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 8px;
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+}
+.saveButton {
+  position: absolute;
+  right: 96px;
+  padding: 8px 20px;
+  cursor: pointer;
+  border: 2px solid;
+  border-radius: 1000px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
