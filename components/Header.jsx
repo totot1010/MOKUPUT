@@ -1,8 +1,18 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { db, auth } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import { useAllUsers } from "../hooks/useAllUsers";
 import classes from "../styles/Header.module.scss";
+import Img4 from "../images.png";
+
+import Camera from "./svg/Camera";
+
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -32,6 +42,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import Avatar from "@mui/material/Avatar";
 
 import algoliasearch from "algoliasearch";
 
@@ -173,8 +184,8 @@ const Header = (props) => {
   };
 
   const profileSave = async () => {
-     await setAlertOpen(true);
-     await db.collection("users").doc(user.uid).set(
+    await setAlertOpen(true);
+    await db.collection("users").doc(user.uid).set(
       {
         name: selectedName,
         experience: selectedExperience,
@@ -183,11 +194,9 @@ const Header = (props) => {
       },
       { merge: true }
     );
-     await setOpen(false);
+    await setOpen(false);
   };
 
-
-console.log(alertOpen)
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -264,9 +273,13 @@ console.log(alertOpen)
 
   return (
     <>
-       <Stack sx={{ width: "100%" }} spacing={2}>
-        <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
-        <Alert severity="success">プロフィールを更新しました!</Alert>
+      <Stack sx={{ width: "100%" }} spacing={2}>
+        <Snackbar
+          open={alertOpen}
+          autoHideDuration={3000}
+          onClose={() => setAlertOpen(false)}
+        >
+          <Alert severity="success">プロフィールを更新しました!</Alert>
         </Snackbar>
       </Stack>
       <Box sx={{ flexGrow: 1 }}>
@@ -361,8 +374,26 @@ console.log(alertOpen)
               onClick={handleClose}
             />
           </Typography>
+          <div className={classes.profile}>
+          <div className={classes.img_container}>
+            <Avatar className={classes.image} src={Img4.src} />
+            <div className={classes.overlay}>
+              <div>
+                <label htmlFor="photo">
+                  <Camera />
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="photo"
+                />
+              </div>
+            </div>
+          </div>
+          </div>
+          <Typography className={classes.typograpphy_name}>名前</Typography>
           <Stack spacing={2}>
-            <Typography className={classes.typography}>名前</Typography>
             <form className={classes.nameForm}>
               <input
                 className={classes.nameText}
