@@ -1,11 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import { db, auth } from "../firebase/firebase";
+import React, { useState, useCallback, useContext, useEffect } from "react";
+import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import { useAllUsers } from "../hooks/useAllUsers";
 import classes from "../styles/Header.module.scss";
@@ -97,13 +91,14 @@ const Header = (props) => {
   // const { users, getUsers } = useAllUsers();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const [selectedUser, setSelectedUser] = useState();
   const [selectedName, setSelectedName] = useState("");
-  const [selectedExperience, setSelectedExperience] = useState("");
+  const [selectedExperience, setSelectedExperience] = useState();
   const [selectedUseLanguage, setSelectedUseLanguage] = useState([]);
-  const [selectedwillLanguage, setSelectedWillLanguage] = useState([]);
+  const [selectedWillLanguage, setSelectedWillLanguage] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState("");
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [img, setImg] = useState("");
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -115,9 +110,36 @@ const Header = (props) => {
         setSelectedExperience(doc.data().experience);
         setSelectedUseLanguage(doc.data().useLanguage);
         setSelectedWillLanguage(doc.data().willLanguage);
+        setSelectedAvatar(doc.data().Avatar);
       }
     });
-  }, []);
+  },[]);
+
+  useEffect(() => {
+    if (img) {
+      const uploadImg = async () => {
+        const storageRef = storage.ref();
+        const imagesRef = storageRef.child(
+          `avatar/${new Date().getTime()} - ${img.name}`
+        );
+
+        try {
+          const snap = await imagesRef.put(img);
+          await snap.ref.getDownloadURL().then(function (URL) {
+            db.collection("users").doc(user.uid).update({
+              avatar: URL,
+              avatarPath: snap.ref.fullPath,
+            });
+            setSelectedAvatar(URL);
+          });
+          setImg("");
+        } catch (error) {
+          cossole.log(err.message);
+        }
+      };
+      uploadImg();
+    }
+  }, [img]);
 
   //言語の種類
   const names = [
@@ -190,7 +212,7 @@ const Header = (props) => {
         name: selectedName,
         experience: selectedExperience,
         useLanguage: selectedUseLanguage,
-        willLanguage: selectedwillLanguage,
+        willLanguage: selectedWillLanguage,
       },
       { merge: true }
     );
@@ -375,22 +397,23 @@ const Header = (props) => {
             />
           </Typography>
           <div className={classes.profile}>
-          <div className={classes.img_container}>
-            <Avatar className={classes.image} src={Img4.src} />
-            <div className={classes.overlay}>
-              <div>
-                <label htmlFor="photo">
-                  <Camera />
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  id="photo"
-                />
+            <div className={classes.img_container}>
+              <Avatar className={classes.image} src={selectedAvatar || Img4.src} />
+              <div className={classes.overlay}>
+                <div>
+                  <label htmlFor="photo">
+                    <Camera />
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id="photo"
+                    onChange={(e) => setImg(e.target.files[0])}
+                  />
+                </div>
               </div>
             </div>
-          </div>
           </div>
           <Typography className={classes.typograpphy_name}>名前</Typography>
           <Stack spacing={2}>
@@ -453,7 +476,7 @@ const Header = (props) => {
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
-                value={selectedwillLanguage}
+                value={selectedWillLanguage}
                 onChange={handleChangeWillLanguage}
                 renderValue={(selected) => selected.join(", ")}
                 MenuProps={MenuProps}
@@ -461,7 +484,7 @@ const Header = (props) => {
                 {names.map((name) => (
                   <MenuItem key={name} value={name}>
                     <Checkbox
-                      checked={selectedwillLanguage.indexOf(name) > -1}
+                      checked={selectedWillLanguage.indexOf(name) > -1}
                     />
                     <ListItemText primary={name} />
                   </MenuItem>
