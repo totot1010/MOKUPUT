@@ -3,7 +3,6 @@ import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import { useAllUsers } from "../hooks/useAllUsers";
 import classes from "../styles/Header.module.scss";
-import Img4 from "../images.png";
 
 import Camera from "./svg/Camera";
 
@@ -95,7 +94,8 @@ const Header = (props) => {
   const [selectedExperience, setSelectedExperience] = useState();
   const [selectedUseLanguage, setSelectedUseLanguage] = useState([]);
   const [selectedWillLanguage, setSelectedWillLanguage] = useState("");
-  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const [selectedAvatarURL, setSelectedAvatarURL] = useState();
+  const [selectedAvatarPath, setSelectedAvatarPath] = useState();
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [img, setImg] = useState("");
@@ -110,7 +110,8 @@ const Header = (props) => {
         setSelectedExperience(doc.data().experience);
         setSelectedUseLanguage(doc.data().useLanguage);
         setSelectedWillLanguage(doc.data().willLanguage);
-        setSelectedAvatar(doc.data().Avatar);
+        setSelectedAvatarURL(doc.data().avatarURL);
+        setSelectedAvatarPath(doc.data().avatarPath);
       }
     });
   },[]);
@@ -124,17 +125,17 @@ const Header = (props) => {
         );
 
         try {
+          if(selectedAvatarPath) {
+            await storageRef.child(selectedAvatarPath).delete()
+          }
           const snap = await imagesRef.put(img);
           await snap.ref.getDownloadURL().then(function (URL) {
-            db.collection("users").doc(user.uid).update({
-              avatar: URL,
-              avatarPath: snap.ref.fullPath,
-            });
-            setSelectedAvatar(URL);
+            setSelectedAvatarURL(URL);
+            setSelectedAvatarPath(snap.ref.fullPath)
           });
           setImg("");
         } catch (error) {
-          cossole.log(err.message);
+          console.log(error.message);
         }
       };
       uploadImg();
@@ -213,6 +214,8 @@ const Header = (props) => {
         experience: selectedExperience,
         useLanguage: selectedUseLanguage,
         willLanguage: selectedWillLanguage,
+        avatarPath: selectedAvatarPath,
+        avatarURL: selectedAvatarURL,
       },
       { merge: true }
     );
@@ -398,7 +401,7 @@ const Header = (props) => {
           </Typography>
           <div className={classes.profile}>
             <div className={classes.img_container}>
-              <Avatar className={classes.image} src={selectedAvatar || Img4.src} />
+              <Avatar className={classes.image} src={selectedAvatarURL} />
               <div className={classes.overlay}>
                 <div>
                   <label htmlFor="photo">
