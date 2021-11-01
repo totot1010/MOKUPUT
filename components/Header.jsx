@@ -3,8 +3,11 @@ import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import { useAllUsers } from "../hooks/useAllUsers";
 import classes from "../styles/Header.module.scss";
+import Router from "next/router";
 
 import Camera from "./svg/Camera";
+import Delete from "./svg/Delete";
+import { useHistory } from "react-router-dom";
 
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -99,6 +102,7 @@ const Header = (props) => {
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [img, setImg] = useState("");
+  const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -114,7 +118,7 @@ const Header = (props) => {
         setSelectedAvatarPath(doc.data().avatarPath);
       }
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (img) {
@@ -125,13 +129,13 @@ const Header = (props) => {
         );
 
         try {
-          if(selectedAvatarPath) {
-            await storageRef.child(selectedAvatarPath).delete()
+          if (selectedAvatarPath) {
+            await storageRef.child(selectedAvatarPath).delete();
           }
           const snap = await imagesRef.put(img);
           await snap.ref.getDownloadURL().then(function (URL) {
             setSelectedAvatarURL(URL);
-            setSelectedAvatarPath(snap.ref.fullPath)
+            setSelectedAvatarPath(snap.ref.fullPath);
           });
           setImg("");
         } catch (error) {
@@ -206,6 +210,25 @@ const Header = (props) => {
     );
   };
 
+  //ユーザーアイコンを削除した時に挙動
+  const deleteImage = async () => {
+    const confirm = window.confirm(
+      "プロフィール画像を削除してよろしいですか？"
+    );
+    if (confirm) {
+      const storageRef = storage.ref();
+      await storageRef.child(selectedAvatarPath).delete();
+
+      await db.collection("users").doc(user.uid).update({
+        avatarURL: "",
+        avatarPath: "",
+      });
+      await setSelectedAvatarURL('')
+      await setSelectedAvatarPath('')
+    }
+  };
+
+  //プロフィール編集の保存ボタンを押した時の挙動
   const profileSave = async () => {
     await setAlertOpen(true);
     await db.collection("users").doc(user.uid).set(
@@ -401,12 +424,15 @@ const Header = (props) => {
           </Typography>
           <div className={classes.profile}>
             <div className={classes.img_container}>
-              <Avatar className={classes.image} src={selectedAvatarURL} />
+              <Avatar className={classes.image} src={selectedAvatarURL}/>
               <div className={classes.overlay}>
-                <div>
+                <div style={{ display: "flex" }}>
                   <label htmlFor="photo">
                     <Camera />
                   </label>
+                  {selectedAvatarURL ? (
+                    <Delete deleteImage={deleteImage} />
+                  ) : null}
                   <input
                     type="file"
                     accept="image/*"
