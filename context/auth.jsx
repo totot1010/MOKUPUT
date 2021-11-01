@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const AuthProvider = (props) => {
   const { children } = props;
   const [user, setUser] = useState()
-  const [loading, setLoading] = useState(true); //いつ使われるのか分からない
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
