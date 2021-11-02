@@ -1,0 +1,33 @@
+.message_container {
+  display:flex;
+  justify-content: center;
+}
+
+
+
+.message_form {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+  height:50px;
+  align-items:center;
+  margin-bottom: 10px;
+
+  input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 1000px;
+    border-color:rgb(107, 201, 251);
+  }
+  .sendButton {
+    position:relative;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+
+
+}
+

@@ -1,16 +1,18 @@
 import React,{useState, useEffect, useContext} from 'react'
 import { db, auth } from "../../../firebase/firebase";
+import firebase from 'firebase/app';
 import { AuthContext } from "../../../context/auth";
 
 import ChatUser from '../../../components/ChatUser'
 import Header from '../../../components/Header'
+import MessageForm from '../../../components/MessageForm'
+
 import classes from '../../../styles/directUser.module.scss'
 import Router from 'next/router'
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -20,12 +22,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
+
 const directChat = ({id}) => {
   const [users, setUsers] = useState([]);
-  const [chat , setChat] = useState('')
+  const [chatUser , setChatUser] = useState('')
+  const [text, setText] = useState('')
   const { user } = useContext(AuthContext);
-console.log(user.uid)
 
+  const user1 = auth.currentUser.uid  
+  
   useEffect(() => {
     const usersRef = db.collection("users");
     usersRef
@@ -41,33 +46,53 @@ console.log(user.uid)
   }, []);
 
   const selectedUser = (user) => {
-    setChat(user)
+    setChatUser(user)
     user && Router.push(`/chat/messages/${user.uid}`)
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    const user2 = chatUser.uid
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
+    console.log(id)
+
+    await db.collection('messages').doc(id).collection('chat').add({
+      text,
+      from: user1,
+      to: user2,
+      createdAt: firebase.firestore.Timestamp.now(),
+    })
+    setText('')
+  }
+
   return (
     <>
    <Header />
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container >
-        <Grid item xs={5}>
-          <Item className={classes.users_container}>
+      <div className={classes.grid_container} >
+        <div>
+          <div className={classes.users_container}>
             {users.map((user) => (
               <ChatUser key={user.uid} user={user} selectedUser={selectedUser}/>
             ))}
-          </Item>
-        </Grid>
-        <Grid item xs={7}>
-          <Item className={classes.messages_container}>
-            {chat ? (
+          </div>
+        </div>
+        <div >
+          <div className={classes.messages_container}>
+            {chatUser ? (
+              <>
               <div className={classes.messages_user}>
-              <h3>{chat.name}</h3>
+              <h3 className={classes.text}>{chatUser.name}</h3>
               </div>
+              <MessageForm handleSubmit={handleSubmit} text={text} setText={setText}/>
+              </>
             ) : (
               <h3 className={classes.no_conversation}>トークを始めるユーザーを選択してください！</h3>
             )}
-          </Item>
-        </Grid>
-      </Grid>
+          </div>
+        </div>
+      </div>
     </Box>
     </>
   )
