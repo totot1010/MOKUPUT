@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db, signupWithEmailAndPassword } from "../firebase/firebase";
+import { db, signupWithEmailAndPassword } from "../../firebase/firebase";
 import firebase from 'firebase/app';
 import { Timestamp } from "firebase/firestore";
 

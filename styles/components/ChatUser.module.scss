@@ -1,0 +1,23 @@
+.user_container {
+padding: 10px;
+padding-right: 0px;
+cursor: pointer;
+border-radius: 8px;
+&:hover {
+  background-color: #dcdcdc;
+}
+}
+
+.user_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_detail {
+  display: flex;
+  align-items:center;
+  h4 {
+    margin-left: 10px;
+  }
+}

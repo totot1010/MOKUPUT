@@ -24,6 +24,6 @@
     "components/SearchUsers.js",
     "pages/home.jsx",
     "pages/_app.jsx"
-, "components/organism/user/UserDetailModal.js", "pages/signup.jsx", "pages/signin.jsx", "components/Header.jsx"  ],
+, "components/organism/user/UserDetailModal.js", "pages/signup/signup.jsx", "pages/signin.jsx", "components/Header.jsx"  ],
   "exclude": ["node_modules"]
 }

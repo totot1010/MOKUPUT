@@ -99,6 +99,7 @@ const UserId = ({ id }) => {
   const clickRegister = async () => {
     if (!user) return alert("ユーザーネームを登録してください");
     await db.collection("users").doc(id).update({
+      uid: id,
       name: user,
       age: age,
       experience: experience,
