@@ -39,7 +39,7 @@ const Home = () => {
       });
   };
 
-
+console.log(auth.currentUser.uid)
 
   return (
     <>
