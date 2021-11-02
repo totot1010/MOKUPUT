@@ -1,9 +1,7 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
 import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
-import { useAllUsers } from "../hooks/useAllUsers";
 import classes from "../styles/Header.module.scss";
-import Router from "next/router";
 
 import Camera from "./svg/Camera";
 import Delete from "./svg/Delete";
@@ -90,7 +88,6 @@ const index = client.initIndex(ALGOLIA_INDEX_NAME);
 const Header = (props) => {
   const { onSearch } = props;
   const { user } = useContext(AuthContext);
-  // const { users, getUsers } = useAllUsers();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [selectedName, setSelectedName] = useState("");
