@@ -7,18 +7,9 @@ import Router from 'next/router'
 
 import { db, auth } from "../../firebase/firebase";
 
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 const Messages = () => {
   const [users, setUsers] = useState([]);
@@ -48,20 +39,20 @@ const Messages = () => {
     <>
     <Header />
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container className={classes.grid_container}>
-        <Grid item xs={5}>
-          <Item className={classes.users_container}>
+      <div className={classes.grid}>
+        <div >
+          <div className={classes.users}>
             {users.map((user) => (
               <ChatUser key={user.uid} user={user} selectedUser={selectedUser}/>
             ))}
-          </Item>
-        </Grid>
-        <Grid item xs={7}>
-          <Item>
-            aaa
-          </Item>
-        </Grid>
-      </Grid>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h1>こんにちは</h1>
+          </div>
+        </div>
+      </div>
     </Box>
     </>
   );

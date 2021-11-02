@@ -63,7 +63,7 @@ const ChatUser = (props) => {
               <Avatar className={classes.avatar} src={user.avatarURL} />
             </UserOffline>
           )}
-          <h4>{user.name}</h4>
+          <h4 className={classes.text}>{user.name}</h4>
         </div>
         <div
           className={`user_status ${user.isOnline ? "online" : "offline"}`}

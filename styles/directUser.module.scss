@@ -1,17 +1,22 @@
 .grid_container {
-
-
+  display:grid;
+  grid-template-columns: 250px 1fr;
 }
-
 .users_container {
-  overflow-y: auto;
   height: 100vh;
-  padding:0
+  padding: 0;
+  border-right: 1px solid;
+  border-color: rgba(0, 0, 0, 0.5);
 }
 
-.messages_user {
-  height: 100vh;
-  
+.text {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  padding: 8px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .no_conversation {
