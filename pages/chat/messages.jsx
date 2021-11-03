@@ -30,7 +30,6 @@ const Messages = () => {
   }, []);
 
   const selectedUser = (user) => {
-    console.log(user.uid)
     user && Router.push(`/chat/messages/${user.uid}`)
   }
 
@@ -48,9 +47,9 @@ const Messages = () => {
           </div>
         </div>
         <div>
-          <div>
-            <h1>こんにちは</h1>
-          </div>
+           <h3 className={classes.no_conversation}>
+                  トークを始めるユーザーを選択してください！
+                </h3>
         </div>
       </div>
     </Box>

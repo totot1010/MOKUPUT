@@ -2,7 +2,6 @@ import React from "react";
 import classes from "../styles/MessageForm.module.scss";
 import UploadImg from "./svg/UploadImg";
 
-
 import SendIcon from "@mui/icons-material/Send";
 
 const MessageForm = (props) => {
@@ -13,14 +12,14 @@ const MessageForm = (props) => {
         <form className={classes.message_form} onSubmit={handleSubmit}>
           <label htmlFor="img">
             <UploadImg />
-            </label>
+          </label>
           <input
             onChange={(e) => setImg(e.target.files[0])}
             type="file"
             id="img"
             accept="image/*"
             style={{ display: "none" }}
-            />
+          />
           <input
             type="text"
             placeholder="新しいメッセージを作成"
