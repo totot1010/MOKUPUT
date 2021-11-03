@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
-import {AuthContext} from '../context/auth'
+import { AuthContext } from "../context/auth";
 import Link from "next/link";
 import Router from "next/router";
 
@@ -14,8 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Home = () => {
-  const  { user } = useContext(AuthContext)
- 
+  const { user } = useContext(AuthContext);
+
   const handleClick = () => {
     console.log(user.uid);
   };
@@ -47,7 +47,7 @@ const Home = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               WELCOME TO MOKUMOKUAPP
             </Typography>
-            <Button color='success'>Profile</Button>
+            <Button color="success">Profile</Button>
             {user ? (
               <>
                 <Button color="inherit" onClick={handleLogout}>
@@ -67,9 +67,7 @@ const Home = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <p>データベースとストレージの違い</p>
-   
-      
+
       <button onClick={handleClick}>取得</button>
     </>
   );

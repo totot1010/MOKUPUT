@@ -3,6 +3,8 @@ import classes from "../styles/components/ChatUser.module.scss";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
+import Link from "next/link";
+
 
 const UserOnline = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -33,7 +35,7 @@ const UserOnline = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const UserOffline = styled(Badge)(({ theme }) => ({
+const UserOffline = styled(Badge)(() => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#eb4034",
   },
@@ -43,6 +45,10 @@ const ChatUser = (props) => {
   const { user, selectedUser } = props;
 
   return (
+    <Link
+    href={`/chat/messages/${user.uid}`}
+    passHref
+  >
     <div className={classes.user_container} onClick={() => selectedUser(user)}>
       <div className={classes.user_info}>
         <div className={classes.user_detail}>
@@ -70,6 +76,7 @@ const ChatUser = (props) => {
         ></div>
       </div>
     </div>
+    </Link>
   );
 };
 
