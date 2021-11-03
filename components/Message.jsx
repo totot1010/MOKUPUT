@@ -53,6 +53,7 @@ const Message = (props) => {
 
       .friend {
         background-color: #333;
+        color: white;
       }
 
       `}</style>

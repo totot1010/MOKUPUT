@@ -84,14 +84,15 @@ const directChat = ({ id }) => {
         });
         setText("");
       });
+    } else {
+      await db.collection("messages").doc(id).collection("chat").add({
+        text,
+        from: user1,
+        to: user2,
+        createdAt: firebase.firestore.Timestamp.now(),
+      });
+      setText("");
     }
-    await db.collection("messages").doc(id).collection("chat").add({
-      text,
-      from: user1,
-      to: user2,
-      createdAt: firebase.firestore.Timestamp.now(),
-    });
-    setText("");
   };
 
   return (

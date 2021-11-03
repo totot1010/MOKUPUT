@@ -67,8 +67,7 @@ const Home = () => {
           </Toolbar>
         </AppBar>
       </Box>
-
-      <button onClick={handleClick}>取得</button>
+     <Link href="/chat/messages"><a>チャットへ</a></Link>
     </>
   );
 };
