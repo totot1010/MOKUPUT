@@ -38,7 +38,7 @@ const directChat = ({ id }) => {
       });
   }, []);
 
-  //
+  //ユーザーを選択した時にFirestoreからメッセージを取ってきてステートに格納
   const selectedUser = async (user) => {
     setChatUser(user);
 
@@ -95,7 +95,11 @@ const directChat = ({ id }) => {
           <div>
             <div className={classes.users_container}>
               {users.map((user) => (
-    <ChatUser key={user.uid} user={user} selectedUser={selectedUser} />
+                <ChatUser
+                  key={user.uid}
+                  user={user}
+                  selectedUser={selectedUser}
+                />
               ))}
             </div>
           </div>
