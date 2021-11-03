@@ -9,7 +9,6 @@ import MessageForm from "../../../components/MessageForm";
 import Message from "../../../components/Message";
 
 import classes from "../../../styles/directUser.module.scss";
-import Router from "next/router";
 
 import Box from "@mui/material/Box";
 
@@ -67,6 +66,7 @@ const directChat = ({ id }) => {
 
     const user2 = chatUser.uid;
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    console.log("aa");
 
     if (img) {
       const storageRef = storage.ref();
@@ -74,8 +74,8 @@ const directChat = ({ id }) => {
         `images/${new Date().getTime()} - ${img.name}`
       );
       const snap = await imageRef.put(img);
-      await snap.ref.getDownloadURL().then(async function (URL) {
-        await db.collection("messages").doc(id).collection("chat").add({
+      await snap.ref.getDownloadURL().then(function (URL) {
+        db.collection("messages").doc(id).collection("chat").add({
           text,
           from: user1,
           to: user2,
@@ -85,6 +85,13 @@ const directChat = ({ id }) => {
         setText("");
       });
     }
+    await db.collection("messages").doc(id).collection("chat").add({
+      text,
+      from: user1,
+      to: user2,
+      createdAt: firebase.firestore.Timestamp.now(),
+    });
+    setText("");
   };
 
   return (

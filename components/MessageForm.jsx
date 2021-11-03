@@ -20,6 +20,7 @@ const MessageForm = (props) => {
             accept="image/*"
             style={{ display: "none" }}
           />
+          <div>
           <input
             type="text"
             placeholder="新しいメッセージを作成"
@@ -27,6 +28,7 @@ const MessageForm = (props) => {
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+          </div>
           <SendIcon color="primary" className={classes.sendButton} />
         </form>
       </div>
