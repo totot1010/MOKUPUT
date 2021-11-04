@@ -2,17 +2,18 @@
   margin-top: 5px;
   padding: 0px 5px;
 }
+
 .message_wrapper img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .message_wrapper p {
-  padding: 10px;
+  padding: 0px 10px 10px;
   display: inline-block;
-  max-width: 50%;
+  max-width: 30%;
   text-align: left;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .message_wrapper small {
@@ -28,10 +29,15 @@
 .me {
   background-color: #0084ff;
   color: white;
+  margin:0;
 }
 
 .friend {
   background-color: #333;
   color: white;
+  margin:0;
 }
 
+.small { 
+  margin: 0;
+}

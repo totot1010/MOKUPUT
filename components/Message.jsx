@@ -21,7 +21,7 @@ const Message = (props) => {
           {message.media ? (
             <img src={message.media} alt={message.text} />
           ) : null}
-          {message.text}
+          <small className={classes.small}>{message.text}</small>
           <br />
           <small>
             <Moment fromNow>{message.createdAt.toDate()}</Moment>
