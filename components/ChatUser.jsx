@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {db} from '../firebase/firebase'
 import classes from "../styles/components/ChatUser.module.scss";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
@@ -42,14 +43,28 @@ const UserOffline = styled(Badge)(() => ({
 }));
 
 const ChatUser = (props) => {
-  const { user, selectedUser } = props;
+  const { user, selectedUser, user1, chatUser } = props;
+  const [data, setData] = useState('')
+
+  const user2 = user.uid
+
+  useEffect(() => {
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    const unsub = db.collection('lastMessage').doc(id).onSnapshot((doc) => {
+      setData(doc.data())
+    })
+    return () => unsub()
+  },[])
+
 
   return (
     <Link
     href={`/chat/messages/${user.uid}`}
     passHref
   >
-    <div className={classes.user_container} onClick={() => selectedUser(user)}>
+    <div className={`${classes.user_container} ${chatUser.name === user.name && classes.selected_user }`} 
+    onClick={() => selectedUser(user)}
+    >
       <div className={classes.user_info}>
         <div className={classes.user_detail}>
           {user.isOnline ? (
@@ -70,11 +85,11 @@ const ChatUser = (props) => {
             </UserOffline>
           )}
           <h4 className={classes.text}>{user.name}</h4>
+          <br />
         </div>
-        <div
-          className={`user_status ${user.isOnline ? "online" : "offline"}`}
-        ></div>
       </div>
+          {data && <p className={classes.lastMessage}>
+            {data.text}</p>}
     </div>
     </Link>
   );
