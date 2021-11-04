@@ -3,6 +3,7 @@ import classes from "../styles/MessageForm.module.scss";
 import UploadImg from "./svg/UploadImg";
 
 import SendIcon from "@mui/icons-material/Send";
+import Button from "@mui/material/Button";
 
 const MessageForm = (props) => {
   const { handleSubmit, text, setText, setImg } = props;
@@ -32,7 +33,9 @@ const MessageForm = (props) => {
             />
           </div>
           <div>
-            <SendIcon color="primary" className={classes.sendButton} />
+            <Button type='submit'>
+              <SendIcon color="primary" className={classes.sendButton} />
+            </Button>
           </div>
         </form>
       </div>

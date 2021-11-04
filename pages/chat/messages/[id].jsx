@@ -11,7 +11,7 @@ import classes from "../../../styles/directUser.module.scss";
 
 import Box from "@mui/material/Box";
 
-const directChat = ({ id}) => {
+const directChat = ({ id }) => {
   const [users, setUsers] = useState([]);
   const [chatUser, setChatUser] = useState("");
   const [text, setText] = useState("");
@@ -34,19 +34,19 @@ const directChat = ({ id}) => {
           });
           setUsers(users);
         });
-        const newId = user1 > id ? `${user1 + id}` : `${user2 + id}`;
+      const newId = user1 > id ? `${user1 + id}` : `${user2 + id}`;
 
-        const messagesRef = await db
-          .collection("messages")
-          .doc(newId)
-          .collection("chat");
-        messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
-          const texts = [];
-          querySnapshot.forEach((doc) => {
-            texts.push(doc.data());
-          });
-          setMessages(texts);
+      const messagesRef = await db
+        .collection("messages")
+        .doc(newId)
+        .collection("chat");
+      messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
+        const texts = [];
+        querySnapshot.forEach((doc) => {
+          texts.push(doc.data());
         });
+        setMessages(texts);
+      });
     };
     f();
   }, []);
@@ -75,8 +75,7 @@ const directChat = ({ id}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user2 = chatUser.uid;
-    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
     if (img) {
       const storageRef = storage.ref();
@@ -85,35 +84,37 @@ const directChat = ({ id}) => {
       );
       const snap = await imageRef.put(img);
       await snap.ref.getDownloadURL().then(function (URL) {
-        db.collection("messages").doc(id).collection("chat").add({
+        db.collection("messages").doc(newId).collection("chat").add({
           text,
           from: user1,
-          to: user2,
+          to: newId,
           createdAt: firebase.firestore.Timestamp.now(),
           media: URL,
         });
 
-        db.collection("lastMessage").doc(id).set({
+        db.collection("lastMessage").doc(newId).set({
           text,
           from: user1,
-          to: user2,
+          to: newId,
           createdAt: firebase.firestore.Timestamp.now(),
           media: URL,
           unread: true,
         });
         setText("");
+        setImg("");
       });
     } else {
-      await db.collection("messages").doc(id).collection("chat").add({
+      if (text === "") return;
+      await db.collection("messages").doc(newId).collection("chat").add({
         text,
         from: user1,
-        to: user2,
+        to: newId,
         createdAt: firebase.firestore.Timestamp.now(),
       });
-      await db.collection("lastMessage").doc(id).set({
+      await db.collection("lastMessage").doc(newId).set({
         text,
         from: user1,
-        to: user2,
+        to: newId,
         createdAt: firebase.firestore.Timestamp.now(),
         unread: true,
       });
