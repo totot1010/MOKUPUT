@@ -19,7 +19,6 @@ const directChat = ({ id }) => {
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
   const { user } = useContext(AuthContext);
-  console.log(messages);
 
   const user1 = auth.currentUser.uid;
 
@@ -50,14 +49,13 @@ const directChat = ({ id }) => {
       .collection("chat");
     messagesRef
       .orderBy("createdAt")
-      .get()
-      .then((snap) => {
+      .onSnapshot((querySnapshot) => {
         const texts = [];
-        snap.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
           texts.push(doc.data());
         });
         setMessages(texts);
-      });
+      })
   };
 
   //画像とテキストを送信した時の挙動
