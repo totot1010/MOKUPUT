@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../../context/auth";
 import ChatUser from '../../components/ChatUser'
-import Header from '../../components/Header'
 import classes from '../../styles/messages.module.scss'
 import Router from 'next/router'
 
@@ -14,6 +13,9 @@ import Box from '@mui/material/Box';
 const Messages = () => {
   const [users, setUsers] = useState([]);
   const { user } = useContext(AuthContext);
+  const [chatUser, setChatUser] = useState('')
+
+  const user1 = auth.currentUser.uid
 
   useEffect(() => {
     const usersRef = db.collection("users");
@@ -30,19 +32,25 @@ const Messages = () => {
   }, []);
 
   const selectedUser = (user) => {
+    setChatUser(user)
     user && Router.push(`/chat/messages/${user.uid}`)
   }
 
 
   return (
     <>
-    <Header />
     <Box sx={{ flexGrow: 1 }}>
       <div className={classes.grid}>
         <div >
           <div className={classes.users}>
             {users.map((user) => (
-              <ChatUser key={user.uid} user={user} selectedUser={selectedUser}/>
+                 <ChatUser
+                  key={user.uid}
+                  user={user}
+                  selectedUser={selectedUser}
+                  user1={user1}
+                  chatUser={chatUser}
+                  />
             ))}
           </div>
         </div>
