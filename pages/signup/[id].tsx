@@ -39,6 +39,15 @@ const names = [
   "React",
   "Python",
   "Go",
+  "C",
+  "C#",
+  "C++",
+  "Rust",
+  "Swift",
+  "TypeScript",
+  "SQL",
+  "Node.js",
+  "VBA",
 ];
 
 //挙動がイマイチ理解できていない。後回し

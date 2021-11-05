@@ -154,6 +154,15 @@ const Header = (props) => {
     "React",
     "Python",
     "Go",
+    "C",
+    "C#",
+    "C++",
+    "Rust",
+    "Swift",
+    "TypeScript",
+    "SQL",
+    "Node.js",
+    "VBA",
   ];
 
   const ITEM_HEIGHT = 48;
@@ -220,8 +229,8 @@ const Header = (props) => {
         avatarURL: "",
         avatarPath: "",
       });
-      await setSelectedAvatarURL('')
-      await setSelectedAvatarPath('')
+      await setSelectedAvatarURL("");
+      await setSelectedAvatarPath("");
     }
   };
 
@@ -421,7 +430,7 @@ const Header = (props) => {
           </Typography>
           <div className={classes.profile}>
             <div className={classes.img_container}>
-              <Avatar className={classes.image} src={selectedAvatarURL}/>
+              <Avatar className={classes.image} src={selectedAvatarURL} />
               <div className={classes.overlay}>
                 <div style={{ display: "flex" }}>
                   <label htmlFor="photo">

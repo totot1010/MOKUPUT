@@ -44,13 +44,14 @@ console.log(auth.currentUser.uid)
   return (
     <>
       <Header onSearch={onSearch} />
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      aa
+      <List className={classes.list} sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {searchUsers.map((user) => {
           return (
             <SearchUsers
               key={user.objectID}
               id={user.objectID}
-              image={user.image}
+              avatarURL={user.avatarURL}
               name={user.name}
               useLanguage={user.useLanguage}
               willLanguage={user.willLanguage}
