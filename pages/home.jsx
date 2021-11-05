@@ -44,8 +44,7 @@ console.log(auth.currentUser.uid)
   return (
     <>
       <Header onSearch={onSearch} />
-      aa
-      <List className={classes.list} sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List className={classes.list} sx={{ width: "100%", maxWidth: 400, bgcolor: "background.paper" }}>
         {searchUsers.map((user) => {
           return (
             <SearchUsers
