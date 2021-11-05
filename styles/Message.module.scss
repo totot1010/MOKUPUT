@@ -24,7 +24,7 @@ margin:100px;
 
 .message_wrapper span {
   display: inline-block;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .message_wrapper small {
@@ -34,6 +34,19 @@ margin:100px;
 
 .message_wrapper.own {
   text-align: right;
+}
+
+.moment_containerI {
+  text-align: right;
+  opacity: 0.6;
+  margin-bottom: 10px;
+  
+}
+.moment_containerYou {
+  text-align: left;
+  opacity: 0.6;
+  margin-bottom: 10px;
+  
 }
 
 .me {
