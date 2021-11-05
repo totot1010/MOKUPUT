@@ -9,7 +9,7 @@ export const useAllUsers = () => {
       setUsers(
         snapshot.docs.map((doc) => ({
           id: doc.id,
-          image: doc.data().image,
+          avatarURL: doc.data().avatarURL,
           experience: doc.data().experience,
           name: doc.data().name,
           age: doc.data().age,

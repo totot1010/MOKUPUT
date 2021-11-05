@@ -475,11 +475,7 @@ const Header = (props) => {
                   control={<Radio />}
                   label="あり"
                 />
-                <FormControlLabel
-                  value="no"
-                  control={<Radio />}
-                  label="なし"
-                />
+                <FormControlLabel value="no" control={<Radio />} label="なし" />
               </RadioGroup>
             </FormControl>
             <Typography className={classes.typography}>

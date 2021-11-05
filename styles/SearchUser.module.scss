@@ -17,6 +17,18 @@
   border:none;
   padding:24px 32px;
 }
+
+.avatar_container {
+  margin:0;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  margin-right: 8px;
+  text-align: center;
+}
+
 .title {
   font-family: Georgia, serif;
   letter-spacing: 4px;
@@ -50,4 +62,21 @@
   padding: 8px;
 }
 
+.img_wrapper {
+  display: flex;
+  justify-content: center;
+}
 
+.image {
+  position:relative;
+  top: 12px;
+  width: 100px;
+  height: 100px;
+}
+
+.typograpphy_name {
+  width: 30%;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  letter-spacing: 2px;
+}
