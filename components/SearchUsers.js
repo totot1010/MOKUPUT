@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { db } from "../firebase/firebase";
+import Link from 'next/link'
 import classes from "../styles/SearchUser.module.scss";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -11,10 +12,11 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
+import Button from '@mui/material/Button';
 import {useAllUsers} from "../hooks/useAllUsers"
 
 const SearchUser = (props) => {
-  const { id, name, useLanguage, willLanguage, image } = props;
+  const { id, name, useLanguage, willLanguage, avatarURL } = props;
   const { users, getUsers} = useAllUsers()
 
 
@@ -43,7 +45,7 @@ const SearchUser = (props) => {
         onClick={() => handleOpen({ id, users })}
       >
         <ListItemAvatar>
-          <Avatar alt="Cindy Baker" src={image} />
+          <Avatar alt="Cindy Baker" src={avatarURL} />
         </ListItemAvatar>
         <ListItemText
           primary={name}
@@ -71,6 +73,7 @@ const SearchUser = (props) => {
         <Box className={classes.box}>
           <Typography variant="h6" className={classes.title}>
             ユーザー詳細
+            <Link href={`chat/messages/${id}`}><Button className={classes.message_button} variant="outlined">メッセージを送る</Button></Link>
             <CloseIcon
               fontSize="large"
               className={classes.closeIcon}
