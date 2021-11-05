@@ -209,8 +209,8 @@ const UserId = ({ id }) => {
           value={experience}
           onChange={handleChangeExperience}
         >
-          <FormControlLabel value="true" control={<Radio />} label="あり" />
-          <FormControlLabel value="false" control={<Radio />} label="なし" />
+          <FormControlLabel value="yes" control={<Radio />} label="あり" />
+          <FormControlLabel value="no" control={<Radio />} label="なし" />
         </RadioGroup>
       </FormControl>
       <h1>４．実務で使っている言語は？？</h1>

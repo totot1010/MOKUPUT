@@ -471,12 +471,12 @@ const Header = (props) => {
                 onChange={(e) => setSelectedExperience(e.target.value)}
               >
                 <FormControlLabel
-                  value="true"
+                  value="yes"
                   control={<Radio />}
                   label="あり"
                 />
                 <FormControlLabel
-                  value="false"
+                  value="no"
                   control={<Radio />}
                   label="なし"
                 />

@@ -88,10 +88,9 @@ const SearchUser = (props) => {
             <Typography className={classes.typography}>実務経験</Typography>
             <Typography className={classes.input}>
               {selectedUser
-                ? selectedUser.experience
+                && selectedUser.experience === 'yes'
                   ? "あり"
-                  : "なし"
-                : "loading"}
+                  : "なし"}
             </Typography>
             <Typography className={classes.typography}>
               実務で使っている言語
