@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { db } from "../firebase/firebase";
-import Link from 'next/link'
+import Link from "next/link";
 import classes from "../styles/SearchUser.module.scss";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -12,20 +12,18 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
-import Button from '@mui/material/Button';
-import {useAllUsers} from "../hooks/useAllUsers"
+import Button from "@mui/material/Button";
+import { useAllUsers } from "../hooks/useAllUsers";
 
 const SearchUser = (props) => {
   const { id, name, useLanguage, willLanguage, avatarURL } = props;
-  const { users, getUsers} = useAllUsers()
-
+  const { users, getUsers } = useAllUsers();
 
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState();
 
-
   useEffect(() => {
-    getUsers()
+    getUsers();
   }, []);
 
   //ユーザーをクリックした時の挙動
@@ -45,7 +43,11 @@ const SearchUser = (props) => {
         onClick={() => handleOpen({ id, users })}
       >
         <ListItemAvatar>
-          <Avatar alt="Cindy Baker" src={avatarURL} />
+          <Avatar
+            alt="Cindy Baker"
+            src={avatarURL}
+            className={classes.avatar}
+          />
         </ListItemAvatar>
         <ListItemText
           primary={name}
@@ -73,54 +75,57 @@ const SearchUser = (props) => {
         <Box className={classes.box}>
           <Typography variant="h6" className={classes.title}>
             ユーザー詳細
-            <Link href={`chat/messages/${id}`}><Button className={classes.message_button} variant="outlined">メッセージを送る</Button></Link>
+            <Link href={`chat/messages/${id}`}>
+              <Button className={classes.message_button} variant="outlined">
+                メッセージを送る
+              </Button>
+            </Link>
             <CloseIcon
               fontSize="large"
               className={classes.closeIcon}
               onClick={handleClose}
             />
           </Typography>
+            <div className={classes.img_wrapper}>
+                <img
+                  className={classes.image}
+                  src={selectedUser && selectedUser.avatarURL}
+                />
+            </div>
           <Stack spacing={2}>
-            <Typography className={classes.typography}>名前</Typography>
+            <Typography className={classes.typograpphy_name}>名前</Typography>
             <Typography className={classes.input}>
               {selectedUser && selectedUser.name}
             </Typography>
             <Typography className={classes.typography}>実務経験</Typography>
             <Typography className={classes.input}>
-              {selectedUser
-                && selectedUser.experience === 'yes'
-                  ? "あり"
-                  : "なし"}
+              {selectedUser && selectedUser.experience === "yes"
+                ? "あり"
+                : "なし"}
             </Typography>
             <Typography className={classes.typography}>
               実務で使っている言語
             </Typography>
             <Typography className={classes.input}>
-              {selectedUser && selectedUser.useLanguage.map((language, index) => {
-                if (index + 1 === selectedUser.useLanguage.length) {
-                    return (
-                  <span key={index}>{language}</span>
-                  )
-                } else {
-                  return (
-                    <span key={index}>{language}&#44;&nbsp;</span>    
-                    )
+              {selectedUser &&
+                selectedUser.useLanguage.map((language, index) => {
+                  if (index + 1 === selectedUser.useLanguage.length) {
+                    return <span key={index}>{language}</span>;
+                  } else {
+                    return <span key={index}>{language}&#44;&nbsp;</span>;
                   }
-              })}
+                })}
             </Typography>
             <Typography className={classes.typography}>勉強中の言語</Typography>
             <Typography className={classes.input}>
-              {selectedUser && selectedUser.willLanguage.map((language, index) => {
-                if (index + 1 === selectedUser.willLanguage.length) {
-                    return (
-                  <span key={index}>{language}</span>
-                  )
-                } else {
-                  return (
-                    <span key={index}>{language}&#44;&nbsp;</span>    
-                    )
+              {selectedUser &&
+                selectedUser.willLanguage.map((language, index) => {
+                  if (index + 1 === selectedUser.willLanguage.length) {
+                    return <span key={index}>{language}</span>;
+                  } else {
+                    return <span key={index}>{language}&#44;&nbsp;</span>;
                   }
-              })}
+                })}
             </Typography>
           </Stack>
         </Box>
