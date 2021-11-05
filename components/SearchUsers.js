@@ -37,100 +37,102 @@ const SearchUser = (props) => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   return (
-    <div className={classes.container}>
-      <ListItem
-        alignItems="flex-start"
-        onClick={() => handleOpen({ id, users })}
-      >
-        <ListItemAvatar>
-          <Avatar
-            alt="Cindy Baker"
-            src={avatarURL}
-            className={classes.avatar}
-          />
-        </ListItemAvatar>
-        <ListItemText
-          primary={name}
-          secondary={
-            <>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              ></Typography>
-              <span>言語:</span>
-              {willLanguage.map((language, index) => {
-                return <span key={index}>{language}&#44;&nbsp;</span>;
-              })}
-              {useLanguage.map((language, index) => {
-                return <span key={index}>{language}&#44;&nbsp;</span>;
-              })}
-            </>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <Modal open={open} onClose={handleClose}>
-        <Box className={classes.box}>
-          <Typography variant="h6" className={classes.title}>
-            ユーザー詳細
-            <Link href={`chat/messages/${id}`}>
-              <Button className={classes.message_button} variant="outlined">
-                メッセージを送る
-              </Button>
-            </Link>
-            <CloseIcon
-              fontSize="large"
-              className={classes.closeIcon}
-              onClick={handleClose}
+    <>
+      <div className={classes.container}>
+        <ListItem
+          alignItems="flex-start"
+          onClick={() => handleOpen({ id, users })}
+        >
+          <ListItemAvatar>
+            <Avatar
+              alt="Cindy Baker"
+              src={avatarURL}
+              className={classes.avatar}
             />
-          </Typography>
+          </ListItemAvatar>
+          <ListItemText
+            primary={name}
+            secondary={
+              <>
+                  {useLanguage.map((language, index) => {
+                    return <span className={classes.language} key={index}>{language}&#44;&nbsp;</span>;
+                  })}
+                  <br />
+                  {willLanguage.map((language, index) => {
+                    return (
+                      <span className={classes.language} key={index}>
+                        {language}&#44;&nbsp;
+                      </span>
+                    );
+                  })}
+              </>
+            }
+          />
+        </ListItem>
+        <Divider variant="inset" component="li" />
+        <Modal open={open} onClose={handleClose}>
+          <Box className={classes.box}>
+            <Typography variant="h6" className={classes.title}>
+              ユーザー詳細
+              <Link href={`chat/messages/${id}`}>
+                <Button className={classes.message_button} variant="outlined">
+                  メッセージを送る
+                </Button>
+              </Link>
+              <CloseIcon
+                fontSize="large"
+                className={classes.closeIcon}
+                onClick={handleClose}
+              />
+            </Typography>
             <div className={classes.img_wrapper}>
-                <img
-                  className={classes.image}
-                  src={selectedUser && selectedUser.avatarURL}
-                />
+              <img
+                className={classes.image}
+                src={selectedUser && selectedUser.avatarURL}
+              />
             </div>
-          <Stack spacing={2}>
-            <Typography className={classes.typograpphy_name}>名前</Typography>
-            <Typography className={classes.input}>
-              {selectedUser && selectedUser.name}
-            </Typography>
-            <Typography className={classes.typography}>実務経験</Typography>
-            <Typography className={classes.input}>
-              {selectedUser && selectedUser.experience === "yes"
-                ? "あり"
-                : "なし"}
-            </Typography>
-            <Typography className={classes.typography}>
-              実務で使っている言語
-            </Typography>
-            <Typography className={classes.input}>
-              {selectedUser &&
-                selectedUser.useLanguage.map((language, index) => {
-                  if (index + 1 === selectedUser.useLanguage.length) {
-                    return <span key={index}>{language}</span>;
-                  } else {
-                    return <span key={index}>{language}&#44;&nbsp;</span>;
-                  }
-                })}
-            </Typography>
-            <Typography className={classes.typography}>勉強中の言語</Typography>
-            <Typography className={classes.input}>
-              {selectedUser &&
-                selectedUser.willLanguage.map((language, index) => {
-                  if (index + 1 === selectedUser.willLanguage.length) {
-                    return <span key={index}>{language}</span>;
-                  } else {
-                    return <span key={index}>{language}&#44;&nbsp;</span>;
-                  }
-                })}
-            </Typography>
-          </Stack>
-        </Box>
-      </Modal>
-    </div>
+            <Stack spacing={2}>
+              <Typography className={classes.typograpphy_name}>名前</Typography>
+              <Typography className={classes.input}>
+                {selectedUser && selectedUser.name}
+              </Typography>
+              <Typography className={classes.typography}>実務経験</Typography>
+              <Typography className={classes.input}>
+                {selectedUser && selectedUser.experience === "yes"
+                  ? "あり"
+                  : "なし"}
+              </Typography>
+              <Typography className={classes.typography}>
+                実務で使っている言語
+              </Typography>
+              <Typography className={classes.input}>
+                {selectedUser &&
+                  selectedUser.useLanguage.map((language, index) => {
+                    if (index + 1 === selectedUser.useLanguage.length) {
+                      return <span key={index}>{language}</span>;
+                    } else {
+                      return <span key={index}>{language}&#44;&nbsp;</span>;
+                    }
+                  })}
+              </Typography>
+              <Typography className={classes.typography}>
+                勉強中の言語
+              </Typography>
+              <Typography className={classes.input}>
+                {selectedUser &&
+                  selectedUser.willLanguage.map((language, index) => {
+                    if (index + 1 === selectedUser.willLanguage.length) {
+                      return <span key={index}>{language}</span>;
+                    } else {
+                      return <span key={index}>{language}&#44;&nbsp;</span>;
+                    }
+                  })}
+              </Typography>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    </>
   );
 };
 

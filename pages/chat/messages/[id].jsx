@@ -34,7 +34,7 @@ const directChat = ({ id }) => {
           });
           setUsers(users);
         });
-      const newId = user1 > id ? `${user1 + id}` : `${user2 + id}`;
+      const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
       const messagesRef = await db
         .collection("messages")
