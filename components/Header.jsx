@@ -37,6 +37,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 
 import algoliasearch from "algoliasearch";
 
@@ -86,7 +87,7 @@ const client = algoliasearch("77WZ20O6OE", "60af8ce0883b0f3a5ae5612e6bbf239f");
 const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
 const Header = (props) => {
-  const { onSearch } = props;
+  const { onSearch, setSearchUsers, searchText, setSearchText } = props;
   const { user } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -97,6 +98,7 @@ const Header = (props) => {
   const [selectedAvatarURL, setSelectedAvatarURL] = useState();
   const [selectedAvatarPath, setSelectedAvatarPath] = useState();
   const [open, setOpen] = useState(false);
+  const [openSearchCancel, setOpenSearchCancel] = useState();
   const [alertOpen, setAlertOpen] = useState(false);
   const [img, setImg] = useState("");
   const history = useHistory();
@@ -251,6 +253,17 @@ const Header = (props) => {
     await setOpen(false);
   };
 
+  const handleOpenSearchCancel = () => {
+    setOpenSearchCancel(true);
+  };
+
+  //検索フォームの✖ボタンを押した時の挙動
+  const searchCancel = () => {
+    setSearchText('')
+    setSearchUsers('')
+    setOpenSearchCancel(false);
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -363,8 +376,17 @@ const Header = (props) => {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                value={searchText}
                 onChange={onSearch}
+                onClick={handleOpenSearchCancel}
               />
+              {openSearchCancel && searchText ? (
+                <>
+                    <Button onClick={searchCancel} style={{padding: '0'}}>
+                      <CloseIcon style={{ color: "white" }} />
+                    </Button>
+                </>
+              ) : null}
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>

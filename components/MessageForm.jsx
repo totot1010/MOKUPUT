@@ -11,7 +11,7 @@ const MessageForm = (props) => {
     <>
       <div className={classes.message_container}>
         <form className={classes.message_form} onSubmit={handleSubmit}>
-          <div>
+          <div className={classes.image_container}>
             <label htmlFor="img">
               <UploadImg />
             </label>
@@ -23,7 +23,7 @@ const MessageForm = (props) => {
               style={{ display: "none" }}
             />
           </div>
-          <div>
+          <div className={classes.input_container}>
             <input
               type="text"
               placeholder="新しいメッセージを作成"
