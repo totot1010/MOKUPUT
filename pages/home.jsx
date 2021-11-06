@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { auth, db } from "../firebase/firebase";
 import Header from "../components/Header";
 import SearchUsers from "../components/SearchUsers";
-import MessageForm from '../components/MessageForm'
+import MessageForm from '../components/MessageForm/HomeForm'
 
 import List from "@mui/material/List";
 
@@ -50,7 +50,7 @@ console.log(auth.currentUser.uid)
           );
         })}
       </List>
-      <div className={classes.form_wrapper}>
+      <div>
       <MessageForm />
       </div>
     </>

@@ -1,11 +1,11 @@
 import React from "react";
-import classes from "../styles/MessageForm.module.scss";
-import UploadImg from "./svg/UploadImg";
+import classes from "../../styles/MessageForm/HomeForm.module.scss";
+import UploadImg from "../svg/UploadImg";
 
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
-const MessageForm = (props) => {
+const HomeForm = (props) => {
   const { handleSubmit, text, setText, setImg } = props;
   return (
     <>
@@ -43,4 +43,4 @@ const MessageForm = (props) => {
   );
 };
 
-export default MessageForm;
+export default HomeForm;

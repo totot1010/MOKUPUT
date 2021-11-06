@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 import { AuthContext } from "../../../context/auth";
 
 import ChatUser from "../../../components/ChatUser";
-import MessageForm from "../../../components/MessageForm";
+import DirectChatForm from "../../../components/MessageForm/DirectChatForm";
 import Message from "../../../components/Message";
 
 import classes from "../../../styles/directUser.module.scss";
@@ -148,12 +148,14 @@ const directChat = ({ id }) => {
                     ))
                   : null}
               </div>
-              <MessageForm
+              <div style={{width: '100%'}}>
+              <DirectChatForm
                 handleSubmit={handleSubmit}
                 text={text}
                 setText={setText}
                 setImg={setImg}
               />
+              </div>
             </div>
           </div>
         </div>
