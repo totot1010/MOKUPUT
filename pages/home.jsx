@@ -29,9 +29,6 @@ const Home = () => {
       setSearchUsers(hits);
     });
   };
-  console.log(searchText)
-
-console.log(auth.currentUser.uid)
 
   return (
     <>
