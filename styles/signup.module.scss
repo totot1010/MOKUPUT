@@ -1,0 +1,52 @@
+.form_wrapper {
+  background: url('file:///home/bala/%E3%83%94%E3%82%AF%E3%83%81%E3%83%A3/desk-1220052_960_720.webp') no-repeat ;
+  height: 350px;
+  width:auto;
+  object-fit: cover;
+  background-size: cover;
+
+  h2 {
+    display: relative;
+    color:white;
+    font-size: 24px;
+    text-align:center;
+    padding-top: 100px;
+  }
+}
+
+.form {
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  height: 100px;
+}
+
+.input_mail {
+  background-color:white; 
+}
+
+.input_password {
+  background-color:white;
+}
+
+.button_wrapper {
+  text-align:center;
+}
+
+.button {
+  background-color:white;
+  padding: 10px 24px;
+  margin-bottom: 30px;
+  color: rgba(0,0,0,0.6);
+  &:hover {
+    border: none;
+  }
+}
+
+.footer {
+  position: absolute;
+  background-color: #39394d;
+  height: 100px;
+  width: 100%;
+  bottom: 0;
+}

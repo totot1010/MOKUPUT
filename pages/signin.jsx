@@ -20,6 +20,7 @@ const Signin = () => {
 
   return (
     <>
+     <div>
       <h1>ログインページ</h1>
       <form onSubmit={signin}>
         <input
@@ -42,6 +43,7 @@ const Signin = () => {
       <div>
         <button onClick={signout}>ログアウト</button>
       </div>
+       </div>
     </>
   );
 };

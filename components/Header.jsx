@@ -369,7 +369,7 @@ const Header = (props) => {
             >
               MOKUMOKUAPP
             </Typography>
-            <Search>
+            <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
