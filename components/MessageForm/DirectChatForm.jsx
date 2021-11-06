@@ -20,7 +20,7 @@ const DirectChatForm = (props) => {
               type="file"
               id="img"
               accept="image/*"
-              style={{ display: "none" }}
+              style={{ display: "none"}}
             />
           </div>
           <div className={classes.input_container}>

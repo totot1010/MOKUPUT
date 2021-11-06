@@ -50,6 +50,7 @@ console.log(auth.currentUser.uid)
           );
         })}
       </List>
+      
       <div>
       <MessageForm />
       </div>

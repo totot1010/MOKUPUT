@@ -11,8 +11,6 @@
   bottom: 0;
   height:60px;
   align-items:center;
-  margin-bottom: 10px;
-
   .image_container {
     margin-left: auto;
     width: 40px;
@@ -32,6 +30,7 @@
   .sendButtonWrapper {
     position:relative;
     left: 10px;
+    margin-right: 10px;
   }
 
   .sendButton {

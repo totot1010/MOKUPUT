@@ -10,6 +10,7 @@ const UploadImg = () => {
         cursor: "pointer",
         color: "gray",
         marginRight: '10px',
+        marginLeft: '10px'
       }}
       viewBox="0 0 20 20"
       fill="currentColor"
