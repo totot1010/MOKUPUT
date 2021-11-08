@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
 const HomeForm = (props) => {
-  const { handleSubmit, text, setText, setImg } = props;
+  const { handleSubmit, text, setText, setImg, channel } = props;
   return (
     <>
       <div className={classes.message_container}>
@@ -26,7 +26,7 @@ const HomeForm = (props) => {
           <div className={classes.input_container}>
             <input
               type="text"
-              placeholder="新しいメッセージを作成"
+              placeholder={`＃${channel && channel.name}へのメッセージを作成`}
               className={classes.input}
               value={text}
               onChange={(e) => setText(e.target.value)}

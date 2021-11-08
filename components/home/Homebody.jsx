@@ -78,7 +78,7 @@ f()
           <h2>{channel && channel.name}</h2>
         </div>
 
-        <HomeForm />
+        <HomeForm channel={channel}/>
       </div>
     </div>
   );
