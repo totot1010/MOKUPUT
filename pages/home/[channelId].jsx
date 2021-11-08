@@ -19,6 +19,8 @@ const index = client.initIndex(ALGOLIA_INDEX_NAME);
 const ChannelId = () => {
   const [searchUsers, setSearchUsers] = useState([]);
   const [searchText, setSearchText] = useState('')
+  const router = useRouter()
+  const channel = router.query.channelId
   
 
 

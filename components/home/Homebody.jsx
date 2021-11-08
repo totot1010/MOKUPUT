@@ -8,26 +8,34 @@ import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
 import HomeForm from "../../components/MessageForm/HomeForm";
 import Router from 'next/router'
+import {useRouter} from 'next/router'
 
 
-const Homebody = ({id}) => {
+
+const Homebody = () => {
+  const [channel, setChannel] = useState()
   const [channels, setChannels] = useState([]);
-  const [channelName, setChannelName] = useState();
-  const [selectChannel, setSelectChannel] = useState()
-  console.log(selectChannel)
+
+  const router = useRouter()
+  const id = router.query.channelId
+console.log(channel)
 
 
   useEffect(() => {
-    const unsub = db.collection("channels").onSnapshot((snapshot) => {
-      const names = [];
-      snapshot.forEach((doc) => {
-        names.push({ id: doc.id, ...doc.data() });
+    const f = async () => {
+      await db.collection("channels").onSnapshot((snapshot) => {
+        const names = [];
+        snapshot.forEach((doc) => {
+          names.push({ id: doc.id, ...doc.data() });
+        });
+        setChannels(names);
       });
-      setChannels(names);
-    });
-    return () => unsub();
 
-
+      await db.collection('channels').doc(id).onSnapshot((snapshot) => {
+        setChannel({id ,...snapshot.data()})
+      })
+    }
+f()
   }, []);
 
   //チャンネルを追加した時の挙動
@@ -41,7 +49,7 @@ const Homebody = ({id}) => {
   };
 
   const selectedChannel = (channel) => {
-    setSelectChannel(channel)
+    setChannel(channel)
     
     Router.push(`/home/${channel.id}`)
   }
@@ -67,7 +75,7 @@ const Homebody = ({id}) => {
 
       <div className={classes.appbody_cotainer}>
         <div>
-          <h2>{selectChannel && selectChannel.name}</h2>
+          <h2>{channel && channel.name}</h2>
         </div>
 
         <HomeForm />
@@ -77,22 +85,3 @@ const Homebody = ({id}) => {
 };
 
 export default Homebody;
-
-export const getStaticPaths = async () => {
-  const snapshot = await db.collection("channels").get();
-  return {
-    paths: snapshot.docs.map((doc) => ({
-      params: {
-        id: doc.id,
-      },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = ({ params: { id } }) => {
-  return {
-    props: { id },
-  };
-};
-
