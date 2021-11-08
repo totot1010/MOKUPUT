@@ -38,6 +38,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import algoliasearch from "algoliasearch";
 
@@ -369,6 +370,7 @@ const Header = (props) => {
             >
               MOKUMOKUAPP
             </Typography>
+            <AccessTimeIcon  className={classes.access_time}/>
             <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
                 <SearchIcon />

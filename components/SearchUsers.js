@@ -74,7 +74,7 @@ const SearchUser = (props) => {
           <Box className={classes.box}>
             <Typography variant="h6" className={classes.title}>
               ユーザー詳細
-              <Link href={`chat/messages/${id}`}>
+              <Link href={`/chat/messages/${id}`}>
                 <Button className={classes.message_button} variant="outlined">
                   メッセージを送る
                 </Button>
