@@ -6,34 +6,43 @@
 .message_form {
   position: fixed;
   display: grid;
-  grid-template-columns: 1fr 9fr 1fr;
+  grid-template-columns: 1fr 12fr 1fr;
   justify-content: center;
-  bottom: 0;
+  bottom: 12px;
   height:60px;
   align-items:center;
+
   .image_container {
-    margin-left: auto;
     width: 40px;
+
   }
+}
   
 
-  input {
-    position:relative;
-    margin: 8px;
+
+  .input {
     width: 100%;
-    padding: 14px 20px;
-    border-radius: 1000px;
+    font-size: 16px;
+    padding: 6px 16px 0;
+    border-radius: 8px;
     border-color:rgb(107, 201, 251);
   }
 
-  .sendButton {
-    position:relative;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
+
+.wrapper {
+
+  
+  .button_container {
+    border: none;
+    background-color:white;
+    padding: 0;
   }
   
+    .sendButton {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      margin: 0 8px;
+    }
 }
-
 

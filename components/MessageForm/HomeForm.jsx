@@ -3,7 +3,8 @@ import classes from "../../styles/MessageForm/HomeForm.module.scss";
 import UploadImg from "../svg/UploadImg";
 
 import SendIcon from "@mui/icons-material/Send";
-import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
+
 
 const HomeForm = (props) => {
   const { handleSubmit, text, setText, setImg, channel } = props;
@@ -26,19 +27,21 @@ const HomeForm = (props) => {
             />
           </div>
           <div className={classes.input_container}>
-            <input
-              type="text"
-              placeholder={`＃${channel && channel.name}へのメッセージを作成`}
-              ref={inputRef}
-              className={classes.input}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+            <TextField
+          multiline
+          maxRows={4}
+          placeholder={`＃${channel && channel.name}へのメッセージを作成`}
+          ref={inputRef}
+          className={classes.input}
+          value={text}
+          name='textarea'
+          onChange={(e) => setText(e.target.value)}
+        />
           </div>
-          <div>
-            <Button type='submit'>
+          <div className={classes.wrapper}>
+            <button type='submit' className={classes.button_container}>
               <SendIcon color="primary" className={classes.sendButton} />
-            </Button>
+            </button>
           </div>
         </form>
       </div>

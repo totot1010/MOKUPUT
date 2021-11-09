@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
 import HomeForm from "../MessageForm/HomeForm";
-import Router, {useRef} from "next/router";
+import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 
@@ -77,8 +77,6 @@ const Homebody = () => {
   const selectedChannel = async (channel) => {
     setChannel(channel);
 
-  
-
     const messagesRef = await db
       .collection("channels")
       .doc(channel.id)
@@ -94,6 +92,7 @@ const Homebody = () => {
     await Router.push(`/home/${channel.id}`);
   };
 
+  //画像とテキストを送信した時の挙動
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -155,7 +154,7 @@ const Homebody = () => {
 
       <div className={classes.appbody_container}>
         <div className={classes.header_container}>
-          <h2>＃{channel && channel.name}</h2>
+          <h2><span>#</span>{channel && channel.name}</h2>
         </div>
         <div className={classes.messages_wrapper}>
           {messages.length

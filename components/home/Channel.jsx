@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from '../../styles/home/Channel.module.scss'
+import classes from '../../styles/home/Homebody.module.scss'
 
 
 
