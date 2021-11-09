@@ -33,7 +33,7 @@ const Home = () => {
 
   return (
     <>
-      <Header onSearch={onSearch} setSearchUsers={setSearchUsers} searchText={searchText} setSearchText={setSearchText} />
+      <Header onSearch={onSearch} setSearchUsers={setSearchUsers} searchText={searchText} setSearchText={setSearchText}/>
       <List className={classes.list} sx={{ width: "100%", maxWidth: 400, bgcolor: "background.paper" }}>
         {searchUsers && searchUsers.map((user) => {
           return (
@@ -48,7 +48,7 @@ const Home = () => {
           );
         })}
       </List>
-      <Homebody />
+      <Homebody className={classes.home_body}/>
     </>
   );
 };
