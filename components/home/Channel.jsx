@@ -1,8 +1,5 @@
 import React from 'react'
 import classes from '../../styles/home/Channel.module.scss'
-import Router from 'next/router'
-import {useRouter} from 'next/router'
-
 
 
 

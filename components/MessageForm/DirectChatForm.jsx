@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 
 const DirectChatForm = (props) => {
   const { handleSubmit, text, setText, setImg } = props;
+
+ 
   return (
     <>
       <div className={classes.message_container}>

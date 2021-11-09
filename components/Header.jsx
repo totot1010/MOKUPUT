@@ -102,7 +102,6 @@ const Header = (props) => {
   const [openSearchCancel, setOpenSearchCancel] = useState();
   const [alertOpen, setAlertOpen] = useState(false);
   const [img, setImg] = useState("");
-  const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -350,8 +349,8 @@ const Header = (props) => {
           <Alert severity="success">プロフィールを更新しました!</Alert>
         </Snackbar>
       </Stack>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+      <Box sx={{ flexGrow: 1 }} >
+        <AppBar position="static" style={{height: '64px'}} >
           <Toolbar>
             <IconButton
               size="large"

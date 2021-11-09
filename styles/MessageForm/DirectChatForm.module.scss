@@ -3,19 +3,19 @@
   justify-content: center;
 }
 
-.message_form {
-  position: fixed;
-  display: grid;
-  grid-template-columns: 1fr 9fr 1fr;
-  justify-content: center;
-  bottom: 0;
-  height:60px;
-  align-items:center;
-  .image_container {
-    margin-left: auto;
-    width: 40px;
-  }
-  
+  .message_form {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr 9fr 1fr;
+    justify-content: center;
+    bottom: 0;
+    height:60px;
+    align-items:center;
+    .image_container {
+      margin-left: auto;
+      width: 40px;
+    }
+    
 
 
   input {

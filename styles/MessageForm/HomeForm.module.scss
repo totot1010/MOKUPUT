@@ -1,21 +1,16 @@
 .message_container {
   display:flex;
   justify-content: center;
-  width: 100%;
 }
 
 .message_form {
   position: fixed;
   display: grid;
-  width:100%;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 9fr 1fr;
   justify-content: center;
   bottom: 0;
   height:60px;
   align-items:center;
-  margin-bottom: 10px;
-  
-  
   .image_container {
     margin-left: auto;
     width: 40px;
@@ -36,7 +31,7 @@
     cursor: pointer;
     width: 30px;
     height: 30px;
-    margin-left: auto;
+    margin-left: 10px;
   }
   
 }

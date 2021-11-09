@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import classes from "../../styles/MessageForm/HomeForm.module.scss";
 import UploadImg from "../svg/UploadImg";
 
@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 
 const HomeForm = (props) => {
   const { handleSubmit, text, setText, setImg, channel } = props;
+  const inputRef = useRef(null)
+
   return (
     <>
       <div className={classes.message_container}>
@@ -27,6 +29,7 @@ const HomeForm = (props) => {
             <input
               type="text"
               placeholder={`＃${channel && channel.name}へのメッセージを作成`}
+              ref={inputRef}
               className={classes.input}
               value={text}
               onChange={(e) => setText(e.target.value)}
