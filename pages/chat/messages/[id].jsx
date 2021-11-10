@@ -20,7 +20,6 @@ const directChat = ({ id }) => {
   const { user } = useContext(AuthContext);
 
   const user1 = auth.currentUser.uid;
-  console.log(user.uid)
 
   useEffect(() => {
     const f = async () => {
@@ -127,7 +126,6 @@ const directChat = ({ id }) => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <div className={classes.grid_container}>
-          <div>
             <div className={classes.users_container}>
               {users.map((user) => (
                 <ChatUser
@@ -139,8 +137,6 @@ const directChat = ({ id }) => {
                 />
               ))}
             </div>
-          </div>
-          <div>
             <div className={classes.messages_container}>
               <div className={classes.messages}>
                 {messages.length
@@ -151,6 +147,7 @@ const directChat = ({ id }) => {
               </div>
               <div style={{width: '100%'}}>
               <DirectChatForm
+                chatUser={chatUser}
                 handleSubmit={handleSubmit}
                 text={text}
                 setText={setText}
@@ -158,7 +155,6 @@ const directChat = ({ id }) => {
               />
               </div>
             </div>
-          </div>
         </div>
       </Box>
     </>
