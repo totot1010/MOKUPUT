@@ -20,12 +20,13 @@ const directChat = ({ id }) => {
   const { user } = useContext(AuthContext);
 
   const user1 = auth.currentUser.uid;
+  console.log(user.uid)
 
   useEffect(() => {
     const f = async () => {
       await db
         .collection("users")
-        .where("uid", "not-in", [user.uid])
+        .where("uid", "not-in", [user1])
         .get()
         .then((snap) => {
           const users = [];
