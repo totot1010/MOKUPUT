@@ -28,7 +28,7 @@ const HomeForm = (props) => {
           <div className={classes.input_container}>
             <TextField
               multiline
-              maxRows={4}
+              maxRows={3}
               placeholder={`＃${channel && channel.name}へのメッセージを作成`}
               ref={inputRef}
               className={classes.input}

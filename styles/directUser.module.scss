@@ -1,6 +1,6 @@
 .grid_container {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 6fr;
 }
 .users_container {
   height: 100vh;
@@ -8,7 +8,7 @@
   border-right: 1px solid;
   border-color: rgba(0, 0, 0, 0.5);
   max-width:400px;
-  min-width:250px;
+  min-width:220px;
 }
 
 .text {
@@ -26,6 +26,6 @@
 }
 
 .messages {
-  height:calc(100vh - 60px);
+  height:calc(100vh - 100px);
   overflow-y: auto;
 }

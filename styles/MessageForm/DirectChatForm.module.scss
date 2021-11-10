@@ -6,10 +6,10 @@
   .message_form {
     position: fixed;
     display: grid;
-    grid-template-columns: 1fr 9fr 1fr;
+    grid-template-columns: 1fr 18fr 1fr;
     justify-content: center;
-    bottom: 0;
-    height:60px;
+    bottom: 12px;
+    min-height:60px;
     align-items:center;
     .image_container {
       margin-left: auto;
@@ -18,19 +18,17 @@
     
 
 
-  input {
-    position:relative;
-    margin: 8px;
+  .input {
     width: 100%;
-    padding: 14px 20px;
-    border-radius: 1000px;
+    padding: 6px 12px 0;
+    border-radius: 8px;
     border-color:rgb(107, 201, 251);
   }
 
-  .sendButtonWrapper {
-    position:relative;
-    left: 10px;
-    margin-right: 10px;
+  .send_wrapper {
+    border: none;
+    background-color:white;
+    padding: 0;
   }
 
   .sendButton {

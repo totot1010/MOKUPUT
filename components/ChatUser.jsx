@@ -84,7 +84,9 @@ const ChatUser = (props) => {
               <Avatar className={classes.avatar} src={user.avatarURL} />
             </UserOffline>
           )}
+          <div>
           <h4 className={classes.text}>{user.name}</h4>
+          </div>
           <br />
         </div>
       </div>
