@@ -9,7 +9,7 @@
   grid-template-columns: 1fr 12fr 1fr;
   justify-content: center;
   bottom: 12px;
-  height:60px;
+  min-height:70px;
   align-items:center;
 
   .image_container {
@@ -17,21 +17,16 @@
 
   }
 }
-  
-
 
   .input {
     width: 100%;
-    font-size: 16px;
     padding: 6px 16px 0;
     border-radius: 8px;
     border-color:rgb(107, 201, 251);
   }
 
-
 .wrapper {
 
-  
   .button_container {
     border: none;
     background-color:white;

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import classes from "../../styles/home/Homebody.module.scss";
 import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
+import EmojiPicker from "../EmojiPicker";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,7 +23,6 @@ const Homebody = () => {
   const router = useRouter();
   const id = router.query.channelId;
   const user1 = auth.currentUser.uid;
-  
 
   useEffect(() => {
     const f = async () => {
@@ -34,17 +34,13 @@ const Homebody = () => {
         setChannels(names);
       });
 
-       db
-        .collection("channels")
+      db.collection("channels")
         .doc(id)
         .onSnapshot((snapshot) => {
           setChannel({ id, ...snapshot.data() });
         });
 
-      const messagesRef =  db
-        .collection("channels")
-        .doc(id)
-        .collection("chat");
+      const messagesRef = db.collection("channels").doc(id).collection("chat");
       messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
         const texts = [];
         querySnapshot.forEach((doc) => {
@@ -53,8 +49,7 @@ const Homebody = () => {
         setMessages(texts);
       });
 
-       db
-        .collection("users")
+      db.collection("users")
         .doc(user1)
         .onSnapshot((snapshot) => {
           setUser({ id: user1, ...snapshot.data() });
@@ -154,17 +149,31 @@ const Homebody = () => {
 
       <div className={classes.appbody_container}>
         <div className={classes.header_container}>
-          <h2><span>#</span>{channel && channel.name}</h2>
+          <h2>
+            <span>#</span>
+            {channel && channel.name}
+          </h2>
         </div>
         <div className={classes.messages_wrapper}>
           {messages.length
             ? messages.map((message, index) => {
-              const {avatarURL, image, name, text, from, createdAt} = message
-              return (
-                <MessageHome key={index} message={message} avatarURL={avatarURL} image={image} name={name} text={text} from={from} timestamp={createdAt}/>
-              )
+                const { avatarURL, image, name, text, from, createdAt } =
+                  message;
+                return (
+                  <MessageHome
+                    key={index}
+                    message={message}
+                    avatarURL={avatarURL}
+                    image={image}
+                    name={name}
+                    text={text}
+                    from={from}
+                    timestamp={createdAt}
+                  />
+                );
               })
             : null}
+        <EmojiPicker />
         </div>
         <div className={classes.form_container}>
           <HomeForm

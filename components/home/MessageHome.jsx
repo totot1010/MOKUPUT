@@ -2,6 +2,8 @@ import React,{useEffect, useRef} from "react";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
 import Avatar from "@mui/material/Avatar";
+import { Picker } from 'emoji-mart';
+import 'emoji-mart/css/emoji-mart.css';
 
 const MessageHome = (props) => {
   const {avatarURL,image, name, text, from, timestamp  } = props
@@ -25,7 +27,6 @@ const MessageHome = (props) => {
         <p>{text}</p>
       </div>
     </div>
-  
     </>
   );
 };
