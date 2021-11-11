@@ -1,4 +1,6 @@
 import React,{useEffect, useRef} from "react";
+import firebase from "firebase/app";
+
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
 import Avatar from "@mui/material/Avatar";
@@ -13,6 +15,8 @@ const MessageHome = (props) => {
     scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
   }, [image, text]);
 
+
+
   return (
     <>
     <div className={classes.message_container}  ref={scrollRef}>
@@ -22,7 +26,7 @@ const MessageHome = (props) => {
       <img src={image} alt="" />
       <div className={classes.messae_info}>
         <h4>
-          {name} <span>{new Date(timestamp?.toDate()).toUTCString()}</span>
+          {name} <span>{new Date(timestamp?.toDate()).toString()}</span>
         </h4>
         <p>{text}</p>
       </div>

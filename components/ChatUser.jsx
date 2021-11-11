@@ -46,7 +46,7 @@ const ChatUser = (props) => {
   const { user, selectedUser, user1, chatUser } = props;
   const [data, setData] = useState('')
 
-  const user2 = user.uid
+  const user2 = user.id
 
   useEffect(() => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
@@ -58,10 +58,6 @@ const ChatUser = (props) => {
 
 
   return (
-    <Link
-    href={`/chat/messages/${user.uid}`}
-    passHref
-  >
     <div className={`${classes.user_container} ${chatUser.name === user.name && classes.selected_user }`} 
     onClick={() => selectedUser(user)}
     >
@@ -93,7 +89,6 @@ const ChatUser = (props) => {
           {data && <p className={classes.lastMessage}>
             {data.text}</p>}
     </div>
-    </Link>
   );
 };
 

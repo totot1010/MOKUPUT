@@ -16,9 +16,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 const Home = () => {
   const { user } = useContext(AuthContext);
 
-  const handleClick = () => {
-    console.log(user.uid);
-  };
 
   const handleLogout = async () => {
     (await auth.currentUser.uid) &&
