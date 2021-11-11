@@ -6,6 +6,7 @@ import firebase from "firebase/app";
 import EmojiPicker from "../EmojiPicker";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
 import HomeForm from "../MessageForm/HomeForm";
@@ -122,12 +123,16 @@ const Homebody = () => {
     }
   };
 
+  const handleChat = () => {
+    Router.push(`/chat/${user1}`)
+  }
+
   return (
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
-        <div className={classes.sidebar_channel}>
-          <ExpandMoreIcon className={classes.expandIcon} />
-          <h3>チャンネル</h3>
+        <div className={classes.sidebar_channel} onClick={handleChat}>
+          <MailOutlineIcon className={classes.message} />
+          <h3>メッセージ</h3>
         </div>
         <hr />
         <div className={classes.addchannels_container} onClick={addChannel}>

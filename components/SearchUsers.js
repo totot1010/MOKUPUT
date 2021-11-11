@@ -87,7 +87,7 @@ const SearchUser = (props) => {
           <Box className={classes.box}>
             <Typography variant="h6" className={classes.title}>
               ユーザー詳細
-              <Link href={`/chat/messages/${id}`}>
+              <Link href={`/chat//${user1}/${id}`}>
                 <Button className={classes.message_button} variant="outlined" onClick={() => firestoreAdd({id, name, avatarURL, isOnline})}>
                   メッセージを送る
                 </Button>
