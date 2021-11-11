@@ -40,6 +40,7 @@ const Home = () => {
             <SearchUsers
               key={user.objectID}
               id={user.objectID}
+              isOnline={user.isOnline}
               avatarURL={user.avatarURL}
               name={user.name}
               useLanguage={user.useLanguage}

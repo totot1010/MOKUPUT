@@ -23,8 +23,6 @@ const ChannelId = () => {
   const channel = router.query.channelId
   
 
-
-
   const onSearch = async (e) => {
     await setSearchText(e.target.value)
     if (e.target.value === "") return setSearchUsers([]);
@@ -46,6 +44,8 @@ const ChannelId = () => {
             <SearchUsers
               key={user.objectID}
               id={user.objectID}
+              user={user}
+              isOnline={user.isOnline}
               avatarURL={user.avatarURL}
               name={user.name}
               useLanguage={user.useLanguage}
