@@ -9,7 +9,24 @@
   border-color: rgba(0, 0, 0, 0.5);
   max-width:400px;
   min-width:220px;
+
+
 }
+
+
+
+.back_wrapper {
+  background-color: white;
+  border: none;
+  height: 40px;
+  width: 40px;
+
+
+  .back {
+    cursor: pointer;
+  }
+}
+
 
 .text {
   font-weight: 400;

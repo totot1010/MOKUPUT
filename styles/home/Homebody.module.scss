@@ -10,31 +10,34 @@
   height: calc(100vh - 64px);
   max-width: 250px;
   color: white;
-  padding-top: 10px;
 
   h3 {
-    font-size: 14px;
+    font-size: 16px;
+    margin-left: 6px;
   }
 
-  hr {
-    margin: 10px 0;
-  }
 }
 
 .sidebar_channel {
   display: flex;
   padding-left: 16px;
-  margin-bottom: 8px;
+  border-top: 1px solid white;
+  padding: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: skyblue;
+  }
+
 }
 
 .addchannels_container {
   display: flex;
-  padding-left: 16px;
-  margin-bottom: 8px;
-
-  h3 {
-    cursor: pointer;
+  padding: 14px;
+  cursor: pointer;
+  &:hover {
+    background-color: skyblue;
   }
+
 }
 
 //channel
