@@ -1,50 +1,103 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { db, auth, storage } from "../../../firebase/firebase";
+
+import Link from 'next/link'
+import Router from 'next/router'
+import { useRouter } from "next/router";
+import classes from "../../../styles/SearchUser.module.scss";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
-import classes from "../../../styles/organism/user/UserDetailModal.module.scss";
+
+// import classes from "../../../styles/organism/user/UserDetailModal.module.scss";
 
 const UserDetailModal = (props) => {
-  const {setOpen, open, user} = props
-console.log(user)
+  const { handleClose, message, open } = props;
+  const {uid, name, avatarURL, isOnline} = message
+  const router = useRouter()
 
+  const user1 = auth.currentUser.uid
 
-  const handleClose = () => setOpen(false)
+    //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
+    const firestoreAdd = async ({uid, name, avatarURL, isOnline}) => {
+      if(user1 === uid) return;
+      const newId = user1 > uid ? `${user1 + uid}` : `${uid + user1}`;
+  
+      await db.collection("users").doc(user1).collection('chatUser').doc(uid).set({uid, name, avatarURL, isOnline}, {merge: true})
+
+      await Router.push(`/chat/${user1}/${uid}`)
+    }
+
 
   return (
-      <Modal open={open} onClose={handleClose}>
-        <Box className={classes.box}>
-          <Typography variant="h6" className={classes.title}>
-            ユーザー詳細
-            <CloseIcon
-              fontSize="large"
-              className={classes.closeIcon}
-              onClick={handleClose}
-            />
+    <Modal open={open} onClose={handleClose}>
+      <Box className={classes.box}>
+        <Typography variant="h6" className={classes.title}>
+          ユーザー詳細
+          {/* <Link href={`/chat/${user1}/${uid}`}> */}
+            <Button
+              className={classes.message_button}
+              variant="outlined"
+              onClick={() => firestoreAdd({ uid, name, avatarURL, isOnline })}
+            >
+              メッセージを送る
+            </Button>
+          {/* </Link> */}
+          <CloseIcon
+            fontSize="large"
+            className={classes.closeIcon}
+            onClick={handleClose}
+          />
+        </Typography>
+        <div className={classes.img_wrapper}>
+          <img
+            className={classes.image}
+            src={message && message.avatarURL}
+          />
+        </div>
+        <Stack spacing={2}>
+          <Typography className={classes.typograpphy_name}>名前</Typography>
+          <Typography className={classes.input}>
+            {message && message.name}
           </Typography>
-          <Stack spacing={2}>
-            <Typography className={classes.typography}>名前</Typography>
-            <Typography className={classes.input}>
-              {/* {user.name} */}
-            </Typography>
-            <Typography className={classes.typography}>実務経験</Typography>
-            <Typography className={classes.input}>
-              {/* {user.experience} */}
-            </Typography>
-            <Typography className={classes.typography}>
-              実務で使っている言語
-            </Typography>
-            <Typography className={classes.input}>{"aaa"}</Typography>
-            <Typography className={classes.typography}>勉強中の言語</Typography>
-            <Typography className={classes.input}>{"aaa"}</Typography>
-         
-          </Stack>
-        </Box>
-      </Modal>
+          <Typography className={classes.typography}>実務経験</Typography>
+          <Typography className={classes.input}>
+            {message && message.experience === "yes"
+              ? "あり"
+              : "なし"}
+          </Typography>
+          <Typography className={classes.typography}>
+            実務で使っている言語
+          </Typography>
+          <Typography className={classes.input}>
+            {message &&
+              message.useLanguage.map((language, index) => {
+                if (index + 1 === message.useLanguage.length) {
+                  return <span key={index}>{language}</span>;
+                } else {
+                  return <span key={index}>{language}&#44;&nbsp;</span>;
+                }
+              })}
+          </Typography>
+          <Typography className={classes.typography}>勉強中の言語</Typography>
+          <Typography className={classes.input}>
+            {message &&
+              message.willLanguage.map((language, index) => {
+                if (index + 1 === message.willLanguage.length) {
+                  return <span key={index}>{language}</span>;
+                } else {
+                  return <span key={index}>{language}&#44;&nbsp;</span>;
+                }
+              })}
+          </Typography>
+        </Stack>
+      </Box>
+    </Modal>
   );
 };
 

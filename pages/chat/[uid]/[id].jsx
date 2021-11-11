@@ -79,8 +79,8 @@ const directChat = () => {
   const selectedUser = async (user) => {
     setChatUser(user);
     /**チャットする相手のid */
-    const user2 = user.id;
-
+    const user2 = user.uid;
+    
     /**use1は自分のid, user2はチャットする相手のid*/
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
@@ -97,7 +97,7 @@ const directChat = () => {
       setMessages(texts);
     });
 
-    Router.push(`/chat/messages/${user2}`)
+    Router.push(`/chat/${user1}/${user2}`)
   };
 
   //画像とテキストを送信した時の挙動
@@ -174,7 +174,7 @@ const directChat = () => {
         <div className={classes.grid_container}>
             <div className={classes.users_container}>
               <div style={{display: 'flex'}}>
-              <Link href='/home/kpKhBToRixlsLYjhuXPR'>
+              <Link href='/home/eJhpxQwVn9zbq09GIZel'>
               <a className={classes.back_wrapper}>
             <ArrowBackIcon sx={{ fontSize: 40 }} color='primary' className={classes.back}/>
               </a>

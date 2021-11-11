@@ -5,7 +5,6 @@ import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import EmojiPicker from "../EmojiPicker";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
@@ -13,6 +12,8 @@ import HomeForm from "../MessageForm/HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
+import { useAllUsers } from "../../hooks/useAllUsers";
+
 
 const Homebody = () => {
   const [channel, setChannel] = useState();
@@ -22,8 +23,11 @@ const Homebody = () => {
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
   const router = useRouter();
+  const { users, getUsers } = useAllUsers();
+  
   const id = router.query.channelId;
   const user1 = auth.currentUser.uid;
+  
 
   useEffect(() => {
     const f = async () => {
@@ -106,6 +110,10 @@ const Homebody = () => {
           image: URL,
           avatarURL: user.avatarURL,
           name: user.name,
+          uid: user.uid,
+          useLanguage: user.useLanguage,
+          willLanguage: user.willLanguage,
+          experience: user.experience,
         });
         setText("");
         setImg("");
@@ -118,6 +126,11 @@ const Homebody = () => {
         createdAt: firebase.firestore.Timestamp.now(),
         avatarURL: user.avatarURL,
         name: user.name,
+        uid: user.uid,
+        useLanguage: user.useLanguage,
+        willLanguage: user.willLanguage,
+        experience: user.experience,
+        isOnline: user.isOnline
       });
       setText("");
     }
@@ -126,6 +139,8 @@ const Homebody = () => {
   const handleChat = () => {
     Router.push(`/chat/${user1}`)
   }
+
+
 
   return (
     <div className={classes.homebody}>
@@ -162,23 +177,14 @@ const Homebody = () => {
         <div className={classes.messages_wrapper}>
           {messages.length
             ? messages.map((message, index) => {
-                const { avatarURL, image, name, text, from, createdAt } =
-                  message;
                 return (
                   <MessageHome
                     key={index}
                     message={message}
-                    avatarURL={avatarURL}
-                    image={image}
-                    name={name}
-                    text={text}
-                    from={from}
-                    timestamp={createdAt}
                   />
                 );
               })
             : null}
-        <EmojiPicker />
         </div>
         <div className={classes.form_container}>
           <HomeForm

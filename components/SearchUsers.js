@@ -46,7 +46,7 @@ const SearchUser = (props) => {
     console.log(id)
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
-    await db.collection("users").doc(user1).collection('chatUser').doc(id).set({id, name, avatarURL, isOnline}, {merge: true})
+    await db.collection("users").doc(user1).collection('chatUser').doc(id).set({uid: id, name, avatarURL, isOnline}, {merge: true})
   }
 
   return (
@@ -87,7 +87,7 @@ const SearchUser = (props) => {
           <Box className={classes.box}>
             <Typography variant="h6" className={classes.title}>
               ユーザー詳細
-              <Link href={`/chat//${user1}/${id}`}>
+              <Link href={`/chat/messages/${id}`}>
                 <Button className={classes.message_button} variant="outlined" onClick={() => firestoreAdd({id, name, avatarURL, isOnline})}>
                   メッセージを送る
                 </Button>
