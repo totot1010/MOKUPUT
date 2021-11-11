@@ -106,7 +106,7 @@ const directChat = () => {
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
     /**送信時に画像がある場合の処理 */
-    if (img) {
+    if (img)  {
 
       /**firebaseのstorageの参照を作成 */
       const storageRef = storage.ref();
@@ -118,7 +118,6 @@ const directChat = () => {
 
       /**storageにある画像をダウンロードする */
       const snap = await imageRef.put(img);
-
       /**画像、テキストをfirestoreに保存する */
       await snap.ref.getDownloadURL().then(function (URL) {
         db.collection("messages").doc(newId).collection("chat").add({
@@ -130,22 +129,22 @@ const directChat = () => {
         });
 
         /**一番最後に行われたメッセージをfirestoreに保存する */
-        db.collection("lastMessage").doc(newId).set({
+         db.collection("lastMessage").doc(newId).set({
           text,
           from: user1,
           to: id,
           createdAt: firebase.firestore.Timestamp.now(),
           media: URL,
           unread: true,
-        });
 
-        setText("");
-        setImg("");
+        });
+         setText("");
+         setImg("");
+
       });
     } else {
       /**テキストがない場合の処理 */
       if (text === "") return;
-
       /**画像、テキストをfirestoreに保存する */
       await db.collection("messages").doc(newId).collection("chat").add({
         text,
@@ -162,7 +161,7 @@ const directChat = () => {
         createdAt: firebase.firestore.Timestamp.now(),
         unread: true,
       });
-      setText("");
+      await setText("");
     }
   };
 
