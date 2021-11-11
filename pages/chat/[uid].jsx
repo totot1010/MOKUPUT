@@ -96,7 +96,7 @@ const Messages = () => {
       setMessages(texts);
     });
 
-    Router.push(`/chat/messages/${user2}`);
+    Router.push(`/chat/${user1}/${user2}`);
   };
 
   //画像とテキストを送信した時の挙動

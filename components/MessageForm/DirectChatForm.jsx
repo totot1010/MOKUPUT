@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 const DirectChatForm = (props) => {
   const { handleSubmit, text, setText, setImg, chatUser } = props;
 
-  //handleDown関数の中にログを入れても１回しかレンダリングされない。
+
   //handleSubmitが何回もレンダリングされている。
   // const handleDown = () => {
   //   const textarea = document.getElementById("textarea");
