@@ -8,23 +8,19 @@ import TextField from "@mui/material/TextField";
 const DirectChatForm = (props) => {
   const { handleSubmit, text, setText, setImg, chatUser } = props;
 
-
   //handleSubmitが何回もレンダリングされている。
-  // const handleDown = () => {
-  //   const textarea = document.getElementById("textarea");
-  //   textarea.addEventListener("keydown", function (e) {
-  //     if (e.keyCode == 13 && e.ctrlKey) {
-  //       document.getElementById("submit").click();
-  //       console.log('a')
-  //       return;
-  //     }
-  //   });
-  // };
+  const handleDown = (e) => {
+      if (e.keyCode == 13 && e.ctrlKey) {
+        document.getElementById("submit").click();
+        console.log("a");
+        return;
+      }
+  };
 
   return (
     <>
       <div className={classes.message_container}>
-        <form className={classes.message_form} onSubmit={handleSubmit}> 
+        <form className={classes.message_form} onSubmit={handleSubmit}>
           <div className={classes.image_container}>
             <label htmlFor="img">
               <UploadImg />
@@ -39,12 +35,11 @@ const DirectChatForm = (props) => {
           </div>
           <div className={classes.input_container}>
             <TextField
-              id="textarea"
               multiline
               maxRows={3}
               placeholder="新しいメッセージを作成する"
               className={classes.input}
-              // onKeyDown={handleDown}
+              onKeyDown={handleDown}
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
@@ -56,6 +51,8 @@ const DirectChatForm = (props) => {
             </button>
           </div>
         </form>
+              <small className={classes.subText}>Enterで改行</small>
+              <small className={classes.subText2}>Ctrl+Enterで送信</small>
       </div>
     </>
   );
