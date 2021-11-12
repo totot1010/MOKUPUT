@@ -39,7 +39,6 @@ const UserDetailModal = (props) => {
       <Box className={classes.box}>
         <Typography variant="h6" className={classes.title}>
           ユーザー詳細
-          {/* <Link href={`/chat/${user1}/${uid}`}> */}
             <Button
               className={classes.message_button}
               variant="outlined"
@@ -47,7 +46,6 @@ const UserDetailModal = (props) => {
             >
               メッセージを送る
             </Button>
-          {/* </Link> */}
           <CloseIcon
             fontSize="large"
             className={classes.closeIcon}

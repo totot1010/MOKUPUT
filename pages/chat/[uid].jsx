@@ -22,7 +22,6 @@ const Messages = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const id = router.query.uid;
-  console.log(id)
 
   const user1 = auth.currentUser.uid;
 

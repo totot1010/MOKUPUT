@@ -29,7 +29,6 @@ const MessageHome = (props) => {
 
       //ユーザーをクリックした時の挙動
       const handleOpen = () => {
-        // if(auth.currentUser.uid) return;
         setOpen(true);
       };
 

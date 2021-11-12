@@ -47,8 +47,6 @@ const ChatUser = (props) => {
   const [data, setData] = useState('')
 
   const user2 = user.uid
-  // console.log(user1)
-  // console.log(user2)
 
   useEffect(() => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
