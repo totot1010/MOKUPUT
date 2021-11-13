@@ -5,7 +5,7 @@ import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import EmojiPicker from "../EmojiPicker";
 
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
 import HomeForm from "../MessageForm/HomeForm";
@@ -13,7 +13,6 @@ import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 import { useAllUsers } from "../../hooks/useAllUsers";
-
 
 const Homebody = () => {
   const [channel, setChannel] = useState();
@@ -24,10 +23,11 @@ const Homebody = () => {
   const [messages, setMessages] = useState([]);
   const router = useRouter();
   const { users, getUsers } = useAllUsers();
-  
+
   const id = router.query.channelId;
+
+  //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
-  
 
   useEffect(() => {
     const f = async () => {
@@ -49,7 +49,7 @@ const Homebody = () => {
       messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
         const texts = [];
         querySnapshot.forEach((doc) => {
-          texts.push(doc.data());
+          texts.push({id: doc.id, ...doc.data()});
         });
         setMessages(texts);
       });
@@ -92,6 +92,8 @@ const Homebody = () => {
     await Router.push(`/home/${channel.id}`);
   };
 
+
+
   //画像とテキストを送信した時の挙動
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -130,16 +132,16 @@ const Homebody = () => {
         useLanguage: user.useLanguage,
         willLanguage: user.willLanguage,
         experience: user.experience,
-        isOnline: user.isOnline
+        isOnline: user.isOnline,
       });
       setText("");
     }
   };
 
+  //チャットページに画面遷移する処理
   const handleChat = () => {
-    Router.push(`/chat/${user1}`)
-  }
-
+    Router.push(`/chat/${user1}`);
+  };
 
 
   return (
@@ -176,12 +178,9 @@ const Homebody = () => {
         </div>
         <div className={classes.messages_wrapper}>
           {messages.length
-            ? messages.map((message, index) => {
+            ? messages.map((message) => {
                 return (
-                  <MessageHome
-                    key={index}
-                    message={message}
-                  />
+                    <MessageHome key={message.id} message={message} />
                 );
               })
             : null}

@@ -367,7 +367,7 @@ const Header = (props) => {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              MOKUMOKUAPP
+              MOKUPUT
             </Typography>
             <AccessTimeIcon  className={classes.access_time}/>
             <Search className={classes.search_wrapper}>

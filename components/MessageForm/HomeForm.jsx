@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 
 const HomeForm = (props) => {
-  const { handleSubmit, text, setText, setImg, channel } = props;
+  const { handleSubmit, text, setText, setImg, channel, AutoLink } = props;
   const inputRef = useRef(null);
 
   const handleDown = (e) => {
@@ -15,6 +15,8 @@ const HomeForm = (props) => {
       return;
     }
 };
+
+
 
   return (
     <>
@@ -35,6 +37,7 @@ const HomeForm = (props) => {
           <div className={classes.input_container}>
             <TextField
               multiline
+              id='js-text'
               maxRows={3}
               placeholder={`＃${channel && channel.name}へのメッセージを作成`}
               ref={inputRef}
@@ -44,7 +47,9 @@ const HomeForm = (props) => {
               name="textarea"
               onChange={(e) => setText(e.target.value)}
             />
-            <input type="submit" id="submit" style={{ display: "none" }} />
+            <input type="submit" id="submit" style={{ display: "none" }} 
+            onClick={AutoLink}
+            />
           </div>
           <div className={classes.wrapper}>
             <button type="submit" className={classes.button_container}>

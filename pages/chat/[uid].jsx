@@ -76,8 +76,9 @@ const Messages = () => {
   //ユーザーを選択した時の処理
   const selectedUser = async (user) => {
     setChatUser(user);
+    
     /**チャットする相手のid */
-    const user2 = user.id;
+    const user2 = user.uid;
 
     /**use1は自分のid, user2はチャットする相手のid*/
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;

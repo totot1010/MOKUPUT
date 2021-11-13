@@ -107,14 +107,20 @@
 //MessageHome------
 
 .message_container {
-  display: flex;
-  align-items: center;
   padding: 16px;
+  border: 0.5px solid rgba(0,0,0, 0.1);
+  &:hover {
+    background:rgba(0,0,0,0.05)
+  }
+
+  .message_info {
+    display: flex;
+  }
 
   .avatar {
     height: 46px;
     width: 46px;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
   }
 
@@ -125,13 +131,21 @@
     font-size: 10px;
   }
 
+  .img {
+    margin-top: 8px;
+    margin-left: 50px;
+    width: 300px;
+    height: 300px;
+  }
+
   p {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    padding-top: 6px;
+    margin-left: 50px;
+    font-weight: 350;
   }
 }
 
 .form_container {
-  z-index: 8;
+  z-index: 3;
 }
