@@ -44,10 +44,9 @@ const directChat = () => {
         .collection("users")
         .doc(user1)
         .collection('chatUser')
-        .get()
-        .then((snap) => {
+        .onSnapshot((querySnapshot) => {
           const users = [];
-          snap.forEach((doc) => {
+          querySnapshot.forEach((doc) => {
             users.push(doc.data());
           });
           setUsers(users);
