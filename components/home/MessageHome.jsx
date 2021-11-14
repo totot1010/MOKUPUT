@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import firebase from "firebase/app";
-import { auth } from "../../firebase/firebase";
+import anchorme from "anchorme";
+import { filterXSS } from "xss";
 
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import UserDetailModal from "../organism/user/UserDetailModal";
-import { useRouter } from "next/router";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
 const MessageHome = (props) => {
@@ -23,17 +22,7 @@ const MessageHome = (props) => {
 
   useEffect(() => {
     getUsers();
-    // AutoLink();
   }, [message.text]);
-
-  // const AutoLink = () => {
-  //   var regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;正規表現（/〜/）を解釈してくれないエディタ等で自動整形を崩さないため。
-  //   var regexp_makeLink = function (all, url, h, href) {
-  //     return '<a href="h' + href + '" target="_blank">' + url + "</a>";
-  //   };
-  //   var textWithLink = message.text.replace(regexp_url, regexp_makeLink);
-  //   document.getElementById("js-result").innerHTML = textWithLink;
-  // };
 
   //ユーザーをクリックした時の挙動
   const handleOpen = () => {
@@ -41,6 +30,26 @@ const MessageHome = (props) => {
   };
 
   const handleClose = () => setOpen(false);
+
+  const htmlText = anchorme({
+    input: message.text,
+    options: {
+      exclude: (string) => {
+        if (!string.startsWith("https://")) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      attributes: () => {
+        const attributes = {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        };
+        return attributes;
+      },
+    },
+  });
 
   return (
     <>
@@ -62,7 +71,16 @@ const MessageHome = (props) => {
         {message.image && (
           <img src={message.image} alt="画像" className={classes.img} />
         )}
-        <p id="js-result">{message.text}</p>
+        <p
+          className={classes.message_text}
+          dangerouslySetInnerHTML={{
+            __html: filterXSS(htmlText, {
+              whiteList: {
+                a: ["href", "title", "target", "rel"],
+              },
+            }),
+          }}
+        />
         <UserDetailModal
           handleClose={handleClose}
           message={message}

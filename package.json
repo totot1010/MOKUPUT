@@ -18,6 +18,7 @@
     "@mui/material": "^5.0.6",
     "@types/react-router-dom": "^5.3.2",
     "algoliasearch": "^4.11.0",
+    "anchorme": "^2.1.2",
     "dotenv": "^10.0.0",
     "emoji-mart": "^3.0.1",
     "emoji-picker-react": "^3.4.8",
@@ -28,6 +29,7 @@
     "next": "11.1.2",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
+    "react-anchorme": "^2.2.1",
     "react-dom": "17.0.2",
     "react-instantsearch-dom": "^6.15.0",
     "react-moment": "^1.1.1",
@@ -36,7 +38,8 @@
     "react-router-dom": "^5.3.0",
     "react-twemoji-picker": "github:brianhung/emojipicker",
     "save": "^2.4.0",
-    "styled-jsx": "^4.0.1"
+    "styled-jsx": "^4.0.1",
+    "xss": "^1.0.10"
   },
   "devDependencies": {
     "@types/algoliasearch": "^4.0.0",

@@ -138,11 +138,16 @@
     height: 300px;
   }
 
-  p {
+  .message_text {
+    display: block;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     margin-left: 50px;
     font-weight: 350;
+
+    a {
+      color:rgb(93, 134, 240)
+    }
   }
 }
 

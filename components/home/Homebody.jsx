@@ -178,9 +178,9 @@ const Homebody = () => {
         </div>
         <div className={classes.messages_wrapper}>
           {messages.length
-            ? messages.map((message) => {
+            ? messages.map((message, index) => {
                 return (
-                    <MessageHome key={message.id} message={message} />
+                    <MessageHome key={index} message={message} />
                 );
               })
             : null}
