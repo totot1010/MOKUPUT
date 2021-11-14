@@ -8,8 +8,7 @@ const UploadImg = () => {
         width: "30px",
         height: "30px",
         cursor: "pointer",
-        color: "gray",
-        marginRight: '10px',
+        color: '#1976d2',
         marginLeft: '10px'
       }}
       viewBox="0 0 20 20"

@@ -28,6 +28,10 @@
     background-color: skyblue;
   }
 
+  .message_icon {
+    margin-left: 4px;
+  }
+
 }
 
 .addchannels_container {
@@ -37,6 +41,12 @@
   &:hover {
     background-color: skyblue;
   }
+
+  .add_icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+  } 
 
 }
 
@@ -53,6 +63,11 @@
 
   span {
     padding: 15px;
+  }
+  
+  .channel_icon {
+    position: relative;
+    top: 8px
   }
 
   h3 {
@@ -81,6 +96,14 @@
   top: 64px;
   z-index: 9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  .header_icon{
+    position: relative;
+    top: 8px;
+    font-size: 36px;
+    margin-left: 12px;
+    margin-right: 16px;
+  }
 
   span {
     font-size: 16px;
@@ -151,6 +174,5 @@
   }
 }
 
-.form_container {
-  z-index: 3;
-}
+
+

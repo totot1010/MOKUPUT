@@ -6,6 +6,7 @@ import firebase from "firebase/app";
 import EmojiPicker from "../EmojiPicker";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import ComputerIcon from '@mui/icons-material/Computer';
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
 import HomeForm from "../MessageForm/HomeForm";
@@ -148,12 +149,12 @@ const Homebody = () => {
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
         <div className={classes.sidebar_channel} onClick={handleChat}>
-          <MailOutlineIcon className={classes.message} />
+          <MailOutlineIcon className={classes.message_icon} />
           <h3>メッセージ</h3>
         </div>
         <hr />
         <div className={classes.addchannels_container} onClick={addChannel}>
-          <AddIcon />
+          <AddIcon className={classes.add_icon}/>
           <h3>チャンネルを追加</h3>
         </div>
         <hr />
@@ -172,7 +173,7 @@ const Homebody = () => {
       <div className={classes.appbody_container}>
         <div className={classes.header_container}>
           <h2>
-            <span>#</span>
+            <ComputerIcon className={classes.header_icon}/>
             {channel && channel.name}
           </h2>
         </div>
@@ -185,7 +186,6 @@ const Homebody = () => {
               })
             : null}
         </div>
-        <div className={classes.form_container}>
           <HomeForm
             channel={channel}
             handleSubmit={handleSubmit}
@@ -193,7 +193,6 @@ const Homebody = () => {
             setText={setText}
             setImg={setImg}
           />
-        </div>
       </div>
     </div>
   );
