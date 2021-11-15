@@ -35,7 +35,7 @@ const Homebody = () => {
       await db.collection("channels").onSnapshot((snapshot) => {
         const names = [];
         snapshot.forEach((doc) => {
-          names.push({ id: doc.id, ...doc.data() });
+          names.push({ documentId: doc.id, ...doc.data() });
         });
         setChannels(names);
       });
@@ -50,7 +50,7 @@ const Homebody = () => {
       messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
         const texts = [];
         querySnapshot.forEach((doc) => {
-          texts.push({id: doc.id, ...doc.data()});
+          texts.push({documentId: doc.id, ...doc.data()});
         });
         setMessages(texts);
       });
@@ -80,17 +80,17 @@ const Homebody = () => {
 
     const messagesRef = await db
       .collection("channels")
-      .doc(channel.id)
+      .doc(channel.documentId)
       .collection("chat");
     messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
       const texts = [];
       querySnapshot.forEach((doc) => {
-        texts.push(doc.data());
+        texts.push({...doc.data(), documentId: doc.id});
       });
       setMessages(texts);
     });
 
-    await Router.push(`/home/${channel.id}`);
+    await channel && Router.push(`/home/${channel.documentId}`);
   };
 
 
@@ -160,10 +160,10 @@ const Homebody = () => {
         <hr />
         <div className={classes.channels}>
           {channels &&
-            channels.map((doc, index) => (
+            channels.map((channel, index) => (
               <Channel
                 key={index}
-                doc={doc}
+                channel={channel}
                 selectedChannel={selectedChannel}
               />
             ))}
@@ -181,7 +181,7 @@ const Homebody = () => {
           {messages.length
             ? messages.map((message, index) => {
                 return (
-                    <MessageHome key={index} message={message} />
+                    <MessageHome key={index} message={message}/>
                 );
               })
             : null}

@@ -5,12 +5,12 @@ import ComputerIcon from '@mui/icons-material/Computer';
 
 
 const Channel = (props) => {
-  const {doc, selectedChannel} = props
+  const {channel, selectedChannel} = props
 
   return (
     <>
-    <div className={classes.channel_container}  onClick={() => selectedChannel(doc)}>
-      <h3><span><ComputerIcon className={classes.channel_icon}/></span>{doc.name}</h3>
+    <div className={classes.channel_container}  onClick={() => selectedChannel(channel)}>
+      <h3><span><ComputerIcon className={classes.channel_icon}/></span>{channel.name}</h3>
     </div>
     </>
   )

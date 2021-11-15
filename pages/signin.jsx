@@ -12,7 +12,6 @@ const Signin = () => {
     setloading(true)
     e.preventDefault();
     const result = await signinWithEmailAndPassword(email, password);
-    console.log(result.user.uid)
     await db.collection('users').doc(result.user.uid).update({isOnline: true});
     await result && Router.push("/");
     setloading(false)
