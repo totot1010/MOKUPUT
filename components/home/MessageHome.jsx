@@ -78,7 +78,8 @@ const MessageHome = (props) => {
         .collection("chat")
         .doc(message.documentId)
         .delete();
-    }
+      }
+    setAnchorEl(null);
   };
 
   const messageEdit = () => {
@@ -163,7 +164,7 @@ const MessageHome = (props) => {
                   fullWidth
                   maxRows={20}
                   placeholder={'メッセージを作成'}
-                  className={classes.input}
+                  className={classes.edit_textField}
                   value={text}
                   name="textarea"
                   onChange={(e) => setText(e.target.value)}
