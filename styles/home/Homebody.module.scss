@@ -15,7 +15,6 @@
     font-size: 16px;
     margin-left: 6px;
   }
-
 }
 
 .sidebar_channel {
@@ -31,7 +30,6 @@
   .message_icon {
     margin-left: 4px;
   }
-
 }
 
 .addchannels_container {
@@ -46,8 +44,7 @@
     width: 24px;
     height: 24px;
     margin-left: 6px;
-  } 
-
+  }
 }
 
 //channel
@@ -64,10 +61,10 @@
   span {
     padding: 15px;
   }
-  
+
   .channel_icon {
     position: relative;
-    top: 8px
+    top: 8px;
   }
 
   h3 {
@@ -97,7 +94,7 @@
   z-index: 9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-  .header_icon{
+  .header_icon {
     position: relative;
     top: 8px;
     font-size: 36px;
@@ -131,9 +128,9 @@
 
 .message_container {
   padding: 16px;
-  border: 0.5px solid rgba(0,0,0, 0.1);
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
   &:hover {
-    background:rgba(0,0,0,0.05)
+    background: rgba(0, 0, 0, 0.05);
   }
 
   .message_info {
@@ -161,6 +158,61 @@
     height: 300px;
   }
 
+  .edit_textField {
+    display: block;
+    white-space: pre-wrap;
+    width: 95%;
+    overflow-wrap: anywhere;
+    margin-left: 50px;
+    font-weight: 350;
+    background-color: rgba(27, 196, 125, 0.1);
+
+    a {
+      color: rgb(93, 134, 240);
+    }
+  }
+
+  .cancel_button {
+    margin-left: 50px;
+    margin-top: 12px;
+    background-color: rgba(25, 118, 210, 0.8);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-right: 24px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .update_button {
+    margin-top: 12px;
+    background-color: #4b9047;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+  }
+
+
+    .emojiIcon_button {
+      position: relative;
+      top: 12px;
+      left: 12px;
+      background-color:white;
+      border-radius: 8px;
+      border: none;
+      padding:0;
+    }
+
+    .emojiIcon {
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+    }
+
+  
+
   .message_text {
     display: block;
     white-space: pre-wrap;
@@ -169,10 +221,22 @@
     font-weight: 350;
 
     a {
-      color:rgb(93, 134, 240)
+      color: rgb(93, 134, 240);
     }
   }
 }
 
+.emoji {
+  position: absolute;
+  z-index: 10;
+  width: 280px;
+  height: 320px;
+  bottom: 120px;
+  right: 20px;
 
+}
 
+.hidden {
+  display: none;
+  background-color: red;
+}

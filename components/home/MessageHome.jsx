@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, createRef } from "react";
 import anchorme from "anchorme";
 import { db, auth } from "../../firebase/firebase";
 import { filterXSS } from "xss";
 import { useRouter } from "next/router";
+import Emoji from "../../emojis/emojisComponent";
 
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
@@ -13,16 +14,17 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-
+import TagFacesIcon from "@mui/icons-material/TagFaces";
 
 const MessageHome = (props) => {
   const { message } = props;
   const scrollRef = useRef();
-  const { users, getUsers } = useAllUsers();
+  const editRef = createRef();
+  const [showEmojis, setShowEmojis] = useState(false);
   const [openIcon, setOpenIcon] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [text, setText] = useState(message.text)
+  const [text, setText] = useState(message.text);
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId = router.query.channelId;
@@ -38,9 +40,22 @@ const MessageHome = (props) => {
     scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
   }, [message.image, message.text]);
 
-  useEffect(() => {
-    getUsers();
-  }, [message.text]);
+  const pickEmoji = (e, { emoji }) => {
+    const ref = editRef.current;
+    ref.focus();
+    const start = text.substring(0, ref.selectionStart);
+    const end = text.substring(ref.selectionStart);
+    const message = start + emoji + end;
+    setText(message);
+    setShowEmojis(!showEmojis);
+  };
+
+  const handleShowEmojis = (e) => {
+    e.preventDefault();
+    editRef.current.focus();
+
+    setShowEmojis(!showEmojis);
+  };
 
   const handleModalClose = () => setOpenIcon(false);
 
@@ -78,26 +93,32 @@ const MessageHome = (props) => {
         .collection("chat")
         .doc(message.documentId)
         .delete();
-      }
+    }
     setAnchorEl(null);
   };
 
+  //編集モードになる時の処理
   const messageEdit = () => {
-    setEdit(!edit)
+    setEdit(true);
     setAnchorEl(null);
   };
 
+  //編集時に編集キャンセルを押した時の処理
   const handleEditCancel = () => {
-    setEdit(false)
-    setText(message.text)
-  }
+    setEdit(false);
+    setText(message.text);
+  };
 
+  //編集の変更をfirestoreに保存する
   const handleEditUpdate = async () => {
-    await db.collection('channels').doc(channelId).collection('chat').doc(message.documentId).set({text: text},{merge: true})
-    await setEdit(false)
-  }
-
-
+    await db
+      .collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .doc(message.documentId)
+      .set({ text: text }, { merge: true });
+    await setEdit(false);
+  };
 
   return (
     <>
@@ -137,14 +158,14 @@ const MessageHome = (props) => {
               <MenuItem
                 onClick={messageDelete}
                 disabled={auth.currentUser.uid !== message.uid}
-                style={{ color: "red" }}
+                style={{ color: "rgb(224, 33, 92)" }}
               >
                 メッセージを削除する
               </MenuItem>
               <MenuItem
                 onClick={messageEdit}
                 disabled={auth.currentUser.uid !== message.uid}
-                style={{ color: "green" }}
+                style={{ color: "rgb(27, 196, 125)" }}
               >
                 メッセージを編集する
               </MenuItem>
@@ -154,35 +175,55 @@ const MessageHome = (props) => {
         </div>
         {message.image && (
           <img src={message.image} alt="画像" className={classes.img} />
-        )} 
+        )}
         {edit ? (
           <>
-                  <TextField
-                  multiline
-                  id="js-text"
-                  autoFocus
-                  fullWidth
-                  maxRows={20}
-                  placeholder={'メッセージを作成'}
-                  className={classes.edit_textField}
-                  value={text}
-                  name="textarea"
-                  onChange={(e) => setText(e.target.value)}
-                />
-                <button onClick={handleEditCancel}>キャンセル</button>
-                <button onClick={handleEditUpdate}>編集を保存する</button>
-                </>
-        ) : (
-            <p
-              className={classes.message_text}
-              dangerouslySetInnerHTML={{
-                __html: filterXSS(htmlText, {
-                  whiteList: {
-                    a: ["href", "title", "target", "rel"],
-                  },
-                }),
-              }}
+            <TextField
+              multiline
+              id="js-text"
+              autoFocus
+              fullWidth
+              inputRef={editRef}
+              maxRows={20}
+              placeholder={"メッセージを作成"}
+              className={classes.edit_textField}
+              value={text}
+              name="textarea"
+              onChange={(e) => setText(e.target.value)}
             />
+            <button
+              onClick={handleEditCancel}
+              className={classes.cancel_button}
+            >
+              {" "}
+              キャンセル
+            </button>
+            <button
+              onClick={handleEditUpdate}
+              className={classes.update_button}
+            >
+              編集を保存する
+            </button>
+              <button onClick={handleShowEmojis} className={classes.emojiIcon_button}>
+                <TagFacesIcon color="primary" className={classes.emojiIcon} />
+              </button>
+            <div
+              className={`${classes.emoji} ${!showEmojis && classes.hidden}`}
+            >
+              <Emoji pickEmoji={pickEmoji} />
+            </div>
+          </>
+        ) : (
+          <p
+            className={classes.message_text}
+            dangerouslySetInnerHTML={{
+              __html: filterXSS(htmlText, {
+                whiteList: {
+                  a: ["href", "title", "target", "rel"],
+                },
+              }),
+            }}
+          />
         )}
         <UserDetailModal
           handleClose={handleModalClose}
