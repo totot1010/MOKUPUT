@@ -31,7 +31,7 @@ const HomeForm = (props) => {
   };
 
   const handleShowEmojis = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     inputRef.current.focus();
 
     setShowEmojis(!showEmojis);
@@ -58,10 +58,11 @@ const HomeForm = (props) => {
             />
           </div>
           <div className={classes.emojiIcon_wrapper}>
-
-            <button onClick={handleShowEmojis}>
-              <TagFacesIcon color="primary" className={classes.emojiIcon} />
-            </button>
+            <TagFacesIcon
+              color="primary"
+              className={classes.emojiIcon}
+              onClick={handleShowEmojis}
+            />
           </div>
           <div className={classes.input_container}>
             <TextField
