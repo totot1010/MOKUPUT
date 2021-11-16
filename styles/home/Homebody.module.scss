@@ -128,6 +128,7 @@
 
 .message_container {
   padding: 16px;
+  padding-bottom: 8px;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   &:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -194,24 +195,21 @@
     color: white;
   }
 
+  .emojiIcon_button {
+    position: relative;
+    top: 12px;
+    left: 12px;
+    background-color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 0;
+  }
 
-    .emojiIcon_button {
-      position: relative;
-      top: 12px;
-      left: 12px;
-      background-color:white;
-      border-radius: 8px;
-      border: none;
-      padding:0;
-    }
-
-    .emojiIcon {
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-    }
-
-  
+  .emojiIcon {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+  }
 
   .message_text {
     display: block;
@@ -224,6 +222,30 @@
       color: rgb(93, 134, 240);
     }
   }
+
+  .sub_function_wrapper {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+
+    div:first-child {
+      flex: 1;
+      text-align: center;
+    }
+
+    div:last-child {
+      flex: 1;
+      text-align: center;
+    }
+
+    .message_icon {
+      cursor: pointer;
+    }
+
+    .good_icon {
+      cursor: pointer;
+    }
+  }
 }
 
 .emoji {
@@ -233,7 +255,6 @@
   height: 320px;
   bottom: 120px;
   right: 20px;
-
 }
 
 .hidden {

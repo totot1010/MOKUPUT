@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import classes from "../../styles/home/Homebody.module.scss";
 import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
-import EmojiPicker from "../EmojiPicker";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ComputerIcon from '@mui/icons-material/Computer';
@@ -22,6 +20,7 @@ const Homebody = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
+  const [replyMessage, setReplyMessage] = useState(false)
   const router = useRouter();
   const { users, getUsers } = useAllUsers();
 
@@ -31,7 +30,7 @@ const Homebody = () => {
   const user1 = auth.currentUser.uid;
 
   useEffect(() => {
-    const f = async () => {
+    const getFirestore = async () => {
       await db.collection("channels").onSnapshot((snapshot) => {
         const names = [];
         snapshot.forEach((doc) => {
@@ -61,7 +60,7 @@ const Homebody = () => {
           setUser({ id: user1, ...snapshot.data() });
         });
     };
-    f();
+    getFirestore();
   }, []);
 
   //チャンネルを追加した時の挙動
