@@ -1,6 +1,17 @@
+.home_back_wrapper {
+  display: flex;
+  justify-content: center;
+
+  .back_home_icon {
+    font-size: 48px;
+    &:hover {
+      background: rgba(25, 118, 210, 0.2);
+      border-radius: 50%;
+    }
+  }
+}
+
 .reply_home_container {
-  // display:flex;
-  // justify-content: center;
   width: 80%;
   margin: 0 auto;
   overflow-y: auto;
@@ -15,6 +26,9 @@
 .message_body {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 36px 24px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
 }
 
 .message_header {
@@ -46,19 +60,20 @@
   margin-top: 12px;
 }
 
-.reply_container {
-  margin-top: 20px;
-}
-
 //Reply
 
 .reply_wrapper {
-  margin-top: 25px;
+  &:first-child {
+    margin-top: 16px;
+  }
 
   .reply_container {
-    margin-top: 16px;
     padding: 16px;
     border: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
 
     .reply_header {
       display: flex;

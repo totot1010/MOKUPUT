@@ -10,6 +10,7 @@ import { ja } from "date-fns/locale";
 
 import { useRouter } from "next/router";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Avatar from "@mui/material/Avatar";
 
 const ReplyMessage = () => {
@@ -86,7 +87,9 @@ const ReplyMessage = () => {
     <>
       <div className={classes.home_back_wrapper}>
         <Link href={`/home/${channelId}`}>
-          <a>戻る</a>
+          <a>
+            <ArrowBackIcon className={classes.back_home_icon} />
+          </a>
         </Link>
       </div>
       <div className={classes.reply_home_container}>
@@ -112,11 +115,11 @@ const ReplyMessage = () => {
             {mainMessage && mainMessage.text}
           </h1>
         </div>
-        <div className={classes.reply_wrapper}>
+        <div>
           {replies &&
             replies.map((reply) => {
               return (
-                <div key={reply.documentId}>
+                <div key={reply.documentId} className={classes.reply_wrapper}>
                   <Reply reply={reply} />
                 </div>
               );
