@@ -29,9 +29,12 @@ const MessageHome = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState(message.text);
+  const [countMessage, setCountMessage] = useState();
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId = router.query.channelId;
+  const messageId = router.query.messageId;
+  console.log(countMessage);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,6 +46,21 @@ const MessageHome = (props) => {
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
   }, [message.image, message.text]);
+
+  useEffect(() => {
+    db.collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .doc(message.documentId)
+      .collection("reply")
+      .onSnapshot((querySnapshot) => {
+        const counts = [];
+        querySnapshot.forEach((doc) => {
+          counts.push({ ...doc.data() });
+        });
+        setCountMessage(counts);
+      });
+  }, []);
 
   const pickEmoji = (e, { emoji }) => {
     const ref = editRef.current;
@@ -252,10 +270,15 @@ const MessageHome = (props) => {
                   className={classes.message_icon}
                   onClick={handleReplyPage}
                 />
+                <span>
+                  {countMessage && countMessage.length === 0
+                    ? ""
+                    : countMessage && countMessage.length}
+                </span>
               </div>
               <div>
                 <FavoriteBorderIcon
-                  className={classes.good_icon}
+                  className={classes.like_icon}
                   onClick={click}
                 />
               </div>

@@ -240,10 +240,23 @@
 
     .message_icon {
       cursor: pointer;
+      &:hover {
+        color: rgb(52, 165, 240);
+      }
     }
 
-    .good_icon {
+    span {
+      position: relative;
+      top: -8px;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 16px;
+    }
+
+    .like_icon {
       cursor: pointer;
+      &:hover {
+        color: red;
+      }
     }
   }
 }
