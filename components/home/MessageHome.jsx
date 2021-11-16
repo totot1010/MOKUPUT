@@ -3,18 +3,22 @@ import anchorme from "anchorme";
 import { db, auth } from "../../firebase/firebase";
 import { filterXSS } from "xss";
 import { useRouter } from "next/router";
+import Router from "next/router";
 import Emoji from "../../emojis/emojisComponent";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
 import Avatar from "@mui/material/Avatar";
 import UserDetailModal from "../organism/user/UserDetailModal";
-import { useAllUsers } from "../../hooks/useAllUsers";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
+import MessageIcon from "@mui/icons-material/Message";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const MessageHome = (props) => {
   const { message } = props;
@@ -120,6 +124,14 @@ const MessageHome = (props) => {
     await setEdit(false);
   };
 
+  const click = () => {
+    alert("");
+  };
+
+  const handleReplyPage = () => {
+    Router.push(`/home/${channelId}/${message.documentId}`);
+  };
+
   return (
     <>
       <div className={classes.message_container} ref={scrollRef}>
@@ -134,7 +146,13 @@ const MessageHome = (props) => {
           </ListItemAvatar>
           <h4>
             {message.name}
-            <span>{new Date(message.createdAt?.toDate()).toString()}</span>
+            <span>
+              {format(
+                new Date(message.createdAt?.toDate()),
+                "yyyy年MM月dd日 H:mm",
+                { locale: ja }
+              )}
+            </span>
           </h4>
           <div>
             <Button
@@ -204,9 +222,12 @@ const MessageHome = (props) => {
             >
               編集を保存する
             </button>
-              <button onClick={handleShowEmojis} className={classes.emojiIcon_button}>
-                <TagFacesIcon color="primary" className={classes.emojiIcon} />
-              </button>
+            <button
+              onClick={handleShowEmojis}
+              className={classes.emojiIcon_button}
+            >
+              <TagFacesIcon color="primary" className={classes.emojiIcon} />
+            </button>
             <div
               className={`${classes.emoji} ${!showEmojis && classes.hidden}`}
             >
@@ -214,16 +235,32 @@ const MessageHome = (props) => {
             </div>
           </>
         ) : (
-          <p
-            className={classes.message_text}
-            dangerouslySetInnerHTML={{
-              __html: filterXSS(htmlText, {
-                whiteList: {
-                  a: ["href", "title", "target", "rel"],
-                },
-              }),
-            }}
-          />
+          <>
+            <p
+              className={classes.message_text}
+              dangerouslySetInnerHTML={{
+                __html: filterXSS(htmlText, {
+                  whiteList: {
+                    a: ["href", "title", "target", "rel"],
+                  },
+                }),
+              }}
+            />
+            <div className={classes.sub_function_wrapper}>
+              <div>
+                <MessageIcon
+                  className={classes.message_icon}
+                  onClick={handleReplyPage}
+                />
+              </div>
+              <div>
+                <FavoriteBorderIcon
+                  className={classes.good_icon}
+                  onClick={click}
+                />
+              </div>
+            </div>
+          </>
         )}
         <UserDetailModal
           handleClose={handleModalClose}
