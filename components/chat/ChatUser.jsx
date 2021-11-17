@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from "react";
-import {db} from '../firebase/firebase'
-import classes from "../styles/components/ChatUser.module.scss";
+import React, { useState, useEffect } from "react";
+import { db } from "../../firebase/firebase";
+import classes from "../../styles/chat/ChatUser.module.scss";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
-
 
 const UserOnline = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -44,22 +43,27 @@ const UserOffline = styled(Badge)(() => ({
 
 const ChatUser = (props) => {
   const { user, selectedUser, user1, chatUser } = props;
-  const [data, setData] = useState('')
+  const [data, setData] = useState("");
 
-  const user2 = user.uid
+  const user2 = user.uid;
 
   useEffect(() => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-    const unsub = db.collection('lastMessage').doc(id).onSnapshot((doc) => {
-      setData(doc.data())
-    })
-    return () => unsub()
-  },[])
-
+    const unsub = db
+      .collection("lastMessage")
+      .doc(id)
+      .onSnapshot((doc) => {
+        setData(doc.data());
+      });
+    return () => unsub();
+  }, []);
 
   return (
-    <div className={`${classes.user_container} ${chatUser.name === user.name && classes.selected_user }`} 
-    onClick={() => selectedUser(user)}
+    <div
+      className={`${classes.user_container} ${
+        chatUser.name === user.name && classes.selected_user
+      }`}
+      onClick={() => selectedUser(user)}
     >
       <div className={classes.user_info}>
         <div className={classes.user_detail}>
@@ -81,13 +85,12 @@ const ChatUser = (props) => {
             </UserOffline>
           )}
           <div>
-          <h4 className={classes.text}>{user.name}</h4>
+            <h4 className={classes.text}>{user.name}</h4>
           </div>
           <br />
         </div>
       </div>
-          {data && <p className={classes.lastMessage}>
-            {data.text}</p>}
+      {data && <p className={classes.lastMessage}>{data.text}</p>}
     </div>
   );
 };

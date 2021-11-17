@@ -2,16 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { db, auth, storage } from "../../../firebase/firebase";
 import firebase from "firebase/app";
 import { AuthContext } from "../../../context/auth";
-import {useRouter} from 'next/router'
-import Router from 'next/router'
-import Link from 'next/link'
-import ChatUser from "../../../components/ChatUser";
-import DirectChatForm from "../../../components/MessageForm/DirectChatForm";
-import Message from "../../../components/Message";
-import classes from "../../../styles/directUser.module.scss";
+import { useRouter } from "next/router";
+import Router from "next/router";
+import Link from "next/link";
+import ChatUser from "../../../components/chat/ChatUser";
+import DirectChatForm from "../../../components/chat/DirectChatForm";
+import Message from "../../../components/chat/Message";
+import classes from "../../../styles/chat/directUser.module.scss";
 import Box from "@mui/material/Box";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const directChat = () => {
   const [users, setUsers] = useState([]);
@@ -19,10 +18,10 @@ const directChat = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
-  const [chatId , setChatId] = useState()
+  const [chatId, setChatId] = useState();
   const { user } = useContext(AuthContext);
-  const router = useRouter()
-  const id = router.query.id
+  const router = useRouter();
+  const id = router.query.id;
 
   const user1 = auth.currentUser.uid;
 
@@ -36,50 +35,49 @@ const directChat = () => {
   useEffect(() => {
     const f = async () => {
       //idでqueryがまだ利用できない時に処理される
-      if(!router.isReady) return ;
+      if (!router.isReady) return;
       //idでqueryが利用可能になってから処理される
       if (chatId) {
         //firestoreから自身のチャットユーザーを取得
         await db
-        .collection("users")
-        .doc(user1)
-        .collection('chatUser')
-        .onSnapshot((querySnapshot) => {
-          const users = [];
-          querySnapshot.forEach((doc) => {
-            users.push(doc.data());
+          .collection("users")
+          .doc(user1)
+          .collection("chatUser")
+          .onSnapshot((querySnapshot) => {
+            const users = [];
+            querySnapshot.forEach((doc) => {
+              users.push(doc.data());
+            });
+            setUsers(users);
           });
-          setUsers(users);
-        });
-        
+
         /**use1は自分のid, chatIdはチャットする相手のid*/
-      const newId = user1 > chatId ? `${user1 + chatId}` : `${newId + chatId}`;
-      
-      /**チャットしている相手とのやり取りを取得する処理して表示させる */
-      const messagesRef = await db
-      .collection("messages")
-        .doc(newId)
-        .collection("chat");
-      messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
-        const texts = [];
-        querySnapshot.forEach((doc) => {
-          texts.push(doc.data());
+        const newId =
+          user1 > chatId ? `${user1 + chatId}` : `${newId + chatId}`;
+
+        /**チャットしている相手とのやり取りを取得する処理して表示させる */
+        const messagesRef = await db
+          .collection("messages")
+          .doc(newId)
+          .collection("chat");
+        messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
+          const texts = [];
+          querySnapshot.forEach((doc) => {
+            texts.push(doc.data());
+          });
+          setMessages(texts);
         });
-        setMessages(texts);
-      });
+      }
     };
-  }
-  f()
-}, [chatId, router.isReady]);
-
-
+    f();
+  }, [chatId, router.isReady]);
 
   //ユーザーを選択した時の処理
   const selectedUser = async (user) => {
     setChatUser(user);
     /**チャットする相手のid */
     const user2 = user.uid;
-    
+
     /**use1は自分のid, user2はチャットする相手のid*/
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
@@ -96,7 +94,7 @@ const directChat = () => {
       setMessages(texts);
     });
 
-    Router.push(`/chat/${user1}/${user2}`)
+    Router.push(`/chat/${user1}/${user2}`);
   };
 
   //画像とテキストを送信した時の挙動
@@ -108,8 +106,7 @@ const directChat = () => {
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
     /**送信時に画像がある場合の処理 */
-    if (img)  {
-
+    if (img) {
       /**firebaseのstorageの参照を作成 */
       const storageRef = storage.ref();
 
@@ -131,18 +128,16 @@ const directChat = () => {
         });
 
         /**一番最後に行われたメッセージをfirestoreに保存する */
-         db.collection("lastMessage").doc(newId).set({
+        db.collection("lastMessage").doc(newId).set({
           text,
           from: user1,
           to: id,
           createdAt: firebase.firestore.Timestamp.now(),
           media: URL,
           unread: true,
-
         });
-         setText("");
-         setImg("");
-
+        setText("");
+        setImg("");
       });
     } else {
       /**テキストがない場合の処理 */
@@ -155,7 +150,7 @@ const directChat = () => {
         createdAt: firebase.firestore.Timestamp.now(),
       });
 
-        /**一番最後に行われたメッセージをfirestoreに保存する */
+      /**一番最後に行われたメッセージをfirestoreに保存する */
       await db.collection("lastMessage").doc(newId).set({
         text,
         from: user1,
@@ -171,34 +166,38 @@ const directChat = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <div className={classes.grid_container}>
-            <div className={classes.users_container}>
-              <div style={{display: 'flex'}}>
-              <Link href='/home/eJhpxQwVn9zbq09GIZel'>
-              <a className={classes.back_wrapper}>
-            <ArrowBackIcon sx={{ fontSize: 40 }} color='primary' className={classes.back}/>
-              </a>
+          <div className={classes.users_container}>
+            <div style={{ display: "flex" }}>
+              <Link href="/home/eJhpxQwVn9zbq09GIZel">
+                <a className={classes.back_wrapper}>
+                  <ArrowBackIcon
+                    sx={{ fontSize: 40 }}
+                    color="primary"
+                    className={classes.back}
+                  />
+                </a>
               </Link>
-              </div>
-            <hr />
-              {users.map((user,index) => (
-                <ChatUser
-                  key={index}
-                  user={user}
-                  selectedUser={selectedUser}
-                  user1={user1}
-                  chatUser={chatUser}
-                />
-              ))}
             </div>
-            <div className={classes.messages_container}>
-              <div className={classes.messages}>
-                {messages.length
-                  ? messages.map((message, index) => (
-                      <Message key={index} message={message} user1={user1} />
-                    ))
-                  : null}
-              </div>
-              <div style={{width: '100%'}}>
+            <hr />
+            {users.map((user, index) => (
+              <ChatUser
+                key={index}
+                user={user}
+                selectedUser={selectedUser}
+                user1={user1}
+                chatUser={chatUser}
+              />
+            ))}
+          </div>
+          <div className={classes.messages_container}>
+            <div className={classes.messages}>
+              {messages.length
+                ? messages.map((message, index) => (
+                    <Message key={index} message={message} user1={user1} />
+                  ))
+                : null}
+            </div>
+            <div style={{ width: "100%" }}>
               <DirectChatForm
                 chatUser={chatUser}
                 handleSubmit={handleSubmit}
@@ -206,8 +205,8 @@ const directChat = () => {
                 setText={setText}
                 setImg={setImg}
               />
-              </div>
             </div>
+          </div>
         </div>
       </Box>
     </>

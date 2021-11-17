@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
+import classes from "../../styles/chat/directUser.module.scss";
 import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import Router from "next/router";
 import Link from "next/link";
-import ChatUser from "../../components/ChatUser";
-import DirectChatForm from "../../components/MessageForm/DirectChatForm";
-import Message from "../../components/Message";
-import classes from "../../styles/directUser.module.scss";
+import ChatUser from "../../components/chat/ChatUser";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -76,7 +74,7 @@ const Messages = () => {
   //ユーザーを選択した時の処理
   const selectedUser = async (user) => {
     setChatUser(user);
-    
+
     /**チャットする相手のid */
     const user2 = user.uid;
 
@@ -170,7 +168,7 @@ const Messages = () => {
         <div className={classes.grid_container}>
           <div className={classes.users_container}>
             <div style={{ display: "flex" }}>
-              <Link href="/home/kpKhBToRixlsLYjhuXPR">
+              <Link href="/home/eJhpxQwVn9zbq09GIZel">
                 <a className={classes.back_wrapper}>
                   <ArrowBackIcon
                     sx={{ fontSize: 40 }}

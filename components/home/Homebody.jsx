@@ -4,10 +4,10 @@ import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import ComputerIcon from '@mui/icons-material/Computer';
+import ComputerIcon from "@mui/icons-material/Computer";
 import AddIcon from "@mui/icons-material/Add";
 import Channel from "./Channel";
-import HomeForm from "../MessageForm/HomeForm";
+import HomeForm from "./HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ const Homebody = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
-  const [replyMessage, setReplyMessage] = useState(false)
+  const [replyMessage, setReplyMessage] = useState(false);
   const router = useRouter();
   const { users, getUsers } = useAllUsers();
 
@@ -49,7 +49,7 @@ const Homebody = () => {
       messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
         const texts = [];
         querySnapshot.forEach((doc) => {
-          texts.push({documentId: doc.id, ...doc.data()});
+          texts.push({ documentId: doc.id, ...doc.data() });
         });
         setMessages(texts);
       });
@@ -84,15 +84,13 @@ const Homebody = () => {
     messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
       const texts = [];
       querySnapshot.forEach((doc) => {
-        texts.push({...doc.data(), documentId: doc.id});
+        texts.push({ ...doc.data(), documentId: doc.id });
       });
       setMessages(texts);
     });
 
-    await channel && Router.push(`/home/${channel.documentId}`);
+    (await channel) && Router.push(`/home/${channel.documentId}`);
   };
-
-
 
   //画像とテキストを送信した時の挙動
   const handleSubmit = async (e) => {
@@ -143,7 +141,6 @@ const Homebody = () => {
     Router.push(`/chat/${user1}`);
   };
 
-
   return (
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
@@ -153,7 +150,7 @@ const Homebody = () => {
         </div>
         <hr />
         <div className={classes.addchannels_container} onClick={addChannel}>
-          <AddIcon className={classes.add_icon}/>
+          <AddIcon className={classes.add_icon} />
           <h3>チャンネルを追加</h3>
         </div>
         <hr />
@@ -172,26 +169,24 @@ const Homebody = () => {
       <div className={classes.appbody_container}>
         <div className={classes.header_container}>
           <h2>
-            <ComputerIcon className={classes.header_icon}/>
+            <ComputerIcon className={classes.header_icon} />
             {channel && channel.name}
           </h2>
         </div>
         <div className={classes.messages_wrapper}>
           {messages.length
             ? messages.map((message, index) => {
-                return (
-                    <MessageHome key={index} message={message}/>
-                );
+                return <MessageHome key={index} message={message} />;
               })
             : null}
         </div>
-          <HomeForm
-            channel={channel}
-            handleSubmit={handleSubmit}
-            text={text}
-            setText={setText}
-            setImg={setImg}
-          />
+        <HomeForm
+          channel={channel}
+          handleSubmit={handleSubmit}
+          text={text}
+          setText={setText}
+          setImg={setImg}
+        />
       </div>
     </div>
   );

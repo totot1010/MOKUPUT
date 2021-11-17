@@ -5,7 +5,6 @@ import classes from "../styles/Header.module.scss";
 
 import Camera from "./svg/Camera";
 import Delete from "./svg/Delete";
-import { useHistory } from "react-router-dom";
 
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -38,7 +37,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 import algoliasearch from "algoliasearch";
 
@@ -259,8 +258,8 @@ const Header = (props) => {
 
   //検索フォームの✖ボタンを押した時の挙動
   const searchCancel = () => {
-    setSearchText('')
-    setSearchUsers('')
+    setSearchText("");
+    setSearchUsers("");
     setOpenSearchCancel(false);
   };
 
@@ -349,8 +348,8 @@ const Header = (props) => {
           <Alert severity="success">プロフィールを更新しました!</Alert>
         </Snackbar>
       </Stack>
-      <Box sx={{ flexGrow: 1 }} >
-        <AppBar position="static" style={{height: '64px'}} >
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" style={{ height: "64px" }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -369,7 +368,7 @@ const Header = (props) => {
             >
               MOKUPUT
             </Typography>
-            <AccessTimeIcon  className={classes.access_time}/>
+            <AccessTimeIcon className={classes.access_time} />
             <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -383,9 +382,9 @@ const Header = (props) => {
               />
               {openSearchCancel && searchText ? (
                 <>
-                    <Button onClick={searchCancel} style={{padding: '0'}}>
-                      <CloseIcon style={{ color: "white" }} />
-                    </Button>
+                  <Button onClick={searchCancel} style={{ padding: "0" }}>
+                    <CloseIcon style={{ color: "white" }} />
+                  </Button>
                 </>
               ) : null}
             </Search>
