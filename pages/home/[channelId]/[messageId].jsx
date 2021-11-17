@@ -23,7 +23,6 @@ const ReplyMessage = () => {
   const messageId = router.query.messageId;
   const channelId = router.query.channelId;
   const user1 = auth.currentUser.uid;
-
   useEffect(() => {
     const getUserDetail = async () => {
       await db
