@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createRef } from "react";
+import React, { useEffect, useRef, useState, createRef, memo } from "react";
 import anchorme from "anchorme";
 import { db, auth } from "../../firebase/firebase";
 import { filterXSS } from "xss";
@@ -17,10 +17,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
-import MessageIcon from "@mui/icons-material/Message";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const MessageHome = (props) => {
+const MessageHome = memo((props) => {
   const { message } = props;
   const scrollRef = useRef();
   const editRef = createRef();
@@ -30,11 +30,15 @@ const MessageHome = (props) => {
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState(message.text);
   const [countMessage, setCountMessage] = useState();
+  const [countLike, setCountLike] = useState();
+  const [userLikes, setUserLikes] = useState();
+  const [authLike, setAuthLike] = useState();
+  const [user, setUser] = useState();
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId = router.query.channelId;
-  const messageId = router.query.messageId;
-  console.log(countMessage);
+  const user1 = auth.currentUser.uid;
+  console.log(userLikes);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,6 +64,42 @@ const MessageHome = (props) => {
         });
         setCountMessage(counts);
       });
+
+    db.collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .doc(message.documentId)
+      .collection("like")
+      .onSnapshot((querySnapshot) => {
+        const likes = [];
+        querySnapshot.forEach((doc) => {
+          likes.push({ documentId: doc.id, ...doc.data() });
+        });
+        setCountLike(likes);
+      });
+
+    db.collection("users")
+      .doc(user1)
+      .onSnapshot((snapshot) => {
+        setUser({ id: user1, ...snapshot.data() });
+      });
+
+    db.collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .doc(message.documentId)
+      .collection("like")
+      .onSnapshot((querySnapshot) => {
+        const likeUsers = [];
+        querySnapshot.forEach((doc) => {
+          likeUsers.push(doc.data().uid);
+        });
+        setUserLikes(likeUsers);
+      });
+
+    const authLikeUser =
+      userLikes && userLikes.find((userLike) => userLike === user1);
+    setAuthLike(authLikeUser);
   }, []);
 
   const pickEmoji = (e, { emoji }) => {
@@ -142,8 +182,33 @@ const MessageHome = (props) => {
     await setEdit(false);
   };
 
-  const click = () => {
-    alert("");
+  const handleLike = async () => {
+    const authLikeUser = await userLikes.find((userLike) => userLike === user1);
+
+    if (!authLikeUser) {
+      await db
+        .collection("channels")
+        .doc(channelId)
+        .collection("chat")
+        .doc(message.documentId)
+        .collection("like")
+        .add({ uid: user.uid });
+    } else {
+      await db
+        .collection("channels")
+        .doc(channelId)
+        .collection("chat")
+        .doc(message.documentId)
+        .collection("like")
+        .where("uid", "==", user1)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        });
+      setAuthLike("");
+    }
   };
 
   const handleReplyPage = () => {
@@ -266,7 +331,7 @@ const MessageHome = (props) => {
             />
             <div className={classes.sub_function_wrapper}>
               <div>
-                <MessageIcon
+                <ChatBubbleOutlineIcon
                   className={classes.message_icon}
                   onClick={handleReplyPage}
                 />
@@ -278,9 +343,18 @@ const MessageHome = (props) => {
               </div>
               <div>
                 <FavoriteBorderIcon
-                  className={classes.like_icon}
-                  onClick={click}
+                  className={`${classes.like_icon} ${
+                    userLikes &&
+                    userLikes.includes(user1) &&
+                    classes.selected_icon
+                  }`}
+                  onClick={handleLike}
                 />
+                <span>
+                  {userLikes && userLikes.length === 0
+                    ? ""
+                    : userLikes && userLikes.length}
+                </span>
               </div>
             </div>
           </>
@@ -293,6 +367,6 @@ const MessageHome = (props) => {
       </div>
     </>
   );
-};
+});
 
 export default MessageHome;
