@@ -1,8 +1,5 @@
 import React, { useState, createRef, useEffect } from "react";
 import classes from "../../styles/reply/ReplyMessage.module.scss";
-
-import UploadImg from "../svg/UploadImg";
-
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import Emoji from "../../emojis/emojisComponent";

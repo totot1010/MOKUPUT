@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { db, auth } from "../firebase/firebase";
+import { db, auth } from "../../firebase/firebase";
 import Link from "next/link";
-import classes from "../styles/SearchUser.module.scss";
+import classes from "../../styles/home/SearchUser.module.scss";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
@@ -13,22 +13,21 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { useAllUsers } from "../hooks/useAllUsers";
+import { useAllUsers } from "../../hooks/useAllUsers";
 
 const SearchUser = (props) => {
-  const { id, name, useLanguage, willLanguage, user, avatarURL, isOnline } = props;
+  const { id, name, useLanguage, willLanguage, user, avatarURL, isOnline } =
+    props;
   const { users, getUsers } = useAllUsers();
 
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState();
 
-  const user1 = auth.currentUser.uid
+  const user1 = auth.currentUser.uid;
 
   useEffect(() => {
     getUsers();
   }, []);
-
-  
 
   //ユーザーをクリックした時の挙動
   const handleOpen = ({ id, users }) => {
@@ -40,14 +39,18 @@ const SearchUser = (props) => {
   //ユーザー詳細を閉じる時の挙動
   const handleClose = useCallback(() => setOpen(false), []);
 
-
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
-  const firestoreAdd = async ({id, name, avatarURL, isOnline}) => {
-    console.log(id)
+  const firestoreAdd = async ({ id, name, avatarURL, isOnline }) => {
+    console.log(id);
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
-    await db.collection("users").doc(user1).collection('chatUser').doc(id).set({uid: id, name, avatarURL, isOnline}, {merge: true})
-  }
+    await db
+      .collection("users")
+      .doc(user1)
+      .collection("chatUser")
+      .doc(id)
+      .set({ uid: id, name, avatarURL, isOnline }, { merge: true });
+  };
 
   return (
     <>
@@ -67,17 +70,21 @@ const SearchUser = (props) => {
             primary={name}
             secondary={
               <>
-                  {useLanguage.map((language, index) => {
-                    return <span className={classes.language} key={index}>{language}&#44;&nbsp;</span>;
-                  })}
-                  <br />
-                  {willLanguage.map((language, index) => {
-                    return (
-                      <span className={classes.language} key={index}>
-                        {language}&#44;&nbsp;
-                      </span>
-                    );
-                  })}
+                {useLanguage.map((language, index) => {
+                  return (
+                    <span className={classes.language} key={index}>
+                      {language}&#44;&nbsp;
+                    </span>
+                  );
+                })}
+                <br />
+                {willLanguage.map((language, index) => {
+                  return (
+                    <span className={classes.language} key={index}>
+                      {language}&#44;&nbsp;
+                    </span>
+                  );
+                })}
               </>
             }
           />
@@ -88,7 +95,13 @@ const SearchUser = (props) => {
             <Typography variant="h6" className={classes.title}>
               ユーザー詳細
               <Link href={`/chat/messages/${id}`}>
-                <Button className={classes.message_button} variant="outlined" onClick={() => firestoreAdd({id, name, avatarURL, isOnline})}>
+                <Button
+                  className={classes.message_button}
+                  variant="outlined"
+                  onClick={() =>
+                    firestoreAdd({ id, name, avatarURL, isOnline })
+                  }
+                >
                   メッセージを送る
                 </Button>
               </Link>

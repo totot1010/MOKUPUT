@@ -23,7 +23,11 @@
     "functions/index.js",
     "components/SearchUsers.js",
     "pages/home.jsx",
-    "pages/_app.jsx"
-, "components/organism/user/UserDetailModal.js", "pages/signup.jsx", "pages/signin.jsx", "components/Header.jsx"  ],
+    "pages/_app.jsx",
+    "components/organism/user/UserDetailModal.jsx",
+    "pages/signup.jsx",
+    "pages/signin.jsx",
+    "components/Header.jsx"
+  ],
   "exclude": ["node_modules"]
 }

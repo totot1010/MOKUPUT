@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../../styles/MessageForm/DirectChatForm.module.scss";
+import classes from "../../styles/chat/DirectChatForm.module.scss";
 import UploadImg from "../svg/UploadImg";
 
 import SendIcon from "@mui/icons-material/Send";
@@ -10,11 +10,11 @@ const DirectChatForm = (props) => {
 
   //handleSubmitが何回もレンダリングされている。
   const handleDown = (e) => {
-      if (e.keyCode == 13 && e.ctrlKey) {
-        document.getElementById("submit").click();
-        console.log("a");
-        return;
-      }
+    if (e.keyCode == 13 && e.ctrlKey) {
+      document.getElementById("submit").click();
+      console.log("a");
+      return;
+    }
   };
 
   return (
@@ -51,8 +51,8 @@ const DirectChatForm = (props) => {
             </button>
           </div>
         </form>
-              <small className={classes.subText}>Enterで改行</small>
-              <small className={classes.subText2}>Ctrl+Enterで送信</small>
+        <small className={classes.subText}>Enterで改行</small>
+        <small className={classes.subText2}>Ctrl+Enterで送信</small>
       </div>
     </>
   );

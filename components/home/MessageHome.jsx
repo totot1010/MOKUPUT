@@ -11,7 +11,7 @@ import { ja } from "date-fns/locale";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
 import Avatar from "@mui/material/Avatar";
-import UserDetailModal from "../organism/user/UserDetailModal";
+import UserDetailModal from "./UserDetailModal";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -38,7 +38,6 @@ const MessageHome = memo((props) => {
   const router = useRouter();
   const channelId = router.query.channelId;
   const user1 = auth.currentUser.uid;
-  console.log(userLikes);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

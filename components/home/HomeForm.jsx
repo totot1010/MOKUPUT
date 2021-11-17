@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
-import classes from "../../styles/MessageForm/HomeForm.module.scss";
+import classes from "../../styles/home/HomeForm.module.scss";
 import UploadImg from "../svg/UploadImg";
 
 import SendIcon from "@mui/icons-material/Send";

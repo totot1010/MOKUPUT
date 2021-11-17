@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Moment from "react-moment";
-import classes from "../styles/Message.module.scss";
+import classes from "../../styles/chat/Message.module.scss";
 
 const Message = (props) => {
   const { message, user1 } = props;
