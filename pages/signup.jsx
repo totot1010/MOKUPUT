@@ -3,7 +3,7 @@ import { db, signupWithEmailAndPassword } from "../firebase/firebase";
 import firebase from "firebase/app";
 import Link from "next/link";
 
-import classes from "../styles/signup.module.scss";
+import classes from "../styles/signup/signup.module.scss";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
@@ -19,13 +19,13 @@ import Router from "next/router";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [datetime, setDatetime] = useState("");
   const [values, setValues] = useState({
     amount: "",
     password: "",
     showPassword: false,
   });
 
+  //クリックすることで打ったパスワードが表示される
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -33,30 +33,35 @@ const Signup = () => {
     });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  //マウスクリック時のデフォルトの動作をキャンセル
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
-  //formタグのEnterを押した時の挙動
-  const signup = async (e) => {
+  //formタグのEnterを押した時の処理
+  const handleSignup = async (e) => {
+    //サインアップが成功した場合
     try {
       e.preventDefault();
-      setDatetime(e.currentTarget.value);
+
+      //サインアップしたユーザーにメールを送る
       const user = await signupWithEmailAndPassword(email, password);
       const newUserId = user.user.uid;
       await firestoreAdd(newUserId);
+      //サインアップしたユーザーが入れば、ユーザー詳細ページに飛ばす
       (await user) && Router.push(`/signup/${newUserId}`);
 
       setEmail("");
       setPassword("");
     } catch {
-      alert("もう一度メールアドレスとパスワードを入力してください。");
+      //サインアップが失敗した場合
 
       setEmail("");
       setPassword("");
     }
   };
 
+  //サインアップ時にfirestoreにデータを保存する処理
   const firestoreAdd = (id) => {
     db.collection("users").doc(id).set({
       email: email,
@@ -70,7 +75,7 @@ const Signup = () => {
       <h1 className={classes.app_title}>ようこそ&nbsp;MOKUPUT&nbsp;へ</h1>
       <Box className={classes.form_wrapper}>
         <h2>切磋琢磨できる仲間を見つけて、一緒に高め合おう！</h2>
-        <form onSubmit={signup}>
+        <form onSubmit={handleSignup}>
           <div className={classes.form}>
             <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
