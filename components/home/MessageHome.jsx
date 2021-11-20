@@ -331,7 +331,9 @@ const MessageHome = memo((props) => {
             <div className={classes.sub_function_wrapper}>
               <div>
                 <ChatBubbleOutlineIcon
-                  className={classes.message_icon}
+                  className={`${classes.message_icon} ${
+                    countMessage.length !== 0 && classes.count_message_icon
+                  }`}
                   onClick={handleReplyPage}
                 />
                 <span>

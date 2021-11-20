@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { auth, db } from "../firebase/firebase";
 import Header from "../components/Header";
 import Homebody from "../components/home/Homebody";
-import SearchUsers from "../components/SearchUsers";
-import MessageForm from "../components/home/Homebody/HomeForm";
+import SearchUsers from "../components/home/SearchUsers";
 
 import List from "@mui/material/List";
 
-import classes from "../styles/home.module.scss";
+import classes from "../styles/home/home.module.scss";
 import algoliasearch from "algoliasearch";
 
 const ALGOLIA_INDEX_NAME = "study-app";
