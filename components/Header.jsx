@@ -516,7 +516,10 @@ const Header = (props) => {
                 {names.map((name) => (
                   <MenuItem key={name} value={name}>
                     <Checkbox
-                      checked={selectedUseLanguage.indexOf(name) > -1}
+                      checked={
+                        selectedUseLanguage &&
+                        selectedUseLanguage.indexOf(name) > -1
+                      }
                     />
                     <ListItemText primary={name} />
                   </MenuItem>
@@ -537,7 +540,10 @@ const Header = (props) => {
                 {names.map((name) => (
                   <MenuItem key={name} value={name}>
                     <Checkbox
-                      checked={selectedWillLanguage.indexOf(name) > -1}
+                      checked={
+                        selectedWillLanguage &&
+                        selectedWillLanguage.indexOf(name) > -1
+                      }
                     />
                     <ListItemText primary={name} />
                   </MenuItem>
