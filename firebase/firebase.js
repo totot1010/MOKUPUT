@@ -2,7 +2,7 @@ import "firebase/app";
 import "firebase/firestore";
 import fb from "firebase/app";
 import "firebase/auth";
-import "firebase/storage"
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,20 +21,12 @@ export const firestore = firebase.firestore();
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
-export const storage = firebase.storage()
+export const storage = firebase.storage();
 
 export const signupWithEmailAndPassword = async (email, password) => {
-  try {
-    const user = await auth.createUserWithEmailAndPassword(email, password);
+  const user = await auth.createUserWithEmailAndPassword(email, password);
 
-    // await auth.currentUser.sendEmailVerification();
-
-    alert("登録成功");
-    return user;
-  } catch (error) {
-    alert("登録失敗");
-    console.log(error);
-  }
+  await auth.currentUser.sendEmailVerification();
 };
 
 export const signinWithEmailAndPassword = async (email, password) => {

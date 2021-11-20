@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db, signupWithEmailAndPassword } from "../firebase/firebase";
 import firebase from "firebase/app";
+import Link from "next/link";
 
 import classes from "../styles/signup.module.scss";
 import Box from "@mui/material/Box";
@@ -38,15 +39,22 @@ const Signup = () => {
 
   //formタグのEnterを押した時の挙動
   const signup = async (e) => {
-    e.preventDefault();
-    setDatetime(e.currentTarget.value);
-    const user = await signupWithEmailAndPassword(email, password);
-    const newUserId = user.user.uid;
-    await firestoreAdd(newUserId);
-    (await user) && Router.push(`/signup/${newUserId}`);
+    try {
+      e.preventDefault();
+      setDatetime(e.currentTarget.value);
+      const user = await signupWithEmailAndPassword(email, password);
+      const newUserId = user.user.uid;
+      await firestoreAdd(newUserId);
+      (await user) && Router.push(`/signup/${newUserId}`);
 
-    setEmail("");
-    setPassword("");
+      setEmail("");
+      setPassword("");
+    } catch {
+      alert("もう一度メールアドレスとパスワードを入力してください。");
+
+      setEmail("");
+      setPassword("");
+    }
   };
 
   const firestoreAdd = (id) => {
@@ -59,59 +67,59 @@ const Signup = () => {
 
   return (
     <>
-      <h1>MOKUMOKUAPP</h1>
-      <Box
-        className={classes.form_wrapper}
-      >
+      <h1 className={classes.app_title}>ようこそ&nbsp;MOKUPUT&nbsp;へ</h1>
+      <Box className={classes.form_wrapper}>
         <h2>切磋琢磨できる仲間を見つけて、一緒に高め合おう！</h2>
         <form onSubmit={signup}>
-          <div  className={classes.form}>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              メールアドレス
-            </InputLabel>
-            <OutlinedInput
-              className={classes.input_mail}
-              id="outlined-adornment-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              label="メールアドレス"
-            />
-          </FormControl>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              パスワード      
-            </InputLabel>
-            <OutlinedInput
-              className={classes.input_password}
-              id="outlined-adornment-password"
-              type={values.showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="パスワード"
-            />
-          </FormControl>
+          <div className={classes.form}>
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                メールアドレス
+              </InputLabel>
+              <OutlinedInput
+                className={classes.input_mail}
+                id="outlined-adornment-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                label="メールアドレス"
+              />
+            </FormControl>
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                パスワード
+              </InputLabel>
+              <OutlinedInput
+                className={classes.input_password}
+                id="outlined-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="パスワード"
+              />
+            </FormControl>
           </div>
-          <div  className={classes.button_wrapper}>
+          <div className={classes.button_wrapper}>
             <Button className={classes.button} variant="outlined" type="submit">
               登録する
             </Button>
           </div>
         </form>
       </Box>
-      <footer className={classes.footer}></footer>
+      <Link href="/signin">
+        <a className={classes.signin}>サインインへ</a>
+      </Link>
     </>
   );
 };
