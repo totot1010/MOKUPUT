@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import classes from "../../styles/home/HomeForm.module.scss";
 import UploadImg from "../svg/UploadImg";
 

@@ -1,4 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import anchorme from "anchorme";
+import { filterXSS } from "xss";
+
 import Moment from "react-moment";
 import classes from "../../styles/chat/Message.module.scss";
 
@@ -9,6 +12,28 @@ const Message = (props) => {
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
   }, [message]);
+
+  //テキストに含まれているURLの文字列をaタグに変換
+  const htmlText = anchorme({
+    input: message.text,
+    options: {
+      //https://がついていないリンクも変換してくれる
+      exclude: (string) => {
+        if (!string.startsWith("https://")) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      attributes: () => {
+        const attributes = {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        };
+        return attributes;
+      },
+    },
+  });
 
   return (
     <>
@@ -28,7 +53,16 @@ const Message = (props) => {
               {message.media ? (
                 <img src={message.media} alt={message.text} />
               ) : null}
-              <span className={classes.span}>{message.text}</span>
+              <span
+                className={classes.span}
+                dangerouslySetInnerHTML={{
+                  __html: filterXSS(htmlText, {
+                    whiteList: {
+                      a: ["href", "title", "target", "rel"],
+                    },
+                  }),
+                }}
+              />
               <br />
             </p>
             <div
@@ -50,8 +84,16 @@ const Message = (props) => {
                 message.from === user1 ? classes.me : classes.friend
               }`}
             >
-              <span className={classes.span}>{message.text}</span>
-              <br />
+              <span
+                className={classes.span}
+                dangerouslySetInnerHTML={{
+                  __html: filterXSS(htmlText, {
+                    whiteList: {
+                      a: ["href", "title", "target", "rel"],
+                    },
+                  }),
+                }}
+              />
             </p>
             <div
               className={`${
