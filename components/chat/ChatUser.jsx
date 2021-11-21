@@ -86,6 +86,9 @@ const ChatUser = (props) => {
           )}
           <div>
             <h4 className={classes.text}>{user.name}</h4>
+            {data?.from !== user1 && data?.unread && (
+              <small className={classes.unread}>New</small>
+            )}
           </div>
           <br />
         </div>

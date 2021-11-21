@@ -89,10 +89,20 @@ const directChat = () => {
     messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
       const texts = [];
       querySnapshot.forEach((doc) => {
-        texts.push(doc.data());
+        texts.push({ documentId: doc.id, ...doc.data() });
       });
       setMessages(texts);
     });
+
+    const docSnap = await db.collection("lastMessage").doc(id).get();
+    if (docSnap.data()?.from !== user1) {
+      await db.collection("lastMessage").doc(id).set(
+        {
+          unread: false,
+        },
+        { merge: true }
+      );
+    }
 
     Router.push(`/chat/${user1}/${user2}`);
   };
