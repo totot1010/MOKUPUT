@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { db } from "../../firebase/firebase";
 import anchorme from "anchorme";
 import { filterXSS } from "xss";
 
@@ -35,6 +36,26 @@ const Message = (props) => {
     },
   });
 
+  const handleMessageDelete = async () => {
+    if (message.from === user1) {
+      const result = window.confirm("クリックしたメッセージを削除しますか？");
+
+      const id =
+        user1 > message?.to
+          ? `${user1 + message?.to}`
+          : `${message?.to + user1}`;
+
+      if (result) {
+        await db
+          .collection("messages")
+          .doc(id)
+          .collection("chat")
+          .doc(message.documentId)
+          .delete();
+      }
+    }
+  };
+
   return (
     <>
       <div
@@ -42,6 +63,7 @@ const Message = (props) => {
           message && message.from === user1 ? classes.own : ""
         }`}
         ref={scrollRef}
+        onClick={handleMessageDelete}
       >
         {message.media ? (
           <>
