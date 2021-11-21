@@ -1,5 +1,5 @@
 .message_wrapper {
-  margin-top: 5px;
+  margin-top: 10px;
   padding: 0px 5px;
 }
 
@@ -11,7 +11,7 @@
 .message_wrapper p {
   padding: 10px 10px 10px;
   display: inline-block;
-  max-width: 30%;
+  max-width: 70%;
   text-align: left;
   border-radius: 20px;
   white-space: pre-wrap;
@@ -19,9 +19,9 @@
 }
 
 .message_wrapper2 {
-padding: 10px 10px 10px;
-margin:100px;
-} 
+  padding: 10px 10px 10px;
+  margin: 100px;
+}
 
 .message_wrapper span {
   display: inline-block;
@@ -41,24 +41,29 @@ margin:100px;
   text-align: right;
   opacity: 0.6;
   margin-bottom: 10px;
-  
 }
 .moment_containerYou {
   text-align: left;
   opacity: 0.6;
   margin-bottom: 10px;
-  
 }
 
 .me {
-  background-color: #0084ff;
-  color: white;
-  margin:0;
+  background-color: rgba(25, 118, 210, 0.3);
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+
+  a {
+    color: white;
+  }
 }
 
 .friend {
-  background-color: #333;
-  color: white;
-  margin:0;
-}
+  background-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
 
+  a {
+    color: white;
+  }
+}
