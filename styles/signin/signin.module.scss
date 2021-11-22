@@ -1,8 +1,6 @@
 .app_title1 {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 84px;
+  margin-bottom: 36px;
   text-align: center;
   line-height: 1.2;
   font-weight: 700;
@@ -11,14 +9,11 @@
   padding: 16px 24px;
   border-radius: 16px;
   font-family: Lato, sans-serif;
-  animation: 3s ease-in 1s infinite reverse both running slidein;
+  height: 100%;
 }
 
 .form_wrapper {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0 auto 16px;
   background: url("../../img/desk-1220052_960_720.webp") no-repeat;
   height: 400px;
   width: 80%;
@@ -64,12 +59,9 @@
   }
 }
 
-.signin {
-  position: absolute;
-  top: 60%;
-  left: 16%;
+.signup {
   padding: 8px 16px;
-  margin-top: 10px;
+  margin-left: 60px;
   color: white;
   border-radius: 8px;
   background: rgba(45, 140, 255, 0.6);
