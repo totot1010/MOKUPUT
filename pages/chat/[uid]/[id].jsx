@@ -11,6 +11,7 @@ import Message from "../../../components/chat/Message";
 import classes from "../../../styles/chat/directUser.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { connectGeoSearch } from "react-instantsearch-core";
 
 const directChat = () => {
   const [users, setUsers] = useState([]);
@@ -19,6 +20,7 @@ const directChat = () => {
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState();
+  const [authUser, setAuthUser] = useState();
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const id = router.query.id;
@@ -68,6 +70,12 @@ const directChat = () => {
           setMessages(texts);
         });
       }
+      await db
+        .collection("users")
+        .doc(user1)
+        .onSnapshot((snapshot) => {
+          setAuthUser({ id: user1, ...snapshot.data() });
+        });
     };
     f();
   }, [chatId, router.isReady]);
@@ -80,6 +88,7 @@ const directChat = () => {
 
     /**use1は自分のid, user2はチャットする相手のid*/
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    // console.log(id);
 
     /**チャットしている相手とのやり取りを取得する処理して表示させる */
     const messagesRef = await db
@@ -114,6 +123,18 @@ const directChat = () => {
 
     /**use1は自分のid, idはチャットする相手のid*/
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
+
+    await db
+      .collection("users")
+      .doc(id)
+      .collection("chatUser")
+      .doc(authUser.uid)
+      .set({
+        name: authUser.name,
+        isOnline: authUser.isOnline,
+        avatarURL: authUser.avatarURL,
+        uid: authUser.uid,
+      });
 
     /**送信時に画像がある場合の処理 */
     if (img) {
