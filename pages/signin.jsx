@@ -99,7 +99,7 @@ const Signin = () => {
         </form>
       </Box>
       <Link href="/signup">
-        <a className={classes.signin}>サインアップへ</a>
+        <a className={classes.signup}>サインアップへ</a>
       </Link>
     </>
   );
