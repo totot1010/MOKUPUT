@@ -1,48 +1,134 @@
 .grid_container {
   display: grid;
-  grid-template-columns: 1fr 6fr;
+  grid-template-columns: 1fr 5fr;
 }
 .users_container {
   height: 100vh;
   padding: 0;
   border-right: 1px solid;
   border-color: rgba(0, 0, 0, 0.5);
-  max-width:400px;
-  min-width:220px;
-
-
+  min-width: 220px;
 }
 
-
-
-.back_wrapper {
+.back_home_wrapper {
   background-color: white;
   border: none;
   height: 40px;
   width: 40px;
 
-
-  .back {
+  .back_home {
     cursor: pointer;
   }
 }
 
-
-.text {
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
-  padding: 8px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.no_conversation {
-  height: 100vh;
-}
-
 .messages {
-  height:calc(100vh - 115px);
+  height: calc(100vh - 115px);
   overflow-y: auto;
+}
+
+//ChatUser
+
+.user_container {
+  min-width: 100px;
+  max-width: 250px;
+  padding: 16px;
+  padding-right: 0px;
+  cursor: pointer;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.user_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_detail {
+  display: flex;
+  align-items: center;
+
+  h4 {
+    margin-left: 10px;
+  }
+
+  .text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin: 10px;
+    white-space: normal;
+  }
+}
+
+.unread {
+  position: relative;
+  top: -12px;
+  left: 110px;
+  background: rgba(11, 118, 246, 0.8);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: white;
+}
+
+.selected_user {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.lastMessage {
+  font-size: 14px;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm_container {
+  display: none;
+}
+
+//レスポンシブ
+@media screen and (max-width: 576px) {
+  .grid_container {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+  }
+
+  .users_container {
+    height: 100vh;
+    padding: 0;
+    border-right: 1px solid;
+    border-color: rgba(0, 0, 0, 0.5);
+    min-width: 70px;
+  }
+
+  .back_home {
+    cursor: pointer;
+    margin-left: 18px;
+  }
+
+  //ChatUser
+
+  .user_container {
+    display: none;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+  }
+
+  .sm_container {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    padding: 8px;
+  }
 }

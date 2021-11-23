@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import classes from "../../styles/chat/directUser.module.scss";
+import classes from "../../styles/chat/DirectUser.module.scss";
 import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { AuthContext } from "../../context/auth";
