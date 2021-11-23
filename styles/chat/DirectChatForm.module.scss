@@ -76,5 +76,14 @@
 
 .hidden {
   display: none;
-  background-color: red;
+}
+
+@media screen and (max-width: 380px) {
+  .subText {
+    display: none;
+  }
+
+  .subText2 {
+    display: none;
+  }
 }

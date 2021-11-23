@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase/firebase";
-import classes from "../../styles/chat/ChatUser.module.scss";
+import classes from "../../styles/chat/DirectUser.module.scss";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
@@ -59,13 +59,49 @@ const ChatUser = (props) => {
   }, []);
 
   return (
-    <div
-      className={`${classes.user_container} ${
-        chatUser.name === user.name && classes.selected_user
-      }`}
-      onClick={() => selectedUser(user)}
-    >
-      <div className={classes.user_info}>
+    <>
+      <div
+        className={`${classes.user_container} ${
+          chatUser.name === user.name && classes.selected_user
+        }`}
+        onClick={() => selectedUser(user)}
+      >
+        <div className={classes.user_info}>
+          <div className={classes.user_detail}>
+            {user.isOnline ? (
+              <UserOnline
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                variant="dot"
+              >
+                <Avatar className={classes.avatar} src={user.avatarURL} />
+              </UserOnline>
+            ) : (
+              <UserOffline
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                variant="dot"
+              >
+                <Avatar className={classes.avatar} src={user.avatarURL} />
+              </UserOffline>
+            )}
+            <div>
+              <h4 className={classes.text}>{user.name}</h4>
+              {data?.from !== user1 && data?.unread && (
+                <small className={classes.unread}>New</small>
+              )}
+            </div>
+            <br />
+          </div>
+        </div>
+        {data && <p className={classes.lastMessage}>{data.text}</p>}
+      </div>
+      <div
+        onClick={() => selectedUser(user)}
+        className={`${classes.sm_container} ${
+          chatUser.name === user.name && classes.selected_user
+        }`}
+      >
         <div className={classes.user_detail}>
           {user.isOnline ? (
             <UserOnline
@@ -84,17 +120,9 @@ const ChatUser = (props) => {
               <Avatar className={classes.avatar} src={user.avatarURL} />
             </UserOffline>
           )}
-          <div>
-            <h4 className={classes.text}>{user.name}</h4>
-            {data?.from !== user1 && data?.unread && (
-              <small className={classes.unread}>New</small>
-            )}
-          </div>
-          <br />
         </div>
       </div>
-      {data && <p className={classes.lastMessage}>{data.text}</p>}
-    </div>
+    </>
   );
 };
 

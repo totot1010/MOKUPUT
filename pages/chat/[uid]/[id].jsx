@@ -8,10 +8,9 @@ import Link from "next/link";
 import ChatUser from "../../../components/chat/ChatUser";
 import DirectChatForm from "../../../components/chat/DirectChatForm";
 import Message from "../../../components/chat/Message";
-import classes from "../../../styles/chat/directUser.module.scss";
+import classes from "../../../styles/chat/DirectUser.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { connectGeoSearch } from "react-instantsearch-core";
 
 const directChat = () => {
   const [users, setUsers] = useState([]);
@@ -200,11 +199,11 @@ const directChat = () => {
           <div className={classes.users_container}>
             <div style={{ display: "flex" }}>
               <Link href="/home/eJhpxQwVn9zbq09GIZel">
-                <a className={classes.back_wrapper}>
+                <a className={classes.back_home_wrapper}>
                   <ArrowBackIcon
                     sx={{ fontSize: 40 }}
                     color="primary"
-                    className={classes.back}
+                    className={classes.back_home}
                   />
                 </a>
               </Link>
