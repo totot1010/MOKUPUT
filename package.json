@@ -17,18 +17,18 @@
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@types/react-router-dom": "^5.3.2",
+    "@zeit/next-css": "^1.0.1",
     "algoliasearch": "^4.11.0",
     "anchorme": "^2.1.2",
     "date-fns": "^2.25.0",
     "dotenv": "^10.0.0",
     "emoji-mart": "^3.0.1",
     "emoji-picker-react": "^3.4.8",
-    "eslint": "^8.3.0",
     "firebase": "^8.10.0",
     "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
     "net": "^1.0.2",
-    "next": "11.1.2",
+    "next": "^11.1.2",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
     "react-anchorme": "^2.2.1",
@@ -50,7 +50,8 @@
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
     "@types/react-instantsearch-dom": "^6.12.0",
-    "eslint-config-next": "^11.1.2",
+    "eslint": "^8.3.0",
+    "eslint-config-next": "^12.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "node-sass": "^4.14.1",
@@ -59,5 +60,20 @@
     "typescript": "^4.4.4",
     "webpack": "^5.61.0",
     "webpack-cli": "^4.9.1"
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yutocreate/study-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yutocreate/study-app/issues"
+  },
+  "homepage": "https://github.com/yutocreate/study-app#readme",
+  "volta": {
+    "node": "14.17.0"
   }
 }
