@@ -60,11 +60,7 @@ const SearchUser = (props) => {
           className={classes.search_user_container}
         >
           <div className={classes.search_user_header}>
-            <Avatar
-              alt="Cindy Baker"
-              src={avatarURL}
-              className={classes.search_user_avatar}
-            />
+            <img src={avatarURL} className={classes.search_user_avatar} />
             <h3>{name}</h3>
           </div>
           <p>
