@@ -92,7 +92,7 @@ const Signin = () => {
             </FormControl>
           </div>
           <div className={classes.button_wrapper}>
-            <Button className={classes.button} variant="outlined" type="submit">
+            <Button className={classes.button} type="submit">
               ログインする
             </Button>
           </div>

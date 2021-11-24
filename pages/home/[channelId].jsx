@@ -39,10 +39,7 @@ const ChannelId = () => {
         searchText={searchText}
         setSearchText={setSearchText}
       />
-      <List
-        className={classes.list}
-        sx={{ width: "100%", maxWidth: 400, bgcolor: "background.paper" }}
-      >
+      <div className={classes.list}>
         {searchUsers &&
           searchUsers.map((user) => {
             return (
@@ -58,7 +55,7 @@ const ChannelId = () => {
               />
             );
           })}
-      </List>
+      </div>
       <Homebody />
     </>
   );
