@@ -43,7 +43,7 @@ const HomeForm = (props) => {
 
   return (
     <>
-      <div className={classes.message_container}>
+      <div className={classes.message_form_container}>
         <form className={classes.message_form} onSubmit={handleSubmit}>
           <div className={classes.image_container}>
             <label htmlFor="img">
@@ -64,7 +64,7 @@ const HomeForm = (props) => {
               onClick={handleShowEmojis}
             />
           </div>
-          <div className={classes.input_container}>
+          <div>
             <TextField
               multiline
               id="js-text"
@@ -72,14 +72,14 @@ const HomeForm = (props) => {
               inputRef={inputRef}
               maxRows={3}
               placeholder={`${channel && channel.name}へのメッセージを作成`}
-              className={classes.input}
+              className={classes.input_text}
               onKeyDown={handleDown}
               value={text}
               name="textarea"
               onChange={(e) => setText(e.target.value)}
             />
           </div>
-          <div className={classes.button_wrapper}>
+          <div>
             <button
               type="submit"
               id="submit"
@@ -92,7 +92,11 @@ const HomeForm = (props) => {
         <small className={classes.subText}>Enterで改行</small>
         <small className={classes.subText2}>Ctrl+Enterで送信</small>
       </div>
-      <div className={`${classes.emoji} ${!showEmojis && classes.hidden}`}>
+      <div
+        className={`${classes.emoji_container} ${
+          !showEmojis && classes.emoji_hidden
+        }`}
+      >
         <Emoji pickEmoji={pickEmoji} />
       </div>
     </>

@@ -54,7 +54,7 @@ const SearchUser = (props) => {
 
   return (
     <>
-      <div className={classes.container}>
+      <div className={classes.search_user_container}>
         <ListItem
           alignItems="flex-start"
           onClick={() => handleOpen({ id, users })}
@@ -63,7 +63,7 @@ const SearchUser = (props) => {
             <Avatar
               alt="Cindy Baker"
               src={avatarURL}
-              className={classes.avatar}
+              className={classes.search_user_avatar}
             />
           </ListItemAvatar>
           <ListItemText
@@ -91,8 +91,8 @@ const SearchUser = (props) => {
         </ListItem>
         <Divider variant="inset" component="li" />
         <Modal open={open} onClose={handleClose}>
-          <Box className={classes.box}>
-            <Typography variant="h6" className={classes.title}>
+          <Box className={classes.detail_user_box}>
+            <Typography variant="h6" className={classes.detail_user_title}>
               ユーザー詳細
               <Link href={`/chat/messages/${id}`}>
                 <Button
@@ -111,19 +111,19 @@ const SearchUser = (props) => {
                 onClick={handleClose}
               />
             </Typography>
-            <div className={classes.img_wrapper}>
+            <div className={classes.detail_avatar_wrapper}>
               <img
-                className={classes.image}
+                className={classes.detail_avatar}
                 src={selectedUser && selectedUser.avatarURL}
               />
             </div>
             <Stack spacing={2}>
               <Typography className={classes.typograpphy_name}>名前</Typography>
-              <Typography className={classes.input}>
+              <Typography className={classes.input_text}>
                 {selectedUser && selectedUser.name}
               </Typography>
               <Typography className={classes.typography}>実務経験</Typography>
-              <Typography className={classes.input}>
+              <Typography className={classes.input_text}>
                 {selectedUser && selectedUser.experience === "yes"
                   ? "あり"
                   : "なし"}
@@ -131,7 +131,7 @@ const SearchUser = (props) => {
               <Typography className={classes.typography}>
                 実務で使っている言語
               </Typography>
-              <Typography className={classes.input}>
+              <Typography className={classes.input_text}>
                 {selectedUser &&
                   selectedUser.useLanguage.map((language, index) => {
                     if (index + 1 === selectedUser.useLanguage.length) {
@@ -144,7 +144,7 @@ const SearchUser = (props) => {
               <Typography className={classes.typography}>
                 勉強中の言語
               </Typography>
-              <Typography className={classes.input}>
+              <Typography className={classes.input_text}>
                 {selectedUser &&
                   selectedUser.willLanguage.map((language, index) => {
                     if (index + 1 === selectedUser.willLanguage.length) {
