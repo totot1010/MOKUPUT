@@ -269,7 +269,9 @@ const MessageHome = memo((props) => {
               >
                 メッセージを編集する
               </MenuItem>
-              <MenuItem onClick={handleClose}>メッセージに返信する</MenuItem>
+              <MenuItem onClick={handleReplyPage}>
+                メッセージに返信する
+              </MenuItem>
             </Menu>
           </div>
         </div>

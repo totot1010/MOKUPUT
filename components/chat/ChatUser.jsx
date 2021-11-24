@@ -4,7 +4,6 @@ import classes from "../../styles/chat/ChatUser.module.scss";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
-import Link from "next/link";
 
 const UserOnline = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {

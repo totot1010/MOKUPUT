@@ -17,6 +17,10 @@
   }
 }
 
+.sidebar_close {
+  display: none;
+}
+
 .sidebar_channel {
   display: flex;
   padding-left: 16px;
@@ -45,6 +49,9 @@
     height: 24px;
     margin-left: 6px;
   }
+}
+.sm_sidebar_container {
+  display: none;
 }
 
 //channel
@@ -94,6 +101,10 @@
   z-index: 9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
+  .open_sidebar {
+    display: none;
+  }
+
   .header_icon {
     position: relative;
     top: 8px;
@@ -118,7 +129,7 @@
 
 .messages_wrapper {
   position: relative;
-  top: 70px;
+  top: 64px;
   overflow-y: scroll;
   height: calc(100vh - 250px);
   z-index: 5;
@@ -280,4 +291,82 @@
 
 .hidden {
   display: none;
+}
+
+//レスポンシブ-----------------------
+@media screen and (max-width: 680px) {
+  //Sidebar---------
+  .sidebar_container {
+    display: none;
+  }
+
+  .sidebar_close_button {
+    display: block;
+    display: flex;
+    padding-left: 16px;
+    border-top: 1px solid white;
+    padding: 16px;
+    cursor: pointer;
+    &:hover {
+      background-color: skyblue;
+    }
+
+    .sidebar_close_icon {
+      margin-left: 4px;
+    }
+  }
+
+  .sm_sidebar_container {
+    display: none;
+  }
+
+  .sm_sidebar_container.sidebar_close {
+    display: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    background-color: #1976d2;
+    flex: 30%;
+    height: calc(100vh - 64px);
+    max-width: 300px;
+    color: white;
+    z-index: 5;
+
+    h3 {
+      font-size: 16px;
+      margin-left: 6px;
+    }
+  }
+
+  //appbody-----------
+  .appbody_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+  }
+
+  .header_container {
+    position: relative;
+    z-index: 5;
+    height: 70px;
+
+    .open_sidebar {
+      display: inline-block;
+      position: relative;
+      top: 6px;
+      margin-right: 24px;
+      color: #1976d2;
+      font-size: 32px;
+      cursor: pointer;
+    }
+  }
+  //messagehome-------
+  .messages_wrapper {
+    position: relative;
+    top: 50px;
+    overflow-y: scroll;
+    height: calc(100vh - 230px);
+    z-index: 5;
+  }
 }

@@ -80,3 +80,16 @@
 .emoji_hidden {
   display: none;
 }
+
+@media screen and (max-width: 680px) {
+  .message_form {
+    bottom: 6px;
+  }
+  .subText {
+    display: none;
+  }
+
+  .subText2 {
+    display: none;
+  }
+}

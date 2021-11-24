@@ -6,6 +6,8 @@ import firebase from "firebase/app";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ComputerIcon from "@mui/icons-material/Computer";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Channel from "./Channel";
 import HomeForm from "./HomeForm";
 import Router from "next/router";
@@ -20,7 +22,8 @@ const Homebody = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
-  const [replyMessage, setReplyMessage] = useState(false);
+  // const [replyMessage, setReplyMessage] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
   const { users, getUsers } = useAllUsers();
 
@@ -141,9 +144,51 @@ const Homebody = () => {
     Router.push(`/chat/${user1}`);
   };
 
+  const handleSidebarClose = () => {
+    setShowSidebar(!showSidebar);
+    console.log(showSidebar);
+  };
+
+  const handleOpenSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   return (
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
+        <div className={classes.sidebar_channel} onClick={handleChat}>
+          <MailOutlineIcon className={classes.message_icon} />
+          <h3>メッセージ</h3>
+        </div>
+        <hr />
+        <div className={classes.addchannels_container} onClick={addChannel}>
+          <AddIcon className={classes.add_icon} />
+          <h3>チャンネルを追加</h3>
+        </div>
+        <hr />
+        <div className={classes.channels}>
+          {channels &&
+            channels.map((channel, index) => (
+              <Channel
+                key={index}
+                channel={channel}
+                selectedChannel={selectedChannel}
+              />
+            ))}
+        </div>
+      </div>
+      <div
+        className={`${classes.sm_sidebar_container} ${
+          showSidebar && classes.sidebar_close
+        }`}
+      >
+        <div
+          className={classes.sidebar_close_button}
+          onClick={handleSidebarClose}
+        >
+          <CloseIcon className={classes.sidebar_close_icon} />
+          <h3>サイドバーを閉じる</h3>
+        </div>
         <div className={classes.sidebar_channel} onClick={handleChat}>
           <MailOutlineIcon className={classes.message_icon} />
           <h3>メッセージ</h3>
@@ -169,6 +214,10 @@ const Homebody = () => {
       <div className={classes.appbody_container}>
         <div className={classes.header_container}>
           <h2>
+            <ArrowBackIcon
+              className={classes.open_sidebar}
+              onClick={handleOpenSidebar}
+            />
             <ComputerIcon className={classes.header_icon} />
             {channel && channel.name}
           </h2>

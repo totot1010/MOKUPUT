@@ -292,7 +292,7 @@ const Header = (props) => {
           <Alert severity="success">プロフィールを更新しました!</Alert>
         </Snackbar>
       </Stack>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }} className={classes.header_container}>
         <AppBar position="static" style={{ height: "64px" }}>
           <Toolbar>
             <IconButton
@@ -312,7 +312,6 @@ const Header = (props) => {
             >
               MOKUPUT
             </Typography>
-            <AccessTimeIcon className={classes.access_time} />
             <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
                 <SearchIcon />

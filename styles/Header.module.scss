@@ -18,10 +18,6 @@
   padding: 24px 32px;
 }
 
-.access_time {
-  margin: 0 20px;
-}
-
 .title {
   font-family: Georgia, serif;
   letter-spacing: 4px;
@@ -57,12 +53,12 @@
 }
 
 .img_container {
-  position:relative;
-  &:hover .image{
-    opacity:0.4;
+  position: relative;
+  &:hover .image {
+    opacity: 0.4;
   }
   &:hover .overlay {
-    opacity:1;
+    opacity: 1;
   }
 }
 
@@ -75,12 +71,12 @@
 
 .overlay {
   transition: 0.5s ease;
-  opacity:0;
+  opacity: 0;
   position: absolute;
-  top:65%;
-  left:50%;
+  top: 65%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  text-align:center; 
+  text-align: center;
 }
 
 .input {
@@ -125,4 +121,11 @@
   background-color: black;
   color: white;
   font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .header_container {
+    position: relative;
+    z-index: 100;
+  }
 }
