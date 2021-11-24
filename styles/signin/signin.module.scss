@@ -54,9 +54,9 @@
   padding: 10px 24px;
   margin-bottom: 30px;
   color: rgba(0, 0, 0, 0.6);
-  &:hover {
-    border: none;
-  }
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .signup {

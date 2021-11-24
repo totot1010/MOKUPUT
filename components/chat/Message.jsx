@@ -63,7 +63,6 @@ const Message = (props) => {
           message && message.from === user1 ? classes.own : ""
         }`}
         ref={scrollRef}
-        onClick={handleMessageDelete}
       >
         {message.media ? (
           <>
@@ -71,6 +70,7 @@ const Message = (props) => {
               className={`${
                 message.from === user1 ? classes.me : classes.friend
               }`}
+              onClick={handleMessageDelete}
             >
               {message.media ? (
                 <img src={message.media} alt={message.text} />
@@ -102,6 +102,7 @@ const Message = (props) => {
         ) : (
           <>
             <p
+              onClick={handleMessageDelete}
               className={`${classes.message_wrapper2} ${
                 message.from === user1 ? classes.me : classes.friend
               }`}

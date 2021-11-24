@@ -116,9 +116,9 @@ const Signup = () => {
             </FormControl>
           </div>
           <div className={classes.button_wrapper}>
-            <Button className={classes.button} variant="outlined" type="submit">
+            <button className={classes.button} variant="outlined" type="submit">
               登録する
-            </Button>
+            </button>
           </div>
         </form>
       </Box>

@@ -92,9 +92,9 @@ const Signin = () => {
             </FormControl>
           </div>
           <div className={classes.button_wrapper}>
-            <Button className={classes.button} type="submit">
+            <button className={classes.button} type="submit">
               ログインする
-            </Button>
+            </button>
           </div>
         </form>
       </Box>

@@ -11,7 +11,7 @@
 .message_wrapper p {
   padding: 10px 10px 10px;
   display: inline-block;
-  max-width: 70%;
+  max-width: 60%;
   text-align: left;
   border-radius: 20px;
   white-space: pre-wrap;
@@ -35,7 +35,6 @@
 
 .message_wrapper.own {
   text-align: right;
-  cursor: pointer;
 }
 
 .moment_containerI {
@@ -53,6 +52,7 @@
   background-color: rgba(25, 118, 210, 0.3);
   color: rgba(0, 0, 0, 0.6);
   margin: 0;
+  cursor: pointer;
 
   a {
     color: white;
