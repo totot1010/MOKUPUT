@@ -1,7 +1,36 @@
-.search_user_container {
+.search_user_container_and_detail {
+  background: white;
+  padding: 16px;
   cursor: pointer;
   &:hover {
     background-color: rgb(237, 232, 232);
+  }
+
+  .search_user_container {
+    width: 400px;
+  }
+
+  p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.search_user_header {
+  display: flex;
+
+  h3 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    color: rgba(0, 0, 0, 0.6);
+    margin-left: 8px;
   }
 }
 
@@ -51,6 +80,16 @@
 
 .message_button {
   margin-left: 80px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border-color: #1976d2;
+  color: #1976d2;
+  background: white;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(182, 220, 249, 0.4);
+  }
 }
 
 .input_text {

@@ -54,56 +54,50 @@ const SearchUser = (props) => {
 
   return (
     <>
-      <div className={classes.search_user_container}>
-        <ListItem
-          alignItems="flex-start"
+      <div className={classes.search_user_container_and_detail}>
+        <div
           onClick={() => handleOpen({ id, users })}
+          className={classes.search_user_container}
         >
-          <ListItemAvatar>
+          <div className={classes.search_user_header}>
             <Avatar
               alt="Cindy Baker"
               src={avatarURL}
               className={classes.search_user_avatar}
             />
-          </ListItemAvatar>
-          <ListItemText
-            primary={name}
-            secondary={
-              <>
-                {useLanguage.map((language, index) => {
-                  return (
-                    <span className={classes.language} key={index}>
-                      {language}&#44;&nbsp;
-                    </span>
-                  );
-                })}
-                <br />
-                {willLanguage.map((language, index) => {
-                  return (
-                    <span className={classes.language} key={index}>
-                      {language}&#44;&nbsp;
-                    </span>
-                  );
-                })}
-              </>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li" />
+            <h3>{name}</h3>
+          </div>
+          <p>
+            {useLanguage.map((language, index) => {
+              return (
+                <span className={classes.language} key={index}>
+                  {language}&#44;&nbsp;
+                </span>
+              );
+            })}
+            <br />
+            {willLanguage.map((language, index) => {
+              return (
+                <span className={classes.language} key={index}>
+                  {language}&#44;&nbsp;
+                </span>
+              );
+            })}
+          </p>
+        </div>
         <Modal open={open} onClose={handleClose}>
           <Box className={classes.detail_user_box}>
             <Typography variant="h6" className={classes.detail_user_title}>
               ユーザー詳細
               <Link href={`/chat/messages/${id}`}>
-                <Button
+                <button
                   className={classes.message_button}
-                  variant="outlined"
                   onClick={() =>
                     firestoreAdd({ id, name, avatarURL, isOnline })
                   }
                 >
                   メッセージを送る
-                </Button>
+                </button>
               </Link>
               <CloseIcon
                 fontSize="large"

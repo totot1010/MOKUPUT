@@ -4,9 +4,7 @@ import { db } from "../../firebase/firebase";
 import Header from "../../components/Header";
 import Homebody from "../../components/home/Homebody";
 import SearchUsers from "../../components/home/SearchUsers";
-import Router from "next/router";
 import { useRouter } from "next/router";
-import List from "@mui/material/List";
 import algoliasearch from "algoliasearch";
 
 const ALGOLIA_INDEX_NAME = "study-app";
