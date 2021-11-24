@@ -8,7 +8,7 @@ import Link from "next/link";
 import ChatUser from "../../../components/chat/ChatUser";
 import DirectChatForm from "../../../components/chat/DirectChatForm";
 import Message from "../../../components/chat/Message";
-import classes from "../../../styles/chat/DirectUser.module.scss";
+import classes from "../../../styles/chat/ChatUser.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
