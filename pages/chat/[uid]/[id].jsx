@@ -200,11 +200,7 @@ const directChat = () => {
             <div style={{ display: "flex" }}>
               <Link href="/home/eJhpxQwVn9zbq09GIZel">
                 <a className={classes.back_home_wrapper}>
-                  <ArrowBackIcon
-                    sx={{ fontSize: 40 }}
-                    color="primary"
-                    className={classes.back_home}
-                  />
+                  <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
                 </a>
               </Link>
             </div>

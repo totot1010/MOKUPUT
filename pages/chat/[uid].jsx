@@ -170,7 +170,7 @@ const Messages = () => {
             <div style={{ display: "flex" }}>
               <Link href="/home/eJhpxQwVn9zbq09GIZel">
                 <a className={classes.back_wrapper}>
-                  <ArrowBackIcon className={classes.back_home} />
+                  <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
                 </a>
               </Link>
             </div>

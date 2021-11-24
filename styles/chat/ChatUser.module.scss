@@ -15,10 +15,7 @@
   border: none;
   height: 40px;
   width: 40px;
-
-  .back_home {
-    cursor: pointer;
-  }
+  cursor: pointer;
 }
 
 .messages {
@@ -112,10 +109,6 @@
     border-right: 1px solid;
     border-color: rgba(0, 0, 0, 0.5);
     min-width: 70px;
-  }
-
-  .back_home {
-    margin-left: 12px;
   }
 
   //ChatUser
