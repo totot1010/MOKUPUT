@@ -364,7 +364,7 @@ const Header = (props) => {
           </Typography>
           <div className={classes.profile}>
             <div className={classes.img_container}>
-              <Avatar className={classes.image} src={selectedAvatarURL} />
+              <img className={classes.image} src={selectedAvatarURL} />
               <div className={classes.overlay}>
                 <div style={{ display: "flex" }}>
                   <label htmlFor="photo">
