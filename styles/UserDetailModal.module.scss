@@ -1,10 +1,10 @@
-.container {
-  cursor: pointer;
-  &:hover {
-    background-color: rgb(237, 232, 232);
-  }
-}
-.box {
+// .container {
+//   cursor: pointer;
+//   &:hover {
+//     background-color: rgb(237, 232, 232);
+//   }
+// }
+.user_detail_modal_wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -18,7 +18,7 @@
   padding: 24px 32px;
 }
 
-.title {
+.user_detail_title {
   font-family: Georgia, serif;
   letter-spacing: 4px;
 }
@@ -33,13 +33,18 @@
   border-color: rgb(182, 220, 249);
 }
 
-.typography {
+.img_wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.sub_title {
   font-size: 16px;
   font-family: Georgia, serif;
   letter-spacing: 2px;
 }
 
-.typograpphy_name {
+.sub_title_name {
   width: 30%;
   margin-bottom: 16px;
   font-size: 16px;
@@ -52,25 +57,25 @@
   justify-content: center;
 }
 
-.img_container {
-  position: relative;
-  &:hover .image {
-    opacity: 0.4;
-  }
-  &:hover .overlay {
-    opacity: 1;
-  }
-}
+// .img_container {
+//   position: relative;
+//   &:hover .image {
+//     opacity: 0.4;
+//   }
+//   &:hover .overlay {
+//     opacity: 1;
+//   }
+// }
 
-.overlay {
-  transition: 0.5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+// .overlay {
+//   transition: 0.5s ease;
+//   opacity: 0;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+// }
 
 .input {
   border: 1px solid;
