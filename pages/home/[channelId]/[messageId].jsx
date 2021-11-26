@@ -87,7 +87,7 @@ const ReplyMessage = () => {
       <div className={classes.home_back_wrapper}>
         <Link href={`/home/${channelId}`}>
           <a>
-            <ArrowBackIcon className={classes.back_home_icon} />
+            <ArrowBackIcon className={classes.back_home_icon} color="primary" />
           </a>
         </Link>
       </div>
