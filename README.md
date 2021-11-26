@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## アプリケーションの概要
 
-First, run the development server:
+コンセプト
+　プログラミング学習者が横とのつながりを作り、切磋琢磨しスキルアップをできるマッチング、勉強アプリ。
+　
+ターゲット
+　１、未経験からプログラミングを勉強しようとしている人。
+　２、すでにエンジニアとして働いていて、より今の技術を伸ばしたい人。
+  3、すでにエンジニアとして働いていて、他の技術を学びたい人。
+  
+ 課題
+  1、プログラミング未経験者はどのような方向性、勉強方法で勉強をすれば良いのか分からない。
+  2、今扱っている技術を更に勉強したく、同じ言語を扱っている優秀なエンジニアと繋がりたい。
+  3、実務で扱っている言語以外の言語も学習したいが、社内に同じような人がいない。現場レベルの有益な情報を得たい。
+  4、プログラミング学習の挫折率の高さ。
+  
+ 解決策
+  1、同じ目標、同じ状況の人と繋がって情報の共有と勉強をする。
+  2、社外の同じレベル感のエンジニアと勉強し、お互いに良いものを吸収し合い、技術を習得する。
+  3、同じ境遇（例えば30歳、未経験）の人とつながり、切磋琢磨して勉強する。
+ 
+ 利用の流れ
+  1、名前、年齢、扱っている言語、勉強している言語を登録。
+  2、
+  3、
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
