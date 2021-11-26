@@ -106,35 +106,42 @@ const Homebody = () => {
       );
       const snap = await imageRef.put(img);
       await snap.ref.getDownloadURL().then(function (URL) {
-        db.collection("channels").doc(id).collection("chat").add({
-          text,
-          from: user1,
-          createdAt: firebase.firestore.Timestamp.now(),
-          image: URL,
-          avatarURL: user.avatarURL,
-          name: user.name,
-          uid: user.uid,
-          useLanguage: user.useLanguage,
-          willLanguage: user.willLanguage,
-          experience: user.experience,
-        });
+        db.collection("channels")
+          .doc(id)
+          .collection("chat")
+          .add({
+            text,
+            from: user1,
+            createdAt: firebase.firestore.Timestamp.now(),
+            image: URL,
+            avatarURL: user.avatarURL || null,
+            name: user.name,
+            uid: user.uid,
+            useLanguage: user.useLanguage,
+            willLanguage: user.willLanguage,
+            experience: user.experience,
+          });
         setText("");
         setImg("");
       });
     } else {
       if (text === "") return;
-      await db.collection("channels").doc(id).collection("chat").add({
-        text,
-        from: user1,
-        createdAt: firebase.firestore.Timestamp.now(),
-        avatarURL: user.avatarURL,
-        name: user.name,
-        uid: user.uid,
-        useLanguage: user.useLanguage,
-        willLanguage: user.willLanguage,
-        experience: user.experience,
-        isOnline: user.isOnline,
-      });
+      await db
+        .collection("channels")
+        .doc(id)
+        .collection("chat")
+        .add({
+          text,
+          from: user1,
+          createdAt: firebase.firestore.Timestamp.now(),
+          avatarURL: user.avatarURL || null,
+          name: user.name,
+          uid: user.uid,
+          useLanguage: user.useLanguage,
+          willLanguage: user.willLanguage,
+          experience: user.experience,
+          isOnline: user.isOnline,
+        });
       setText("");
     }
   };

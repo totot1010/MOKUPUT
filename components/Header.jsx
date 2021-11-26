@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -342,7 +342,10 @@ const Header = (props) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <Avatar
+                  src={selectedAvatarURL}
+                  sx={{ width: "55px", height: "55px" }}
+                />
               </IconButton>
             </Box>
           </Toolbar>
@@ -364,7 +367,14 @@ const Header = (props) => {
           </Typography>
           <div className={classes.profile}>
             <div className={classes.img_container}>
-              <img className={classes.image} src={selectedAvatarURL} />
+              <Avatar
+                src={selectedAvatarURL}
+                sx={{
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                }}
+              />
               <div className={classes.overlay}>
                 <div style={{ display: "flex" }}>
                   <label htmlFor="photo">

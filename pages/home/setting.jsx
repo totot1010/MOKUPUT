@@ -23,6 +23,7 @@ const setting = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [deleteChatUsers, setDeleteChatUsers] = useState([]);
   const [alertPasswordChange, setAlertPasswordChange] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -31,12 +32,30 @@ const setting = () => {
   const AuthEmail = auth.currentUser.email;
 
   useEffect(() => {
-    db.collection("users")
+    getFirestore();
+  }, []);
+
+  const getFirestore = async () => {
+    await db
+      .collection("users")
       .doc(user1)
       .onSnapshot((snapshot) => {
         setAuthUser({ id: user1, ...snapshot.data() });
       });
-  }, []);
+
+    await db
+      .collection("users")
+      .doc(user1)
+      .collection("chatUser")
+      .get()
+      .then((querySnapshot) => {
+        const chatUserUid = [];
+        querySnapshot.forEach((doc) => {
+          chatUserUid.push(doc.data().uid);
+        });
+        setDeleteChatUsers(chatUserUid);
+      });
+  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -91,6 +110,14 @@ const setting = () => {
           .then(() => {
             auth.currentUser.delete();
           });
+
+        await deleteChatUsers.map((deleteChatUser) => {
+          db.collection("users")
+            .doc(user1)
+            .collection("chatUser")
+            .doc(deleteChatUser)
+            .delete();
+        });
 
         await db.collection("users").doc(user1).delete();
         Router.push("/signup");
@@ -218,7 +245,7 @@ const setting = () => {
             />
           </div>
           <button disabled={currentPassword === ""} onClick={handleUserDelete}>
-            保存
+            削除
           </button>
         </div>
       </div>

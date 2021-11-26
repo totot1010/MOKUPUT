@@ -6,8 +6,8 @@ const Delete = ({ deleteImage }) => {
       onClick={deleteImage}
       xmlns="http://www.w3.org/2000/svg"
       style={{
-        width: "50px",
-        height: "50px",
+        width: "70px",
+        height: "70px",
         cursor: "pointer",
         color: "#f24957",
       }}
