@@ -73,7 +73,10 @@ const ChatUser = (props) => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant="dot"
               >
-                <img className={classes.avatar} src={user.avatarURL} />
+                <Avatar
+                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                  src={user.avatarURL}
+                />
               </UserOnline>
             ) : (
               <UserOffline
@@ -81,7 +84,10 @@ const ChatUser = (props) => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant="dot"
               >
-                <img className={classes.avatar} src={user.avatarURL} />
+                <Avatar
+                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                  src={user.avatarURL}
+                />
               </UserOffline>
             )}
             <div>
@@ -108,7 +114,10 @@ const ChatUser = (props) => {
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant="dot"
             >
-              <img className={classes.avatar} src={user.avatarURL} />
+              <Avatar
+                sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                src={user.avatarURL}
+              />
             </UserOnline>
           ) : (
             <UserOffline
@@ -116,7 +125,10 @@ const ChatUser = (props) => {
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant="dot"
             >
-              <img className={classes.avatar} src={user.avatarURL} />
+              <Avatar
+                sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                src={user.avatarURL}
+              />
             </UserOffline>
           )}
         </div>

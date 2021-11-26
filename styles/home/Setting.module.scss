@@ -1,0 +1,103 @@
+.home_back_wrapper {
+  display: flex;
+  justify-content: center;
+
+  .back_home_icon {
+    &:hover {
+      background: rgba(25, 118, 210, 0.2);
+      border-radius: 50%;
+    }
+  }
+}
+
+.setting_container {
+  text-align: center;
+
+  //パスワードの変更
+  .change_password_container {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+
+    .password_header {
+      padding: 16px;
+    }
+
+    .current_password {
+      padding: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .new_password {
+      padding: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: none;
+    }
+
+    button {
+      background: #1976d2;
+      opacity: 0.6;
+      border: none;
+      padding: 8px 16px;
+      font-size: 20px;
+      border-radius: 24px;
+      color: white;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: default;
+    }
+  }
+
+  //アカウントの削除
+
+  .delete_user_container {
+    border: 1px solid rgba(255, 0, 0, 0.6);
+    width: 80%;
+    margin: 48px auto 0;
+
+    .delete_user_header {
+      padding: 16px;
+
+      h2 {
+        color: red;
+      }
+    }
+
+    .delete_user_explanation {
+      padding: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      h4 {
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .current_password {
+      padding: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: none;
+    }
+
+    button {
+      background: rgba(244, 33, 46, 1);
+      opacity: 0.6;
+      border: none;
+      padding: 8px 16px;
+      font-size: 20px;
+      border-radius: 24px;
+      color: white;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: default;
+    }
+  }
+}

@@ -131,7 +131,7 @@ const directChat = () => {
       .set({
         name: authUser.name,
         isOnline: authUser.isOnline,
-        avatarURL: authUser.avatarURL,
+        avatarURL: authUser.avatarURL || null,
         uid: authUser.uid,
       });
 

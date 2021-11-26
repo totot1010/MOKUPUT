@@ -2,6 +2,7 @@ import React, { useState, useCallback, useContext, useEffect } from "react";
 import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
+import Router from "next/router";
 
 import Camera from "./svg/Camera";
 import Delete from "./svg/Delete";
@@ -19,12 +20,8 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
-import Stack from "@mui/material/Stack";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -34,10 +31,9 @@ import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 import algoliasearch from "algoliasearch";
 
@@ -97,7 +93,7 @@ const Header = (props) => {
   const [selectedWillLanguage, setSelectedWillLanguage] = useState("");
   const [selectedAvatarURL, setSelectedAvatarURL] = useState();
   const [selectedAvatarPath, setSelectedAvatarPath] = useState();
-  const [open, setOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const [openSearchCancel, setOpenSearchCancel] = useState();
   const [alertOpen, setAlertOpen] = useState(false);
   const [img, setImg] = useState("");
@@ -191,9 +187,9 @@ const Header = (props) => {
   };
 
   const profileClick = () => {
-    setOpen(true);
+    setOpenProfile(true);
   };
-  const handleClose = useCallback(() => setOpen(false), []);
+  const handleProfileClose = useCallback(() => setOpenProfile(false), []);
 
   const handleChangeLanguage = (event) => {
     const {
@@ -259,6 +255,10 @@ const Header = (props) => {
     setOpenSearchCancel(false);
   };
 
+  const handleSettingPage = () => {
+    Router.push("/home/setting");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -276,8 +276,8 @@ const Header = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={profileClick}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={profileClick}>プロフィール</MenuItem>
+      <MenuItem onClick={handleSettingPage}>設定</MenuItem>
     </Menu>
   );
 
@@ -349,7 +349,7 @@ const Header = (props) => {
         </AppBar>
         {renderMenu}
       </Box>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={openProfile} onClose={handleProfileClose}>
         <Box className={classes.box}>
           <Typography variant="h6" className={classes.title}>
             プロフィール編集
@@ -359,7 +359,7 @@ const Header = (props) => {
             <CloseIcon
               fontSize="large"
               className={classes.closeIcon}
-              onClick={handleClose}
+              onClick={handleProfileClose}
             />
           </Typography>
           <div className={classes.profile}>

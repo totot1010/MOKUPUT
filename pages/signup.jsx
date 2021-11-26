@@ -20,7 +20,6 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [values, setValues] = useState({
-    amount: "",
     password: "",
     showPassword: false,
   });
@@ -67,6 +66,7 @@ const Signup = () => {
       email: email,
       createdAt: firebase.firestore.Timestamp.now(),
       isOnline: true,
+      password: password,
     });
   };
 

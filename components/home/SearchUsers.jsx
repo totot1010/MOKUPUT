@@ -60,7 +60,16 @@ const SearchUser = (props) => {
           className={classes.search_user_container}
         >
           <div className={classes.search_user_header}>
-            <img src={avatarURL} className={classes.search_user_avatar} />
+            <Avatar
+              src={avatarURL}
+              sx={{
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                marginRight: "8px",
+                textAlign: "center",
+              }}
+            />
             <h3>{name}</h3>
           </div>
           <p>
@@ -85,7 +94,7 @@ const SearchUser = (props) => {
           <Box className={classes.detail_user_box}>
             <Typography variant="h6" className={classes.detail_user_title}>
               ユーザー詳細
-              <Link href={`/chat/messages/${id}`}>
+              <Link href={`/chat/${user1}/${id}`}>
                 <button
                   className={classes.message_button}
                   onClick={() =>
@@ -102,8 +111,13 @@ const SearchUser = (props) => {
               />
             </Typography>
             <div className={classes.detail_avatar_wrapper}>
-              <img
-                className={classes.detail_avatar}
+              <Avatar
+                sx={{
+                  positon: "relative",
+                  top: "12px",
+                  width: "100px",
+                  height: "100px",
+                }}
                 src={selectedUser && selectedUser.avatarURL}
               />
             </div>
