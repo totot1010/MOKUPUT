@@ -54,7 +54,7 @@ const UserDetailModal = (props) => {
         </Typography>
         <div className={classes.img_wrapper}>
           <Avatar
-            src={message && message.avatarURL}
+            src={(message && message.avatarURL) || null}
             sx={{
               width: "100px",
               height: "100px",

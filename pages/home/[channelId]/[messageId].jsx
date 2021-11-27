@@ -96,8 +96,8 @@ const ReplyMessage = () => {
           <div className={classes.message_header}>
             <ListItemAvatar>
               <Avatar
-                src={mainMessage && mainMessage.avatarURL}
-                className={classes.avatar}
+                src={(mainMessage && mainMessage.avatarURL) || null}
+                sx={{ width: "60px", height: "60px" }}
               />
             </ListItemAvatar>
             <h4>{mainMessage && mainMessage.name}</h4>
