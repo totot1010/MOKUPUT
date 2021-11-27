@@ -22,7 +22,6 @@ const Homebody = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [replyMessage, setReplyMessage] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
   const { users, getUsers } = useAllUsers();

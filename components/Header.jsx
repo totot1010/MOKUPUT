@@ -19,7 +19,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Radio from "@mui/material/Radio";
@@ -123,9 +122,6 @@ const Header = (props) => {
         );
 
         try {
-          if (selectedAvatarPath) {
-            await storageRef.child(selectedAvatarPath).delete();
-          }
           const snap = await imagesRef.put(img);
           await snap.ref.getDownloadURL().then(function (URL) {
             setSelectedAvatarURL(URL);
@@ -241,7 +237,7 @@ const Header = (props) => {
       },
       { merge: true }
     );
-    await setOpen(false);
+    await setOpenProfile(false);
   };
 
   const handleOpenSearchCancel = () => {
@@ -368,7 +364,7 @@ const Header = (props) => {
           <div className={classes.profile}>
             <div className={classes.img_container}>
               <Avatar
-                src={selectedAvatarURL}
+                src={selectedAvatarURL || null}
                 sx={{
                   width: "100px",
                   height: "100px",

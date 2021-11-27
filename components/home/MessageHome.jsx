@@ -218,14 +218,16 @@ const MessageHome = memo((props) => {
     <>
       <div className={classes.message_container} ref={scrollRef}>
         <div className={classes.message_info}>
-          <ListItemAvatar>
-            <Avatar
-              alt="Cindy Baker"
-              src={message && message.avatarURL}
-              className={classes.avatar}
-              onClick={() => setOpenIcon(true)}
-            />
-          </ListItemAvatar>
+          <Avatar
+            src={message && message.avatarURL}
+            sx={{
+              height: "46px",
+              width: "46px",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+            onClick={() => setOpenIcon(true)}
+          />
           <h4>
             {message.name}
             <span>
