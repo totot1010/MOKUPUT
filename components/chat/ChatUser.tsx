@@ -40,28 +40,50 @@ const UserOffline = styled(Badge)(() => ({
   },
 }));
 
-const ChatUser = (props) => {
-  const { user, selectedUser, user1, chatUser } = props;
-  const [data, setData] = useState("");
+interface Props {
+  user: {
+    avatarURL?: string | null;
+    isOnline: boolean;
+    name: string;
+    uid: string;
+  };
+  selectedUser: (object) => void;
+  user1: string;
+  chatUser: {
+    avatarURL?: string | null;
+    isOnline?: boolean;
+    name?: string;
+    uid?: string;
+  };
+}
 
-  const user2 = user.uid;
+interface lastMessageType {
+  createdAt: object;
+  from: string;
+  text: string;
+  to: string;
+  unread: boolean;
+}
+
+const ChatUser: React.FC<Props> = (props) => {
+  const { user, selectedUser, user1, chatUser } = props;
+  const [lastMessageData, setLastMessageData] = useState<lastMessageType>();
+
+  const user2: string = user.uid;
 
   useEffect(() => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-    const unsub = db
-      .collection("lastMessage")
-      .doc(id)
-      .onSnapshot((doc) => {
-        setData(doc.data());
+    db.collection("lastMessage").doc(id).onSnapshot <
+      ((doc) => {
+        setLastMessageData(doc.data());
       });
-    return () => unsub();
   }, []);
 
   return (
     <>
       <div
         className={`${classes.user_container} ${
-          chatUser.name === user.name && classes.selected_user
+          chatUser?.name === user.name && classes.selected_user
         }`}
         onClick={() => selectedUser(user)}
       >
@@ -92,14 +114,16 @@ const ChatUser = (props) => {
             )}
             <div>
               <h4 className={classes.text}>{user.name}</h4>
-              {data?.from !== user1 && data?.unread && (
+              {lastMessageData?.from !== user1 && lastMessageData?.unread && (
                 <small className={classes.unread}>New</small>
               )}
             </div>
             <br />
           </div>
         </div>
-        {data && <p className={classes.lastMessage}>{data.text}</p>}
+        {lastMessageData && (
+          <p className={classes.lastMessage}>{lastMessageData.text}</p>
+        )}
       </div>
       <div
         onClick={() => selectedUser(user)}

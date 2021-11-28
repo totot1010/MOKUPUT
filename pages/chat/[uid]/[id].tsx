@@ -12,24 +12,38 @@ import classes from "../../../styles/chat/ChatUser.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const directChat = () => {
+interface authUserType {
+  uid: string;
+  name: string;
+  isOnline: boolean;
+  avatarURL?: string;
+  avatarPath?: string;
+  age?: number;
+  email: string;
+  experience?: string;
+  useLanguage?: Array<string>;
+  willLanguage?: Array<string>;
+  createdAt: Date;
+}
+
+const DirectChat = () => {
   const [users, setUsers] = useState([]);
-  const [chatUser, setChatUser] = useState("");
-  const [text, setText] = useState("");
-  const [img, setImg] = useState("");
+  const [chatUser, setChatUser] = useState<any>("");
+  const [text, setText] = useState<string>("");
+  const [img, setImg] = useState<any>();
   const [messages, setMessages] = useState([]);
-  const [chatId, setChatId] = useState();
-  const [authUser, setAuthUser] = useState();
+  const [chatId, setChatId] = useState<string | string[]>("");
+  const [authUser, setAuthUser] = useState<authUserType>();
   const { user } = useContext(AuthContext);
   const router = useRouter();
-  const id = router.query.id;
+  const id: any = router.query.id;
 
-  const user1 = auth.currentUser.uid;
+  const user1: string = auth.currentUser.uid;
 
   useEffect(() => {
     // idがqueryで利用可能になったら処理される
     if (router.asPath !== router.route) {
-      setChatId(router.query.id);
+      setChatId(id);
     }
   }, [router]);
 
@@ -54,7 +68,7 @@ const directChat = () => {
 
         /**use1は自分のid, chatIdはチャットする相手のid*/
         const newId =
-          user1 > chatId ? `${user1 + chatId}` : `${newId + chatId}`;
+          user1 > chatId ? `${user1 + chatId}` : `${chatId + user1}`;
 
         /**チャットしている相手とのやり取りを取得する処理して表示させる */
         const messagesRef = await db
@@ -72,8 +86,8 @@ const directChat = () => {
       await db
         .collection("users")
         .doc(user1)
-        .onSnapshot((snapshot) => {
-          setAuthUser({ id: user1, ...snapshot.data() });
+        .onSnapshot((doc) => {
+          setAuthUser(doc.data() as authUserType);
         });
     };
     f();
@@ -225,7 +239,6 @@ const directChat = () => {
             </div>
             <div style={{ width: "100%" }}>
               <DirectChatForm
-                chatUser={chatUser}
                 handleSubmit={handleSubmit}
                 text={text}
                 setText={setText}
@@ -239,4 +252,4 @@ const directChat = () => {
   );
 };
 
-export default directChat;
+export default DirectChat;

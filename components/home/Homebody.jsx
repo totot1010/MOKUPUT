@@ -26,7 +26,7 @@ const Homebody = () => {
   const router = useRouter();
   const { users, getUsers } = useAllUsers();
 
-  const id = router.query.channelId;
+  const channelId = router.query.channelId;
 
   //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
@@ -42,12 +42,15 @@ const Homebody = () => {
       });
 
       db.collection("channels")
-        .doc(id)
+        .doc(channelId)
         .onSnapshot((snapshot) => {
-          setChannel({ id, ...snapshot.data() });
+          setChannel({ id: channelId, ...snapshot.data() });
         });
 
-      const messagesRef = db.collection("channels").doc(id).collection("chat");
+      const messagesRef = db
+        .collection("channels")
+        .doc(channelId)
+        .collection("chat");
       messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
         const texts = [];
         querySnapshot.forEach((doc) => {
@@ -106,7 +109,7 @@ const Homebody = () => {
       const snap = await imageRef.put(img);
       await snap.ref.getDownloadURL().then(function (URL) {
         db.collection("channels")
-          .doc(id)
+          .doc(channelId)
           .collection("chat")
           .add({
             text,
@@ -127,7 +130,7 @@ const Homebody = () => {
       if (text === "") return;
       await db
         .collection("channels")
-        .doc(id)
+        .doc(channelId)
         .collection("chat")
         .add({
           text,

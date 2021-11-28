@@ -10,13 +10,17 @@ import ChatUser from "../../components/chat/ChatUser";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+interface chatUserType {
+  name: string;
+}
+
 const Messages = () => {
   const [users, setUsers] = useState([]);
-  const [chatUser, setChatUser] = useState("");
+  const [chatUser, setChatUser] = useState<chatUserType>();
   const [text, setText] = useState("");
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState<any>("");
   const [messages, setMessages] = useState([]);
-  const [chatId, setChatId] = useState();
+  const [chatId, setChatId] = useState<string | string[]>();
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const id = router.query.uid;
@@ -52,7 +56,7 @@ const Messages = () => {
 
         /**use1は自分のid, chatIdはチャットする相手のid*/
         const newId =
-          user1 > chatId ? `${user1 + chatId}` : `${newId + chatId}`;
+          user1 > chatId ? `${user1 + chatId}` : `${chatId + user1}`;
 
         /**チャットしている相手とのやり取りを取得する処理して表示させる */
         const messagesRef = await db
