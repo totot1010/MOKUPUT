@@ -6,12 +6,26 @@ import { filterXSS } from "xss";
 import Moment from "react-moment";
 import classes from "../../styles/chat/Message.module.scss";
 
-const Message = (props) => {
+interface Props {
+  message: {
+    documentId: string;
+    createdAt: any;
+    from: string;
+    media: string;
+    text: string;
+    to: string;
+  };
+  user1: string;
+}
+
+const Message: React.FC<Props> = (props) => {
   const { message, user1 } = props;
-  const scrollRef = useRef();
+  const scrollRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
+    scrollRef?.current?.scrollIntoView({
+      block: "end",
+    });
   }, [message]);
 
   //テキストに含まれているURLの文字列をaタグに変換

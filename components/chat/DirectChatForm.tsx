@@ -8,11 +8,18 @@ import TextField from "@mui/material/TextField";
 import Emoji from "../../emojis/emojisComponent";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 
-const DirectChatForm = (props) => {
+interface Props {
+  handleSubmit: (e) => void;
+  text?: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  setImg: React.Dispatch<React.SetStateAction<any>>;
+}
+
+const DirectChatForm: React.FC<Props> = (props) => {
   const { handleSubmit, text, setText, setImg } = props;
-  const inputRef = createRef();
-  const [showEmojis, setShowEmojis] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState();
+  const inputRef = createRef<HTMLInputElement>();
+  const [showEmojis, setShowEmojis] = useState<boolean>(false);
+  const [cursorPosition, setCursorPosition] = useState<number>();
 
   //handleSubmitが何回もレンダリングされている。
   const handleDown = (e) => {
@@ -22,7 +29,7 @@ const DirectChatForm = (props) => {
     }
   };
 
-  const pickEmoji = (e, { emoji }) => {
+  const pickEmoji = (e, { emoji }): void => {
     const ref = inputRef.current;
     ref.focus();
     const start = text.substring(0, ref?.selectionStart);
@@ -32,7 +39,7 @@ const DirectChatForm = (props) => {
     setCursorPosition(start.length + emoji.length);
   };
 
-  const handleShowEmojis = (e) => {
+  const handleShowEmojis = (e): void => {
     e.preventDefault();
     inputRef.current?.focus();
 
@@ -52,7 +59,9 @@ const DirectChatForm = (props) => {
               <UploadImg />
             </label>
             <input
-              onChange={(e) => setImg(e.target.files[0])}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setImg(e.target.files[0])
+              }
               type="file"
               id="img"
               accept="image/*"

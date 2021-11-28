@@ -28,7 +28,8 @@
     "pages/signup.jsx",
     "pages/signin.jsx",
     "components/Header.jsx",
-    "pages/signup/[id].tsx"
+    "pages/signup/[id].tsx",
+    "pages/chat/[uid]/[id].jsx"
   ],
   "exclude": ["node_modules"]
 }
