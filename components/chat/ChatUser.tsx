@@ -49,7 +49,7 @@ interface Props {
   };
   selectedUser: (object) => void;
   user1: string;
-  chatUser: {
+  chatUser?: {
     avatarURL?: string | null;
     isOnline?: boolean;
     name?: string;
@@ -58,7 +58,7 @@ interface Props {
 }
 
 interface lastMessageType {
-  createdAt: object;
+  createdAt: number;
   from: string;
   text: string;
   to: string;
@@ -83,7 +83,7 @@ const ChatUser: React.FC<Props> = (props) => {
     <>
       <div
         className={`${classes.user_container} ${
-          chatUser?.name === user.name && classes.selected_user
+          chatUser && chatUser.name === user.name && classes.selected_user
         }`}
         onClick={() => selectedUser(user)}
       >
@@ -128,7 +128,7 @@ const ChatUser: React.FC<Props> = (props) => {
       <div
         onClick={() => selectedUser(user)}
         className={`${classes.sm_container} ${
-          chatUser.name === user.name && classes.selected_user
+          chatUser && chatUser.name === user.name && classes.selected_user
         }`}
       >
         <div className={classes.user_detail}>

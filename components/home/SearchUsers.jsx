@@ -2,17 +2,12 @@ import React, { useState, useCallback, useEffect } from "react";
 import { db, auth } from "../../firebase/firebase";
 import Link from "next/link";
 import classes from "../../styles/home/SearchUser.module.scss";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
 const SearchUser = (props) => {
@@ -41,7 +36,6 @@ const SearchUser = (props) => {
 
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
   const firestoreAdd = async ({ id, name, avatarURL, isOnline }) => {
-    console.log(id);
     const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
 
     await db
@@ -49,7 +43,15 @@ const SearchUser = (props) => {
       .doc(user1)
       .collection("chatUser")
       .doc(id)
-      .set({ uid: id, name, avatarURL, isOnline }, { merge: true });
+      .set(
+        {
+          uid: id,
+          name,
+          avatarURL: avatarURL || null,
+          isOnline,
+        },
+        { merge: true }
+      );
   };
 
   return (
