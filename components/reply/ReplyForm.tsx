@@ -1,17 +1,34 @@
-import React, { useState, useEffect, createRef } from "react";
-import classes from "../../styles/home/HomeForm.module.scss";
-import UploadImg from "../svg/UploadImg";
-
+import React, { useState, createRef, useEffect } from "react";
+import classes from "../../styles/reply/ReplyMessage.module.scss";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import Emoji from "../../emojis/emojisComponent";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 
-const HomeForm = (props) => {
-  const { handleSubmit, text, setText, setImg, channel } = props;
-  const inputRef = createRef();
+interface Props {
+  handleSubmit: () => void;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  mainMessage: {
+    uid: string;
+    name: string;
+    isOnline: boolean;
+    avatarURL?: string;
+    avatarPath?: string;
+    age?: number;
+    email: string;
+    experience?: string;
+    useLanguage?: Array<string>;
+    willLanguage?: Array<string>;
+    createdAt: Date;
+  };
+}
+
+const ReplyForm: React.FC<Props> = (props) => {
+  const { handleSubmit, text, setText, mainMessage } = props;
+  const inputRef = createRef<HTMLInputElement>();
   const [showEmojis, setShowEmojis] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState();
+  const [cursorPosition, setCursorPosition] = useState<number>();
 
   const handleDown = (e) => {
     if (e.keyCode == 13 && e.ctrlKey) {
@@ -43,43 +60,29 @@ const HomeForm = (props) => {
 
   return (
     <>
-      <div className={classes.message_form_container}>
+      <div className={classes.message_container}>
         <form className={classes.message_form} onSubmit={handleSubmit}>
-          <div className={classes.image_container}>
-            <label htmlFor="img">
-              <UploadImg />
-            </label>
-            <input
-              onChange={(e) => setImg(e.target.files[0])}
-              type="file"
-              id="img"
-              accept="image/*"
-              style={{ display: "none" }}
-            />
-          </div>
           <div className={classes.emojiIcon_wrapper}>
-            <TagFacesIcon
-              color="primary"
-              className={classes.emojiIcon}
-              onClick={handleShowEmojis}
-            />
+            <button onClick={handleShowEmojis}>
+              <TagFacesIcon color="primary" className={classes.emojiIcon} />
+            </button>
           </div>
-          <div>
+          <div className={classes.input_container}>
             <TextField
               multiline
               id="js-text"
               autoFocus
               inputRef={inputRef}
               maxRows={3}
-              placeholder={`${channel && channel.name}へのメッセージを作成`}
-              className={classes.input_text}
+              placeholder={`${mainMessage && mainMessage.name}への返信を作成`}
+              className={classes.input}
               onKeyDown={handleDown}
               value={text}
               name="textarea"
               onChange={(e) => setText(e.target.value)}
             />
           </div>
-          <div>
+          <div className={classes.button_wrapper}>
             <button
               type="submit"
               id="submit"
@@ -89,18 +92,12 @@ const HomeForm = (props) => {
             </button>
           </div>
         </form>
-        <small className={classes.subText}>Enterで改行</small>
-        <small className={classes.subText2}>Ctrl+Enterで送信</small>
       </div>
-      <div
-        className={`${classes.emoji_container} ${
-          !showEmojis && classes.emoji_hidden
-        }`}
-      >
+      <div className={`${classes.emoji} ${!showEmojis && classes.hidden}`}>
         <Emoji pickEmoji={pickEmoji} />
       </div>
     </>
   );
 };
 
-export default HomeForm;
+export default ReplyForm;

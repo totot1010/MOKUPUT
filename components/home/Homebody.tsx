@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import classes from "../../styles/home/Homebody.module.scss";
 import { db, auth, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
-
+import { AuthUserType } from "../../types/user";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ComputerIcon from "@mui/icons-material/Computer";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,18 +15,22 @@ import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
-const Homebody = () => {
-  const [channel, setChannel] = useState();
-  const [channels, setChannels] = useState([]);
-  const [user, setUser] = useState();
-  const [text, setText] = useState("");
-  const [img, setImg] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const router = useRouter();
-  const { users, getUsers } = useAllUsers();
+interface channelType {
+  id: string;
+  name: string;
+}
 
-  const channelId = router.query.channelId;
+const Homebody: React.FC = () => {
+  const [channel, setChannel] = useState<channelType>();
+  const [channels, setChannels] = useState([]);
+  const [user, setUser] = useState<AuthUserType>();
+  const [text, setText] = useState("");
+  const [img, setImg] = useState<any>();
+  const [messages, setMessages] = useState([]);
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const router = useRouter();
+
+  const channelId: any = router.query.channelId;
 
   //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
@@ -43,8 +47,8 @@ const Homebody = () => {
 
       db.collection("channels")
         .doc(channelId)
-        .onSnapshot((snapshot) => {
-          setChannel({ id: channelId, ...snapshot.data() });
+        .onSnapshot((doc) => {
+          setChannel({ id: channelId, name: doc.data().name });
         });
 
       const messagesRef = db
@@ -62,7 +66,7 @@ const Homebody = () => {
       db.collection("users")
         .doc(user1)
         .onSnapshot((snapshot) => {
-          setUser({ id: user1, ...snapshot.data() });
+          setUser(snapshot.data() as AuthUserType);
         });
     };
     getFirestore();
@@ -155,7 +159,6 @@ const Homebody = () => {
 
   const handleSidebarClose = () => {
     setShowSidebar(!showSidebar);
-    console.log(showSidebar);
   };
 
   const handleOpenSidebar = () => {

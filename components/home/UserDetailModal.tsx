@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { db, auth, storage } from "../../firebase/firebase";
+import React from "react";
+import { db, auth } from "../../firebase/firebase";
 import Router from "next/router";
-import { useRouter } from "next/router";
 import classes from "../../styles/UserDetailModal.module.scss";
 
 import Box from "@mui/material/Box";
@@ -12,17 +11,33 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
-const UserDetailModal = (props) => {
+interface Props {
+  handleClose: () => void;
+  message: {
+    uid: string;
+    name: string;
+    documentId: string;
+    avatarURL?: string;
+    isOnline: boolean;
+    age?: number;
+    from: string;
+    experience?: string;
+    useLanguage?: Array<string>;
+    willLanguage?: Array<string>;
+    createdAt: Date;
+  };
+  open: boolean;
+}
+
+const UserDetailModal: React.FC<Props> = (props) => {
   const { handleClose, message, open } = props;
   const { uid, name, avatarURL, isOnline } = message;
-  const router = useRouter();
 
-  const user1 = auth.currentUser.uid;
+  const user1: string = auth.currentUser.uid;
 
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
   const firestoreAdd = async ({ uid, name, avatarURL, isOnline }) => {
     if (user1 === uid) return;
-    const newId = user1 > uid ? `${user1 + uid}` : `${uid + user1}`;
 
     await db
       .collection("users")

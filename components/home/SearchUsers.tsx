@@ -10,13 +10,22 @@ import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
-const SearchUser = (props) => {
-  const { id, name, useLanguage, willLanguage, user, avatarURL, isOnline } =
-    props;
+interface Props {
+  id: string;
+  name: string;
+  isOnline: boolean;
+  avatarURL?: string;
+  useLanguage?: Array<string>;
+  willLanguage?: Array<string>;
+}
+
+const SearchUser: React.FC<Props> = (props) => {
+  const { id, name, useLanguage, willLanguage, avatarURL, isOnline } = props;
   const { users, getUsers } = useAllUsers();
 
-  const [open, setOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState();
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<any>();
+  console.log(selectedUser);
 
   const user1 = auth.currentUser.uid;
 
@@ -114,13 +123,13 @@ const SearchUser = (props) => {
             </Typography>
             <div className={classes.detail_avatar_wrapper}>
               <Avatar
+                src={selectedUser && selectedUser.avatarURL}
                 sx={{
-                  positon: "relative",
+                  position: "relative",
                   top: "12px",
                   width: "100px",
                   height: "100px",
                 }}
-                src={selectedUser && selectedUser.avatarURL}
               />
             </div>
             <Stack spacing={2}>

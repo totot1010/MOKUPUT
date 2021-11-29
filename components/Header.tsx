@@ -3,10 +3,8 @@ import { db, auth, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
 import Router from "next/router";
-
 import Camera from "./svg/Camera";
 import Delete from "./svg/Delete";
-
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -81,21 +79,30 @@ const ALGOLIA_INDEX_NAME = "study-app";
 const client = algoliasearch("77WZ20O6OE", "60af8ce0883b0f3a5ae5612e6bbf239f");
 const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
-const Header = (props) => {
+interface Props {
+  onSearch: (e: any) => Promise<void>;
+  setSearchUsers: React.Dispatch<React.SetStateAction<Array<any> | string>>;
+  searchText: string;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Header: React.FC<Props> = (props) => {
   const { onSearch, setSearchUsers, searchText, setSearchText } = props;
   const { user } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const [selectedName, setSelectedName] = useState("");
-  const [selectedExperience, setSelectedExperience] = useState();
+  const [selectedName, setSelectedName] = useState<string>("");
+  const [selectedExperience, setSelectedExperience] = useState<string>();
   const [selectedUseLanguage, setSelectedUseLanguage] = useState([]);
-  const [selectedWillLanguage, setSelectedWillLanguage] = useState("");
-  const [selectedAvatarURL, setSelectedAvatarURL] = useState();
-  const [selectedAvatarPath, setSelectedAvatarPath] = useState();
-  const [openProfile, setOpenProfile] = useState(false);
-  const [openSearchCancel, setOpenSearchCancel] = useState();
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [img, setImg] = useState("");
+  const [selectedWillLanguage, setSelectedWillLanguage] = useState<
+    Array<string>
+  >([]);
+  const [selectedAvatarURL, setSelectedAvatarURL] = useState<string>("");
+  const [selectedAvatarPath, setSelectedAvatarPath] = useState<string>("");
+  const [openProfile, setOpenProfile] = useState<boolean>(false);
+  const [openSearchCancel, setOpenSearchCancel] = useState<boolean>();
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [img, setImg] = useState<any>("");
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -313,7 +320,7 @@ const Header = (props) => {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search…"
+                placeholder="ユーザー名、言語で検索"
                 inputProps={{ "aria-label": "search" }}
                 value={searchText}
                 onChange={onSearch}
