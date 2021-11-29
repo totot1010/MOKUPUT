@@ -6,7 +6,7 @@ import Emoji from "../../emojis/emojisComponent";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 
 interface Props {
-  handleSubmit: () => void;
+  handleSubmit: (e: any) => Promise<void>;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   mainMessage: {
