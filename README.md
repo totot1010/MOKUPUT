@@ -27,7 +27,11 @@
 その他・・・検索、Link検知、絵文字、いいね
 　
 #### 言語/フレームワークなどの技術
-　Next.js,firebase,Algolia,Typescript
+ <a href="https://nextjs.org/"><img src="https://user-images.githubusercontent.com/88995036/143837865-d2becaa3-7fcb-46e9-8dca-f04576d2664b.png" height="90px;" width="200px;" /></a>
+ <a href="https://firebase.google.com/"><img src="https://user-images.githubusercontent.com/88995036/143838807-8a899eb9-551a-4b30-beeb-b10671964628.png" height="90px;" width="200px;"/></a>
+ <a href="https://www.algolia.com/doc/"><img src="https://user-images.githubusercontent.com/88995036/143838959-b53ab07e-3f51-4983-bd7f-5978da369743.png" height="90px;" width="200px;"/></a>
+ <a href="https://www.typescriptlang.org/docs/"><img src="https://user-images.githubusercontent.com/88995036/143839860-b5d8a21a-2b66-46d1-9fad-11ed0648a271.png" height="90px;" width="200px;"/></a>
+ 
  
 #### 実装予定の機能（優先度A > C）  
  A: 通知機能、ソート機能、Docker導入、SNSログイン、投稿に対する全文検索  
