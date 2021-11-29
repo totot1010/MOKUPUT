@@ -15,13 +15,8 @@ import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 import { useAllUsers } from "../../hooks/useAllUsers";
 
-interface channelType {
-  id: string;
-  name: string;
-}
-
 const Homebody: React.FC = () => {
-  const [channel, setChannel] = useState<channelType>();
+  const [channel, setChannel] = useState<any>();
   const [channels, setChannels] = useState([]);
   const [user, setUser] = useState<AuthUserType>();
   const [text, setText] = useState("");
@@ -48,7 +43,7 @@ const Homebody: React.FC = () => {
       db.collection("channels")
         .doc(channelId)
         .onSnapshot((doc) => {
-          setChannel({ id: channelId, name: doc.data().name });
+          setChannel({ id: channelId, ...doc.data() });
         });
 
       const messagesRef = db
