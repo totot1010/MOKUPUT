@@ -16,10 +16,9 @@
 3、同じ境遇（例えば30歳、未経験）の人とつながり、切磋琢磨して勉強する。  
  
 #### 利用の流れ
-1、名前、年齢、扱っている言語、勉強している言語を登録する。  
-2、扱っている言語、経験者、未経験者など主催者がもくもく会参加条件を決め、もくもく会を開催する（もくもく会はアウトプットも行ってもらいたいので、最大4人まで）。  
-3、アウトプットの時間を作り、お互いの学びをアウトプットする。他の人がアウトプットしている時に、なるべく質問を入れる。  
-4、勉強していく中で、気が合う人、切磋琢磨できる人を見つけて、さらに勉強する。  
+1、ユーザー情報を登録する。  
+2、もくもく会を開催する（最大4人）。  
+3、アウトプットの時間を作り、学びをアウトプットする。  
 
 #### アプリ機能一覧
 ユーザー・・・新規登録、ログイン、ユーザー削除（アカウント削除）、プロフィール編集  
@@ -27,10 +26,10 @@
 その他・・・検索、Link検知、絵文字、いいね
 　
 #### 言語/フレームワークなどの技術
- <a href="https://nextjs.org/"><img src="https://user-images.githubusercontent.com/88995036/143837865-d2becaa3-7fcb-46e9-8dca-f04576d2664b.png" height="90px;" width="200px;" /></a>
- <a href="https://firebase.google.com/"><img src="https://user-images.githubusercontent.com/88995036/143838807-8a899eb9-551a-4b30-beeb-b10671964628.png" height="90px;" width="200px;"/></a>
- <a href="https://www.algolia.com/doc/"><img src="https://user-images.githubusercontent.com/88995036/143838959-b53ab07e-3f51-4983-bd7f-5978da369743.png" height="90px;" width="200px;"/></a>
- <a href="https://www.typescriptlang.org/docs/"><img src="https://user-images.githubusercontent.com/88995036/143839860-b5d8a21a-2b66-46d1-9fad-11ed0648a271.png" height="90px;" width="200px;"/></a>
+ <a href="https://nextjs.org/"><img src="https://user-images.githubusercontent.com/88995036/143837865-d2becaa3-7fcb-46e9-8dca-f04576d2664b.png" height="100px;" width="230px;" /></a>
+ <a href="https://firebase.google.com/"><img src="https://user-images.githubusercontent.com/88995036/143838807-8a899eb9-551a-4b30-beeb-b10671964628.png" height="100px;" width="230px;"/></a>
+ <a href="https://www.algolia.com/doc/"><img src="https://user-images.githubusercontent.com/88995036/143838959-b53ab07e-3f51-4983-bd7f-5978da369743.png" height="100px;" width="230px;"/></a>
+ <a href="https://www.typescriptlang.org/docs/"><img src="https://user-images.githubusercontent.com/88995036/143839860-b5d8a21a-2b66-46d1-9fad-11ed0648a271.png" height="100px;" width="230px;"/></a>
  
  
 #### 実装予定の機能（優先度A > C）  
