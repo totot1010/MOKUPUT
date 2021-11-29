@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { auth, db } from "../firebase/firebase";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Homebody from "../components/home/Homebody";
 import SearchUsers from "../components/home/SearchUsers";

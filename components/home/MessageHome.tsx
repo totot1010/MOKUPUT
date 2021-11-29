@@ -20,24 +20,39 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const MessageHome = memo((props) => {
+interface Props {
+  message: {
+    uid: string;
+    name: string;
+    isOnline: boolean;
+    avatarURL?: string;
+    from: string;
+    text: string;
+    image?: string;
+    documentId: string;
+    experience?: string;
+    useLanguage?: Array<string>;
+    willLanguage?: Array<string>;
+    createdAt: any;
+  };
+}
+
+const MessageHome: React.FC<Props> = (props) => {
   const { message } = props;
-  const scrollRef = useRef();
-  const editRef = createRef();
-  const [showEmojis, setShowEmojis] = useState(false);
-  const [openIcon, setOpenIcon] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>();
+  const editRef = createRef<HTMLInputElement>();
+  const [showEmojis, setShowEmojis] = useState<boolean>(false);
+  const [openIcon, setOpenIcon] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [edit, setEdit] = useState(false);
-  const [text, setText] = useState(message.text);
-  const [countMessage, setCountMessage] = useState();
-  const [countLike, setCountLike] = useState();
-  const [userLikes, setUserLikes] = useState();
-  const [authLike, setAuthLike] = useState();
-  const [user, setUser] = useState();
+  const [edit, setEdit] = useState<boolean>(false);
+  const [text, setText] = useState<string>(message.text);
+  const [countMessage, setCountMessage] = useState<Array<string>>();
+  const [userLikes, setUserLikes] = useState<Array<string>>();
+  const [user, setUser] = useState<any>();
   const open = Boolean(anchorEl);
   const router = useRouter();
-  const channelId = router.query.channelId;
-  const user1 = auth.currentUser.uid;
+  const channelId: any = router.query.channelId;
+  const user1: string = auth.currentUser.uid;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -47,7 +62,7 @@ const MessageHome = memo((props) => {
   };
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behaivor: "smooth", block: "end" });
+    scrollRef.current.scrollIntoView({ block: "end" });
   }, [message.image, message.text]);
 
   useEffect(() => {
@@ -59,28 +74,15 @@ const MessageHome = memo((props) => {
       .onSnapshot((querySnapshot) => {
         const counts = [];
         querySnapshot.forEach((doc) => {
-          counts.push({ ...doc.data() });
+          counts.push(doc.data().uid);
         });
         setCountMessage(counts);
-      });
-
-    db.collection("channels")
-      .doc(channelId)
-      .collection("chat")
-      .doc(message.documentId)
-      .collection("like")
-      .onSnapshot((querySnapshot) => {
-        const likes = [];
-        querySnapshot.forEach((doc) => {
-          likes.push({ documentId: doc.id, ...doc.data() });
-        });
-        setCountLike(likes);
       });
 
     db.collection("users")
       .doc(user1)
       .onSnapshot((snapshot) => {
-        setUser({ id: user1, ...snapshot.data() });
+        setUser(snapshot.data());
       });
 
     db.collection("channels")
@@ -95,14 +97,10 @@ const MessageHome = memo((props) => {
         });
         setUserLikes(likeUsers);
       });
-
-    const authLikeUser =
-      userLikes && userLikes.find((userLike) => userLike === user1);
-    setAuthLike(authLikeUser);
   }, []);
 
   const pickEmoji = (e, { emoji }) => {
-    const ref = editRef.current;
+    const ref: any = editRef.current;
     ref.focus();
     const start = text.substring(0, ref.selectionStart);
     const end = text.substring(ref.selectionStart);
@@ -206,7 +204,6 @@ const MessageHome = memo((props) => {
             doc.ref.delete();
           });
         });
-      setAuthLike("");
     }
   };
 
@@ -374,6 +371,6 @@ const MessageHome = memo((props) => {
       </div>
     </>
   );
-});
+};
 
 export default MessageHome;

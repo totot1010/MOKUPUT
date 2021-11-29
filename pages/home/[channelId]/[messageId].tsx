@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classes from "../../../styles/reply/ReplyMessage.module.scss";
-import { db, auth, storage } from "../../../firebase/firebase";
+import { db, auth } from "../../../firebase/firebase";
 import firebase from "firebase/app";
 import Link from "next/link";
 import ReplyForm from "../../../components/reply/ReplyForm";
@@ -13,15 +13,15 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Avatar from "@mui/material/Avatar";
 
-const ReplyMessage = () => {
-  const [mainMessage, setMainMessage] = useState();
-  const [text, setText] = useState("");
-  const [user, setUser] = useState();
+const ReplyMessage: React.FC = () => {
+  const [mainMessage, setMainMessage] = useState<any>();
+  const [text, setText] = useState<string>("");
+  const [user, setUser] = useState<any>();
   const [replies, setReplies] = useState([]);
 
   const router = useRouter();
-  const messageId = router.query.messageId;
-  const channelId = router.query.channelId;
+  const messageId: any = router.query.messageId;
+  const channelId: any = router.query.channelId;
   const user1 = auth.currentUser.uid;
   useEffect(() => {
     const getUserDetail = async () => {
@@ -87,7 +87,11 @@ const ReplyMessage = () => {
       <div className={classes.home_back_wrapper}>
         <Link href={`/home/${channelId}`}>
           <a>
-            <ArrowBackIcon className={classes.back_home_icon} color="primary" />
+            <ArrowBackIcon
+              sx={{ width: "50px", height: "50px", marginTop: "8px" }}
+              className={classes.back_home_icon}
+              color="primary"
+            />
           </a>
         </Link>
       </div>

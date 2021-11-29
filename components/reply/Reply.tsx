@@ -6,7 +6,22 @@ import { ja } from "date-fns/locale";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-const Reply = (props) => {
+interface Props {
+  reply: {
+    uid: string;
+    name: string;
+    isOnline: boolean;
+    avatarURL?: string;
+    text: string;
+    documentId: string;
+    experience?: string;
+    useLanguage?: Array<string>;
+    willLanguage?: Array<string>;
+    createdAt: any;
+  };
+}
+
+const Reply: React.FC<Props> = (props) => {
   const { reply } = props;
 
   return (

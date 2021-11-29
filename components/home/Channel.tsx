@@ -2,7 +2,15 @@ import React from "react";
 import classes from "../../styles/home/Homebody.module.scss";
 import ComputerIcon from "@mui/icons-material/Computer";
 
-const Channel = (props) => {
+interface Props {
+  channel: {
+    documentId: string;
+    name: string;
+  };
+  selectedChannel: (channel) => void;
+}
+
+const Channel: React.FC<Props> = (props) => {
   const { channel, selectedChannel } = props;
 
   return (

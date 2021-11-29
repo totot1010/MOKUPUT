@@ -3,6 +3,7 @@ import { db, auth, storage } from "../../../firebase/firebase";
 import firebase from "firebase/app";
 import { AuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
+import { AuthUserType } from "../../../types/user";
 import Router from "next/router";
 import Link from "next/link";
 import ChatUser from "../../../components/chat/ChatUser";
@@ -12,20 +13,6 @@ import classes from "../../../styles/chat/ChatUser.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface authUserType {
-  uid: string;
-  name: string;
-  isOnline: boolean;
-  avatarURL?: string;
-  avatarPath?: string;
-  age?: number;
-  email: string;
-  experience?: string;
-  useLanguage?: Array<string>;
-  willLanguage?: Array<string>;
-  createdAt: Date;
-}
-
 const DirectChat = () => {
   const [users, setUsers] = useState([]);
   const [chatUser, setChatUser] = useState<any>("");
@@ -33,7 +20,7 @@ const DirectChat = () => {
   const [img, setImg] = useState<any>();
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState<string | string[]>("");
-  const [authUser, setAuthUser] = useState<authUserType>();
+  const [authUser, setAuthUser] = useState<AuthUserType>();
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const id: any = router.query.id;
@@ -87,7 +74,7 @@ const DirectChat = () => {
         .collection("users")
         .doc(user1)
         .onSnapshot((doc) => {
-          setAuthUser(doc.data() as authUserType);
+          setAuthUser(doc.data() as AuthUserType);
         });
     };
     f();
@@ -101,7 +88,6 @@ const DirectChat = () => {
 
     /**use1は自分のid, user2はチャットする相手のid*/
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-    // console.log(id);
 
     /**チャットしている相手とのやり取りを取得する処理して表示させる */
     const messagesRef = await db

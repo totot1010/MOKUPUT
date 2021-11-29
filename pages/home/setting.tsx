@@ -17,19 +17,21 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 
-const setting = () => {
-  const [authUser, setAuthUser] = useState();
-  const [currentEmail, setCurrentEmail] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [deleteChatUsers, setDeleteChatUsers] = useState([]);
-  const [alertPasswordChange, setAlertPasswordChange] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const setting: React.FC = () => {
+  const [authUser, setAuthUser] = useState<any>();
+  const [currentEmail, setCurrentEmail] = useState<string>("");
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [deleteChatUsers, setDeleteChatUsers] = useState<Array<any>>([]);
+  const [alertPasswordChange, setAlertPasswordChange] =
+    useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
-  const user1 = auth.currentUser.uid;
-  const AuthEmail = auth.currentUser.email;
+  const user1: string = auth.currentUser.uid;
+  const AuthEmail: string = auth.currentUser.email;
 
   useEffect(() => {
     getFirestore();
