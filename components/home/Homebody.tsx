@@ -19,7 +19,7 @@ const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
   const [channels, setChannels] = useState([]);
   const [user, setUser] = useState<AuthUserType>();
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
   const [img, setImg] = useState<any>();
   const [messages, setMessages] = useState([]);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);

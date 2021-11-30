@@ -25,7 +25,6 @@ const SearchUser: React.FC<Props> = (props) => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<any>();
-  console.log(selectedUser);
 
   const user1 = auth.currentUser.uid;
 
