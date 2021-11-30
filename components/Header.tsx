@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import { db, storage } from "../firebase/firebase";
+import { db, storage, auth } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
 import Router from "next/router";
@@ -107,8 +107,10 @@ const Header: React.FC<Props> = (props) => {
   const [openSearchCancel, setOpenSearchCancel] = useState<boolean>();
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [img, setImg] = useState<any>("");
+  const [notifications, setNotifications] = useState<any>();
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const user1 = auth.currentUser.uid;
 
   useEffect(() => {
     const docRef = db.collection("users").doc(user.uid);
@@ -122,6 +124,19 @@ const Header: React.FC<Props> = (props) => {
         setSelectedAvatarPath(doc.data().avatarPath);
       }
     });
+
+    db.collection("notifications")
+      .doc(user1)
+      .collection("notice")
+      .where("unread", "in", [true])
+      .get()
+      .then((querySnapshot) => {
+        const notificationData = [];
+        querySnapshot.forEach((doc) => {
+          notificationData.push(doc.data());
+        });
+        setNotifications(notificationData);
+      });
   }, []);
 
   useEffect(() => {
@@ -296,7 +311,10 @@ const Header: React.FC<Props> = (props) => {
         <p style={{ marginLeft: "29px" }}>設定</p>
       </MenuItem>
       <MenuItem onClick={handleNotifications}>
-        <Badge badgeContent={17} color="error">
+        <Badge
+          badgeContent={notifications && notifications.length}
+          color="error"
+        >
           <NotificationsIcon />
         </Badge>
         <p style={{ margin: "auto" }}>通知</p>
@@ -367,7 +385,15 @@ const Header: React.FC<Props> = (props) => {
               >
                 <Avatar
                   src={selectedAvatarURL}
-                  sx={{ width: "55px", height: "55px" }}
+                  sx={{ width: "50px", height: "50px" }}
+                />
+                <Badge
+                  badgeContent={notifications && notifications.length}
+                  color="error"
+                  sx={{
+                    position: "relative",
+                    top: "-16px",
+                  }}
                 />
               </IconButton>
             </Box>

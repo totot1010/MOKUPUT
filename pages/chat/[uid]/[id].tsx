@@ -69,7 +69,18 @@ const DirectChat = () => {
           });
           setMessages(texts);
         });
+
+        const docSnap = await db.collection("lastMessage").doc(newId).get();
+        if (docSnap.data()?.from !== user1) {
+          await db.collection("lastMessage").doc(newId).set(
+            {
+              unread: false,
+            },
+            { merge: true }
+          );
+        }
       }
+
       await db
         .collection("users")
         .doc(user1)
@@ -166,6 +177,20 @@ const DirectChat = () => {
           media: URL,
           unread: true,
         });
+
+        db.collection("notifications")
+          .doc(id)
+          .collection("notice")
+          .add({
+            text,
+            uid: user1,
+            media: URL,
+            avatarURL: authUser.avatarURL || null,
+            unread: true,
+            chat: true,
+            notification: `${authUser.name}さんから新しい📤メッセージが届きました。`,
+            createdAt: firebase.firestore.Timestamp.now(),
+          });
         setText("");
         setImg("");
       });
@@ -188,6 +213,19 @@ const DirectChat = () => {
         createdAt: firebase.firestore.Timestamp.now(),
         unread: true,
       });
+
+      db.collection("notifications")
+        .doc(id)
+        .collection("notice")
+        .add({
+          text,
+          uid: user1,
+          avatarURL: authUser.avatarURL || null,
+          unread: true,
+          chat: true,
+          notification: `${authUser.name}さんから💌メッセージが届きました。`,
+          createdAt: firebase.firestore.Timestamp.now(),
+        });
       await setText("");
     }
   };

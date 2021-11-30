@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import classes from "../../styles/reply/ReplyMessage.module.scss";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -23,13 +23,28 @@ interface Props {
 
 const Reply: React.FC<Props> = (props) => {
   const { reply } = props;
+  const scrollRef = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({
+      block: "end",
+    });
+  }, [reply]);
 
   return (
     <>
-      <div className={classes.reply_container}>
+      <div className={classes.reply_container} ref={scrollRef}>
         <div className={classes.reply_header}>
           <ListItemAvatar>
-            <Avatar src={reply && reply.avatarURL} className={classes.avatar} />
+            <Avatar
+              src={reply && reply.avatarURL}
+              sx={{
+                height: "46px",
+                width: "46px",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+            />
           </ListItemAvatar>
           <h3>{reply.name}</h3>
           <span>

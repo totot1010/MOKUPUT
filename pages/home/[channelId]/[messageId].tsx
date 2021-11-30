@@ -79,6 +79,21 @@ const ReplyMessage: React.FC = () => {
         experience: user.experience,
         isOnline: user.isOnline,
       });
+
+    db.collection("notifications")
+      .doc(mainMessage.uid)
+      .collection("notice")
+      .add({
+        text,
+        uid: user1,
+        avatarURL: user.avatarURL || null,
+        unread: true,
+        channelId,
+        messageId,
+        message: true,
+        notification: `${user.name}さんからあなたの投稿に対して📤返信しました。`,
+        createdAt: firebase.firestore.Timestamp.now(),
+      });
     setText("");
   };
 

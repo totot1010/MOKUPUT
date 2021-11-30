@@ -234,7 +234,7 @@ const Homebody: React.FC = () => {
             ? messages.map((message, index) => {
                 return <MessageHome key={index} message={message} />;
               })
-            : null}
+            : "このチャンネルに投稿は有りません。"}
         </div>
         <HomeForm
           channel={channel}
