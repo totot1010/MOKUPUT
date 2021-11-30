@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, createRef, memo } from "react";
 import { db, auth } from "../../firebase/firebase";
+import firebase from "firebase/app";
 import anchorme from "anchorme";
 import { filterXSS } from "xss";
 import { useRouter } from "next/router";
@@ -51,7 +52,6 @@ const MessageHome: React.FC<Props> = (props) => {
   const router = useRouter();
   const channelId: any = router.query.channelId;
   const user1: string = auth.currentUser.uid;
-  console.log(user1);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -195,12 +195,20 @@ const MessageHome: React.FC<Props> = (props) => {
         .collection("like")
         .add({ uid: user.uid });
 
+      if (message.uid === user1) return;
       await db
         .collection("notifications")
         .doc(message.uid)
         .collection("notice")
         .add({
-          text: `${user.name}があなたの投稿にいいねを押しました。`,
+          notification: `${user.name}さんがあなたの投稿に😍いいねを押しました。`,
+          text: text,
+          avatarURL: user.avatarURL,
+          like: true,
+          unread: true,
+          channelId,
+          uid: user.uid,
+          createdAt: firebase.firestore.Timestamp.now(),
         });
     }
     //uidが返って来た時

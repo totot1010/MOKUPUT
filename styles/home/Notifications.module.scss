@@ -1,0 +1,79 @@
+.home_back_wrapper {
+  display: flex;
+  justify-content: center;
+
+  .back_home_icon {
+    &:hover {
+      background: rgba(25, 118, 210, 0.2);
+      border-radius: 50%;
+    }
+  }
+}
+
+.notifications_container {
+  text-align: center;
+  cursor: pointer;
+
+  .notifications_header {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+
+    .notifications_header {
+      padding: 16px;
+    }
+
+    .current_password {
+      padding: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      background: #1976d2;
+      opacity: 0.6;
+      border: none;
+      padding: 8px 16px;
+      font-size: 20px;
+      border-radius: 24px;
+      color: white;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: default;
+    }
+  }
+
+  //Notice
+
+  .notice_container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .notice_header {
+      display: flex;
+
+      h4 {
+        margin-left: 12px;
+        font-weight: 400;
+      }
+    }
+
+    span {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    .notice_text {
+      margin-left: 54px;
+      text-align: left;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
