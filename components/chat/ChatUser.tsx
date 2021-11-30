@@ -73,9 +73,10 @@ const ChatUser: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-    db.collection("lastMessage").doc(id).onSnapshot <
-      ((doc) => {
-        setLastMessageData(doc.data());
+    db.collection("lastMessage")
+      .doc(id)
+      .onSnapshot((doc) => {
+        setLastMessageData(doc.data() as lastMessageType);
       });
   }, []);
 

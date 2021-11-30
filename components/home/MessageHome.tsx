@@ -7,8 +7,6 @@ import Router from "next/router";
 import Emoji from "../../emojis/emojisComponent";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
-
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import classes from "../../styles/home/Homebody.module.scss";
 import Avatar from "@mui/material/Avatar";
 import UserDetailModal from "./UserDetailModal";
@@ -53,6 +51,7 @@ const MessageHome: React.FC<Props> = (props) => {
   const router = useRouter();
   const channelId: any = router.query.channelId;
   const user1: string = auth.currentUser.uid;
+  console.log(user1);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,6 +65,7 @@ const MessageHome: React.FC<Props> = (props) => {
   }, [message.image, message.text]);
 
   useEffect(() => {
+    //投稿に対しての返信の数をfirestoreから取得する
     db.collection("channels")
       .doc(channelId)
       .collection("chat")
@@ -79,12 +79,14 @@ const MessageHome: React.FC<Props> = (props) => {
         setCountMessage(counts);
       });
 
+    //現在のユーザーのデータをfirestoreから取得
     db.collection("users")
       .doc(user1)
       .onSnapshot((snapshot) => {
         setUser(snapshot.data());
       });
 
+    //投稿に対してのいいねの数をfiestoreから取得する
     db.collection("channels")
       .doc(channelId)
       .collection("chat")
@@ -109,10 +111,10 @@ const MessageHome: React.FC<Props> = (props) => {
     setShowEmojis(!showEmojis);
   };
 
-  const handleShowEmojis = (e) => {
+  //絵文字を開く
+  const handleShowEmojis = (e): void => {
     e.preventDefault();
     editRef.current.focus();
-
     setShowEmojis(!showEmojis);
   };
 
@@ -180,8 +182,10 @@ const MessageHome: React.FC<Props> = (props) => {
   };
 
   const handleLike = async () => {
+    //いいね押したユーザーの中から自分のuidを取ってくる
     const authLikeUser = await userLikes.find((userLike) => userLike === user1);
 
+    //uidが返ってこない時
     if (!authLikeUser) {
       await db
         .collection("channels")
@@ -190,7 +194,17 @@ const MessageHome: React.FC<Props> = (props) => {
         .doc(message.documentId)
         .collection("like")
         .add({ uid: user.uid });
-    } else {
+
+      await db
+        .collection("notifications")
+        .doc(message.uid)
+        .collection("notice")
+        .add({
+          text: `${user.name}があなたの投稿にいいねを押しました。`,
+        });
+    }
+    //uidが返って来た時
+    else {
       await db
         .collection("channels")
         .doc(channelId)
@@ -207,6 +221,7 @@ const MessageHome: React.FC<Props> = (props) => {
     }
   };
 
+  //メッセージページに遷移する
   const handleReplyPage = () => {
     Router.push(`/home/${channelId}/${message.documentId}`);
   };

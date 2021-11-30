@@ -10,10 +10,6 @@ import ChatUser from "../../components/chat/ChatUser";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-// interface chatUserType {
-//   name: string;
-// }
-
 const Messages = () => {
   const [users, setUsers] = useState([]);
   const [chatUser, setChatUser] = useState();

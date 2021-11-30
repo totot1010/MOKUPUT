@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import { db, auth, storage } from "../firebase/firebase";
+import { db, storage } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
 import Router from "next/router";
@@ -29,8 +29,12 @@ import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Badge from "@mui/material/Badge";
 import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import algoliasearch from "algoliasearch";
 
@@ -262,6 +266,10 @@ const Header: React.FC<Props> = (props) => {
     Router.push("/home/setting");
   };
 
+  const handleNotifications = () => {
+    Router.push("/home/notifications");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -279,8 +287,20 @@ const Header: React.FC<Props> = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={profileClick}>プロフィール</MenuItem>
-      <MenuItem onClick={handleSettingPage}>設定</MenuItem>
+      <MenuItem onClick={profileClick}>
+        <AccountBoxIcon sx={{ marginRight: "8px" }} />
+        プロフィール
+      </MenuItem>
+      <MenuItem onClick={handleSettingPage}>
+        <SettingsApplicationsIcon sx={{ marginRight: "8px" }} />
+        <p style={{ marginLeft: "29px" }}>設定</p>
+      </MenuItem>
+      <MenuItem onClick={handleNotifications}>
+        <Badge badgeContent={17} color="error">
+          <NotificationsIcon />
+        </Badge>
+        <p style={{ margin: "auto" }}>通知</p>
+      </MenuItem>
     </Menu>
   );
 
