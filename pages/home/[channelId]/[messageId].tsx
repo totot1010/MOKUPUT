@@ -119,19 +119,21 @@ const ReplyMessage: React.FC = () => {
                 sx={{ width: "60px", height: "60px" }}
               />
             </ListItemAvatar>
-            <h4>{mainMessage && mainMessage.name}</h4>
-            <span>
-              {mainMessage &&
-                format(
-                  new Date(mainMessage.createdAt?.toDate()),
-                  "yyyy年MM月dd日 H:mm",
-                  { locale: ja }
-                )}
-            </span>
+            <h4>
+              {mainMessage && mainMessage.name}
+              <span>
+                {mainMessage &&
+                  format(
+                    new Date(mainMessage.createdAt?.toDate()),
+                    "yyyy年MM月dd日 H:mm",
+                    { locale: ja }
+                  )}
+              </span>
+            </h4>
           </div>
-          <h1 className={classes.message_text}>
+          <h2 className={classes.message_text}>
             {mainMessage && mainMessage.text}
-          </h1>
+          </h2>
         </div>
         <div>
           {replies &&

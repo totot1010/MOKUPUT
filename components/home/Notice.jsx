@@ -54,14 +54,16 @@ const Notice = (props) => {
                 borderRadius: "8px",
               }}
             />
-            <h4>{notice.notification}</h4>
-            <span>
-              {format(
-                new Date(notice.createdAt?.toDate()),
-                "yyyy年MM月dd日 H:mm",
-                { locale: ja }
-              )}
-            </span>
+            <h4>
+              {notice.notification}
+              <h5>
+                {format(
+                  new Date(notice.createdAt?.toDate()),
+                  "yyyy年MM月dd日 H:mm",
+                  { locale: ja }
+                )}
+              </h5>
+            </h4>
           </div>
           <div className={classes.notice_text}>
             <p>{notice.text}</p>
@@ -80,13 +82,13 @@ const Notice = (props) => {
               }}
             />
             <h4>{notice.notification}</h4>
-            <span>
+            <h5>
               {format(
                 new Date(notice.createdAt?.toDate()),
                 "yyyy年MM月dd日 H:mm",
                 { locale: ja }
               )}
-            </span>
+            </h5>
           </div>
           <div className={classes.notice_text}>
             <p>{notice.text}</p>
@@ -105,13 +107,13 @@ const Notice = (props) => {
               }}
             />
             <h4>{notice.notification}</h4>
-            <span>
+            <h5>
               {format(
                 new Date(notice.createdAt?.toDate()),
                 "yyyy年MM月dd日 H:mm",
                 { locale: ja }
               )}
-            </span>
+            </h5>
           </div>
           <div className={classes.notice_text}>
             <p>{notice.text}</p>

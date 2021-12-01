@@ -46,14 +46,16 @@ const Reply: React.FC<Props> = (props) => {
               }}
             />
           </ListItemAvatar>
-          <h3>{reply.name}</h3>
-          <span>
-            {format(
-              new Date(reply.createdAt?.toDate()),
-              "yyyy年MM月dd日 H:mm",
-              { locale: ja }
-            )}
-          </span>
+          <h3>
+            {reply.name}
+            <span>
+              {format(
+                new Date(reply.createdAt?.toDate()),
+                "yyyy年MM月dd日 H:mm",
+                { locale: ja }
+              )}
+            </span>
+          </h3>
         </div>
         <div className={classes.reply_text}>
           <p>{reply.text}</p>
