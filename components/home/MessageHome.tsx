@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createRef, memo } from "react";
+import React, { useEffect, useRef, useState, createRef } from "react";
 import { db, auth } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import anchorme from "anchorme";

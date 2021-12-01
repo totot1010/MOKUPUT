@@ -146,17 +146,12 @@ const Header: React.FC<Props> = (props) => {
         const imagesRef = storageRef.child(
           `avatar/${new Date().getTime()} - ${img.name}`
         );
-
-        try {
-          const snap = await imagesRef.put(img);
-          await snap.ref.getDownloadURL().then(function (URL) {
-            setSelectedAvatarURL(URL);
-            setSelectedAvatarPath(snap.ref.fullPath);
-          });
-          setImg("");
-        } catch (error) {
-          console.log(error.message);
-        }
+        const snap = await imagesRef.put(img);
+        await snap.ref.getDownloadURL().then(function (URL) {
+          setSelectedAvatarURL(URL);
+          setSelectedAvatarPath(snap.ref.fullPath);
+        });
+        setImg("");
       };
       uploadImg();
     }

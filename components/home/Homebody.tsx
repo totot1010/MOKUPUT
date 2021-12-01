@@ -14,8 +14,6 @@ import HomeForm from "./HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
-import { useAllUsers } from "../../hooks/useAllUsers";
-import { connectGeoSearch } from "react-instantsearch-core";
 
 const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
@@ -31,8 +29,7 @@ const Homebody: React.FC = () => {
 
   //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
-
-  console.log(loading);
+  console.log(messages);
 
   useEffect(() => {
     getFirestore();
@@ -242,9 +239,13 @@ const Homebody: React.FC = () => {
               </h2>
             </div>
             <div className={classes.messages_wrapper}>
-              {messages.map((message, index) => {
-                return <MessageHome key={index} message={message} />;
-              })}
+              {messages.length > 0 ? (
+                messages.map((message, index) => {
+                  return <MessageHome key={index} message={message} />;
+                })
+              ) : (
+                <h1>まだ投稿がありません。</h1>
+              )}
             </div>
             <HomeForm
               channel={channel}

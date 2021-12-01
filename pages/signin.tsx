@@ -46,7 +46,7 @@ const Signin: React.FC = () => {
       .collection("users")
       .doc(result.user.uid)
       .update({ isOnline: true });
-    (await result) && Router.push("/home/eJhpxQwVn9zbq09GIZel");
+    (await result) && Router.push("/home/3fSVoNmwFQWi9zYg63Fw");
   };
 
   return (
