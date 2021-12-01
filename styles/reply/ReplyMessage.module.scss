@@ -14,7 +14,7 @@
   width: 80%;
   margin: 0 auto;
   overflow-y: auto;
-  height: calc(100vh - 165px);
+  height: calc(100vh - 173px);
 }
 
 .message_container {
@@ -48,9 +48,10 @@
 
 .message_text {
   display: block;
-  font-size: 20px;
+  font-size: 14px;
   margin-left: 36px;
   margin-top: 12px;
+  font-weight: 400;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -59,7 +60,7 @@
 
 .reply_wrapper {
   &:first-child {
-    margin-top: 16px;
+    margin-top: 12px;
   }
 
   .reply_container {

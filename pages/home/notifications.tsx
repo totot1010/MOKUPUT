@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase/firebase";
 import classes from "../../styles/home/Notifications.module.scss";
 import Link from "next/link";
-import Router from "next/router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Notice from "../../components/home/Notice";
 
 const notifications = () => {
-  const [notifications, setNotifications] = useState();
+  const [notifications, setNotifications] = useState<any>();
 
-  const user1 = auth.currentUser.uid;
+  const user1: string = auth.currentUser.uid;
 
   useEffect(() => {
     getFirestore();
@@ -34,7 +33,7 @@ const notifications = () => {
   return (
     <>
       <div className={classes.home_back_wrapper}>
-        <Link href={"/home/eJhpxQwVn9zbq09GIZel"}>
+        <Link href={"/home/3fSVoNmwFQWi9zYg63Fw"}>
           <a>
             <ArrowBackIcon
               className={classes.back_home_icon}

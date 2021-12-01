@@ -141,7 +141,7 @@ const setting: React.FC = () => {
         </Snackbar>
       </Stack>
       <div className={classes.home_back_wrapper}>
-        <Link href={"/home/eJhpxQwVn9zbq09GIZel"}>
+        <Link href={"/home/3fSVoNmwFQWi9zYg63Fw"}>
           <a>
             <ArrowBackIcon
               className={classes.back_home_icon}

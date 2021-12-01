@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { db, auth } from "../../firebase/firebase";
 import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
 import classes from "../../styles/home/Notifications.module.scss";
 import Router from "next/router";
 import { format } from "date-fns";
@@ -56,13 +57,13 @@ const Notice = (props) => {
             />
             <h4>
               {notice.notification}
-              <h5>
+              <p>
                 {format(
                   new Date(notice.createdAt?.toDate()),
                   "yyyy年MM月dd日 H:mm",
                   { locale: ja }
                 )}
-              </h5>
+              </p>
             </h4>
           </div>
           <div className={classes.notice_text}>
@@ -81,14 +82,16 @@ const Notice = (props) => {
                 borderRadius: "8px",
               }}
             />
-            <h4>{notice.notification}</h4>
-            <h5>
-              {format(
-                new Date(notice.createdAt?.toDate()),
-                "yyyy年MM月dd日 H:mm",
-                { locale: ja }
-              )}
-            </h5>
+            <h4>
+              {notice.notification}
+              <p>
+                {format(
+                  new Date(notice.createdAt?.toDate()),
+                  "yyyy年MM月dd日 H:mm",
+                  { locale: ja }
+                )}
+              </p>
+            </h4>
           </div>
           <div className={classes.notice_text}>
             <p>{notice.text}</p>
@@ -106,14 +109,16 @@ const Notice = (props) => {
                 borderRadius: "8px",
               }}
             />
-            <h4>{notice.notification}</h4>
-            <h5>
-              {format(
-                new Date(notice.createdAt?.toDate()),
-                "yyyy年MM月dd日 H:mm",
-                { locale: ja }
-              )}
-            </h5>
+            <h4>
+              {notice.notification}
+              <p>
+                {format(
+                  new Date(notice.createdAt?.toDate()),
+                  "yyyy年MM月dd日 H:mm",
+                  { locale: ja }
+                )}
+              </p>
+            </h4>
           </div>
           <div className={classes.notice_text}>
             <p>{notice.text}</p>
