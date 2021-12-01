@@ -29,7 +29,6 @@ const Homebody: React.FC = () => {
 
   //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
-  console.log(messages);
 
   useEffect(() => {
     getFirestore();

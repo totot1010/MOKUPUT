@@ -53,6 +53,8 @@ const MessageHome: React.FC<Props> = (props) => {
   const channelId: any = router.query.channelId;
   const user1: string = auth.currentUser.uid;
 
+  console.log(userLikes);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
