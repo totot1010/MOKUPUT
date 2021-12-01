@@ -9,11 +9,13 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Channel from "./Channel";
+import Loading from "../Loading";
 import HomeForm from "./HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 import { useAllUsers } from "../../hooks/useAllUsers";
+import { connectGeoSearch } from "react-instantsearch-core";
 
 const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
@@ -23,49 +25,55 @@ const Homebody: React.FC = () => {
   const [img, setImg] = useState<any>();
   const [messages, setMessages] = useState([]);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
-
   const channelId: any = router.query.channelId;
 
   //現在ログインしてるユーザーのid（自分）
   const user1 = auth.currentUser.uid;
 
+  console.log(loading);
+
   useEffect(() => {
-    const getFirestore = async () => {
-      await db.collection("channels").onSnapshot((snapshot) => {
-        const names = [];
-        snapshot.forEach((doc) => {
-          names.push({ documentId: doc.id, ...doc.data() });
-        });
-        setChannels(names);
-      });
-
-      db.collection("channels")
-        .doc(channelId)
-        .onSnapshot((doc) => {
-          setChannel({ id: channelId, ...doc.data() });
-        });
-
-      const messagesRef = db
-        .collection("channels")
-        .doc(channelId)
-        .collection("chat");
-      messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
-        const texts = [];
-        querySnapshot.forEach((doc) => {
-          texts.push({ documentId: doc.id, ...doc.data() });
-        });
-        setMessages(texts);
-      });
-
-      db.collection("users")
-        .doc(user1)
-        .onSnapshot((snapshot) => {
-          setUser(snapshot.data() as AuthUserType);
-        });
-    };
     getFirestore();
   }, []);
+
+  const getFirestore = async () => {
+    await db.collection("channels").onSnapshot((snapshot) => {
+      const names = [];
+      snapshot.forEach((doc) => {
+        names.push({ documentId: doc.id, ...doc.data() });
+      });
+      setChannels(names);
+    });
+
+    await db
+      .collection("channels")
+      .doc(channelId)
+      .onSnapshot((doc) => {
+        setChannel({ id: channelId, ...doc.data() });
+      });
+
+    const messagesRef = await db
+      .collection("channels")
+      .doc(channelId)
+      .collection("chat");
+    messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
+      const texts = [];
+      querySnapshot.forEach((doc) => {
+        texts.push({ documentId: doc.id, ...doc.data() });
+      });
+      setMessages(texts);
+    });
+
+    await db
+      .collection("users")
+      .doc(user1)
+      .onSnapshot((snapshot) => {
+        setUser(snapshot.data() as AuthUserType);
+        setLoading(false);
+      });
+  };
 
   //チャンネルを追加した時の挙動
   const addChannel = () => {
@@ -219,30 +227,34 @@ const Homebody: React.FC = () => {
       </div>
 
       <div className={classes.appbody_container}>
-        <div className={classes.header_container}>
-          <h2>
-            <ArrowBackIcon
-              className={classes.open_sidebar}
-              onClick={handleOpenSidebar}
-            />
-            <ComputerIcon className={classes.header_icon} />
-            {channel && channel.name}
-          </h2>
-        </div>
-        <div className={classes.messages_wrapper}>
-          {messages.length
-            ? messages.map((message, index) => {
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <div className={classes.header_container}>
+              <h2>
+                <ArrowBackIcon
+                  className={classes.open_sidebar}
+                  onClick={handleOpenSidebar}
+                />
+                <ComputerIcon className={classes.header_icon} />
+                {channel && channel.name}
+              </h2>
+            </div>
+            <div className={classes.messages_wrapper}>
+              {messages.map((message, index) => {
                 return <MessageHome key={index} message={message} />;
-              })
-            : "このチャンネルに投稿は有りません。"}
-        </div>
-        <HomeForm
-          channel={channel}
-          handleSubmit={handleSubmit}
-          text={text}
-          setText={setText}
-          setImg={setImg}
-        />
+              })}
+            </div>
+            <HomeForm
+              channel={channel}
+              handleSubmit={handleSubmit}
+              text={text}
+              setText={setText}
+              setImg={setImg}
+            />
+          </>
+        )}
       </div>
     </div>
   );
