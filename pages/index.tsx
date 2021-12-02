@@ -16,7 +16,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 const Home = () => {
   const { user } = useContext(AuthContext);
 
-
   const handleLogout = async () => {
     (await auth.currentUser.uid) &&
       db
@@ -64,7 +63,9 @@ const Home = () => {
           </Toolbar>
         </AppBar>
       </Box>
-     <Link href="/chat/messages"><a>チャットへ</a></Link>
+      <Link href="/chat/messages">
+        <a>チャットへ</a>
+      </Link>
     </>
   );
 };

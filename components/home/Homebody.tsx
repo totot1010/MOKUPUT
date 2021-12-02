@@ -27,9 +27,6 @@ const Homebody: React.FC = () => {
   const router = useRouter();
   const channelId: any = router.query.channelId;
 
-  //現在ログインしてるユーザーのid（自分）
-  const user1 = auth.currentUser.uid;
-
   useEffect(() => {
     getFirestore();
   }, []);
@@ -60,14 +57,15 @@ const Homebody: React.FC = () => {
         texts.push({ documentId: doc.id, ...doc.data() });
       });
       setMessages(texts);
+      setLoading(false);
     });
 
+    if (auth.currentUser === null) return;
     await db
       .collection("users")
-      .doc(user1)
+      .doc(auth.currentUser.uid)
       .onSnapshot((snapshot) => {
         setUser(snapshot.data() as AuthUserType);
-        setLoading(false);
       });
   };
 
@@ -116,7 +114,7 @@ const Homebody: React.FC = () => {
           .collection("chat")
           .add({
             text,
-            from: user1,
+            from: auth.currentUser.uid,
             createdAt: firebase.firestore.Timestamp.now(),
             image: URL,
             avatarURL: user.avatarURL || null,
@@ -137,7 +135,7 @@ const Homebody: React.FC = () => {
         .collection("chat")
         .add({
           text,
-          from: user1,
+          from: auth.currentUser.uid,
           createdAt: firebase.firestore.Timestamp.now(),
           avatarURL: user.avatarURL || null,
           name: user.name,
@@ -153,7 +151,7 @@ const Homebody: React.FC = () => {
 
   //チャットページに画面遷移する処理
   const handleChat = () => {
-    Router.push(`/chat/${user1}`);
+    Router.push(`/chat/${auth.currentUser.uid}`);
   };
 
   const handleSidebarClose = () => {
