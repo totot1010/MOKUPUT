@@ -15,6 +15,7 @@ import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
 import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
+import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
 
 const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
@@ -24,12 +25,17 @@ const Homebody: React.FC = () => {
   const [img, setImg] = useState<any>();
   const [messages, setMessages] = useState([]);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const channelId: any = router.query.channelId;
 
   useEffect(() => {
-    getFirestore();
+    if (auth.currentUser === null) {
+      getFirestoreExceptAuth();
+    } else {
+      getFirestore();
+    }
   }, []);
 
   const getFirestore = async () => {
@@ -48,25 +54,55 @@ const Homebody: React.FC = () => {
         setChannel({ id: channelId, ...doc.data() });
       });
 
-    const messagesRef = await db
+    await db
       .collection("channels")
       .doc(channelId)
-      .collection("chat");
-    messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
-      const texts = [];
-      querySnapshot.forEach((doc) => {
-        texts.push({ documentId: doc.id, ...doc.data() });
+      .collection("chat")
+      .orderBy("createdAt")
+      .onSnapshot((querySnapshot) => {
+        const texts = [];
+        querySnapshot.forEach((doc) => {
+          texts.push({ documentId: doc.id, ...doc.data() });
+        });
+        setMessages(texts);
+        setLoading(false);
       });
-      setMessages(texts);
-      setLoading(false);
-    });
 
-    if (auth.currentUser === null) return;
-    await db
-      .collection("users")
+    db.collection("users")
       .doc(auth.currentUser.uid)
       .onSnapshot((snapshot) => {
         setUser(snapshot.data() as AuthUserType);
+      });
+  };
+
+  const getFirestoreExceptAuth = async () => {
+    await db.collection("channels").onSnapshot((snapshot) => {
+      const names = [];
+      snapshot.forEach((doc) => {
+        names.push({ documentId: doc.id, ...doc.data() });
+      });
+      setChannels(names);
+    });
+
+    await db
+      .collection("channels")
+      .doc(channelId)
+      .onSnapshot((doc) => {
+        setChannel({ id: channelId, ...doc.data() });
+      });
+
+    await db
+      .collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .orderBy("createdAt")
+      .onSnapshot((querySnapshot) => {
+        const texts = [];
+        querySnapshot.forEach((doc) => {
+          texts.push({ documentId: doc.id, ...doc.data() });
+        });
+        setMessages(texts);
+        setLoading(false);
       });
   };
 
@@ -163,6 +199,13 @@ const Homebody: React.FC = () => {
     setShowSidebar(!showSidebar);
   };
 
+  const HandleOpenNoAuthUserModal = (e) => {
+    e.preventDefault();
+    setText("");
+    setOpenNoAuthUserModal(true);
+  };
+  const HandleCloseNoAuthUserModal = () => setOpenNoAuthUserModal(false);
+
   return (
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
@@ -176,7 +219,7 @@ const Homebody: React.FC = () => {
         ) : (
           <div className={classes.sidebar_channel} onClick={handleChat}>
             <MailOutlineIcon className={classes.message_icon} />
-            <h3>メッセージ</h3>
+            <h3 style={{ marginLeft: "16px" }}>メッセージ</h3>
           </div>
         )}
         <hr />
@@ -190,7 +233,7 @@ const Homebody: React.FC = () => {
         ) : (
           <div className={classes.addchannels_container} onClick={addChannel}>
             <AddIcon className={classes.add_icon} />
-            <h3>チャンネルを追加</h3>
+            <h3 style={{ marginLeft: "16px" }}>チャンネルを追加</h3>
           </div>
         )}
         <hr />
@@ -255,7 +298,7 @@ const Homebody: React.FC = () => {
               </h2>
             </div>
             <div className={classes.messages_wrapper}>
-              {messages.length > 0 ? (
+              {messages && messages.length > 0 ? (
                 messages.map((message, index) => {
                   return <MessageHome key={index} message={message} />;
                 })
@@ -263,12 +306,28 @@ const Homebody: React.FC = () => {
                 <h1>まだ投稿がありません。</h1>
               )}
             </div>
-            <HomeForm
-              channel={channel}
-              handleSubmit={handleSubmit}
-              text={text}
-              setText={setText}
-              setImg={setImg}
+            {auth.currentUser === null ? (
+              <HomeForm
+                channel={channel}
+                handleSubmit={HandleOpenNoAuthUserModal}
+                text={text}
+                setText={setText}
+                setImg={setImg}
+              />
+            ) : (
+              <HomeForm
+                channel={channel}
+                handleSubmit={handleSubmit}
+                text={text}
+                setText={setText}
+                setImg={setImg}
+              />
+            )}
+            <NoAuthUserIcon
+              openNoAuthUserModal={openNoAuthUserModal}
+              setOpenNoAuthUserModal={setOpenNoAuthUserModal}
+              HandleOpenNoAuthUserModal={HandleOpenNoAuthUserModal}
+              HandleCloseNoAuthUserModal={HandleCloseNoAuthUserModal}
             />
           </>
         )}

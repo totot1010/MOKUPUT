@@ -1,9 +1,9 @@
-.container {
-  cursor: pointer;
-  &:hover {
-    background-color: rgb(237, 232, 232);
-  }
-}
+// .container {
+//   cursor: pointer;
+//   &:hover {
+//     background-color: rgb(237, 232, 232);
+//   }
+// }
 .box {
   position: absolute;
   top: 50%;
@@ -85,6 +85,33 @@
 
 .search_wrapper {
   display: flex;
+}
+
+.button_container {
+  display: flex;
+  // justify-content: space-between;
+
+  a:first-child {
+    width: 90px;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 8px;
+    &:hover {
+      background: rgba(52, 165, 240, 0.6);
+    }
+  }
+
+  a:last-child {
+    width: 90px;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 8px;
+    &:hover {
+      background: rgba(85, 196, 0, 0.6);
+    }
+  }
 }
 
 .nameText {

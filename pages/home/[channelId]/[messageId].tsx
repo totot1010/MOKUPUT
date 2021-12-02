@@ -22,7 +22,6 @@ const ReplyMessage: React.FC = () => {
   const router = useRouter();
   const messageId: any = router.query.messageId;
   const channelId: any = router.query.channelId;
-  const user1 = auth.currentUser.uid;
   useEffect(() => {
     const getUserDetail = async () => {
       await db
@@ -47,13 +46,13 @@ const ReplyMessage: React.FC = () => {
         });
         setReplies(replies);
       });
-    };
 
-    db.collection("users")
-      .doc(user1)
-      .onSnapshot((snapshot) => {
-        setUser({ id: user1, ...snapshot.data() });
-      });
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .onSnapshot((snapshot) => {
+          setUser({ id: auth.currentUser.uid, ...snapshot.data() });
+        });
+    };
 
     getUserDetail();
   }, []);
@@ -70,7 +69,7 @@ const ReplyMessage: React.FC = () => {
       .collection("reply")
       .add({
         text,
-        uid: user1,
+        uid: auth.currentUser.uid,
         avatarURL: user.avatarURL,
         name: user.name,
         createdAt: firebase.firestore.Timestamp.now(),
@@ -85,7 +84,7 @@ const ReplyMessage: React.FC = () => {
       .collection("notice")
       .add({
         text,
-        uid: user1,
+        uid: auth.currentUser.uid,
         avatarURL: user.avatarURL || null,
         unread: true,
         channelId,
