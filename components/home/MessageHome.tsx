@@ -51,9 +51,6 @@ const MessageHome: React.FC<Props> = (props) => {
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId: any = router.query.channelId;
-  const user1: string = auth.currentUser.uid;
-
-  console.log(userLikes);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -81,13 +78,6 @@ const MessageHome: React.FC<Props> = (props) => {
         setCountMessage(counts);
       });
 
-    //現在のユーザーのデータをfirestoreから取得
-    db.collection("users")
-      .doc(user1)
-      .onSnapshot((snapshot) => {
-        setUser(snapshot.data());
-      });
-
     //投稿に対してのいいねの数をfiestoreから取得する
     db.collection("channels")
       .doc(channelId)
@@ -100,6 +90,14 @@ const MessageHome: React.FC<Props> = (props) => {
           likeUsers.push(doc.data().uid);
         });
         setUserLikes(likeUsers);
+      });
+
+    //現在のユーザーのデータをfirestoreから取得
+    if (auth.currentUser === null) return;
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .onSnapshot((snapshot) => {
+        setUser(snapshot.data());
       });
   }, []);
 
@@ -185,7 +183,9 @@ const MessageHome: React.FC<Props> = (props) => {
 
   const handleLike = async () => {
     //いいね押したユーザーの中から自分のuidを取ってくる
-    const authLikeUser = await userLikes.find((userLike) => userLike === user1);
+    const authLikeUser = await userLikes.find(
+      (userLike) => userLike === auth.currentUser.uid
+    );
 
     //uidが返ってこない時
     if (!authLikeUser) {
@@ -197,7 +197,7 @@ const MessageHome: React.FC<Props> = (props) => {
         .collection("like")
         .add({ uid: user.uid });
 
-      if (message.uid === user1) return;
+      if (message.uid === auth.currentUser.uid) return;
       await db
         .collection("notifications")
         .doc(message.uid)
@@ -221,7 +221,7 @@ const MessageHome: React.FC<Props> = (props) => {
         .collection("chat")
         .doc(message.documentId)
         .collection("like")
-        .where("uid", "==", user1)
+        .where("uid", "==", auth.currentUser.uid)
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -270,33 +270,35 @@ const MessageHome: React.FC<Props> = (props) => {
             >
               詳細
             </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem
-                onClick={messageDelete}
-                disabled={auth.currentUser.uid !== message.uid}
-                style={{ color: "rgb(224, 33, 92)" }}
+            {auth.currentUser === null ? null : (
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
               >
-                メッセージを削除する
-              </MenuItem>
-              <MenuItem
-                onClick={messageEdit}
-                disabled={auth.currentUser.uid !== message.uid}
-                style={{ color: "rgb(27, 196, 125)" }}
-              >
-                メッセージを編集する
-              </MenuItem>
-              <MenuItem onClick={handleReplyPage}>
-                メッセージに返信する
-              </MenuItem>
-            </Menu>
+                <MenuItem
+                  onClick={messageDelete}
+                  disabled={auth.currentUser.uid !== message.uid}
+                  style={{ color: "rgb(224, 33, 92)" }}
+                >
+                  メッセージを削除する
+                </MenuItem>
+                <MenuItem
+                  onClick={messageEdit}
+                  disabled={auth.currentUser.uid !== message.uid}
+                  style={{ color: "rgb(27, 196, 125)" }}
+                >
+                  メッセージを編集する
+                </MenuItem>
+                <MenuItem onClick={handleReplyPage}>
+                  メッセージに返信する
+                </MenuItem>
+              </Menu>
+            )}
           </div>
         </div>
         {message.image && (
@@ -373,8 +375,9 @@ const MessageHome: React.FC<Props> = (props) => {
               <div>
                 <FavoriteBorderIcon
                   className={`${classes.like_icon} ${
+                    auth.currentUser !== null &&
                     userLikes &&
-                    userLikes.includes(user1) &&
+                    userLikes.includes(auth.currentUser.uid) &&
                     classes.selected_icon
                   }`}
                   onClick={handleLike}

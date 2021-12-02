@@ -33,20 +33,18 @@ const UserDetailModal: React.FC<Props> = (props) => {
   const { handleClose, message, open } = props;
   const { uid, name, avatarURL, isOnline } = message;
 
-  const user1: string = auth.currentUser.uid;
-
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
   const firestoreAdd = async ({ uid, name, avatarURL, isOnline }) => {
-    if (user1 === uid) return;
+    if (auth.currentUser.uid === uid) return;
 
     await db
       .collection("users")
-      .doc(user1)
+      .doc(auth.currentUser.uid)
       .collection("chatUser")
       .doc(uid)
       .set({ uid, name, avatarURL, isOnline }, { merge: true });
 
-    await Router.push(`/chat/${user1}/${uid}`);
+    await Router.push(`/chat/${auth.currentUser.uid}/${uid}`);
   };
 
   return (
