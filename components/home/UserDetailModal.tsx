@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { db, auth } from "../../firebase/firebase";
 import Router from "next/router";
 import classes from "../../styles/UserDetailModal.module.scss";
+import NoAuthCurrentUser from "../NoAuthUser/NoAuthUserButton";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -48,71 +49,77 @@ const UserDetailModal: React.FC<Props> = (props) => {
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box className={classes.user_detail_modal_wrapper}>
-        <Typography variant="h6" className={classes.user_detail_title}>
-          ユーザー詳細
-          <Button
-            sx={{ marginLeft: "60px" }}
-            variant="outlined"
-            onClick={() => firestoreAdd({ uid, name, avatarURL, isOnline })}
-          >
-            メッセージを送る
-          </Button>
-          <CloseIcon
-            fontSize="large"
-            className={classes.closeIcon}
-            onClick={handleClose}
-          />
-        </Typography>
-        <div className={classes.img_wrapper}>
-          <Avatar
-            src={(message && message.avatarURL) || null}
-            sx={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-              position: "relative",
-              top: "20px",
-            }}
-          />
-        </div>
-        <Stack spacing={2}>
-          <Typography className={classes.sub_title_name}>名前</Typography>
-          <Typography className={classes.input}>
-            {message && message.name}
+    <>
+      <Modal open={open} onClose={handleClose}>
+        <Box className={classes.user_detail_modal_wrapper}>
+          <Typography variant="h6" className={classes.user_detail_title}>
+            ユーザー詳細
+            {auth.currentUser === null ? (
+              <NoAuthCurrentUser name="メッセージを送る" />
+            ) : (
+              <Button
+                sx={{ marginLeft: "60px" }}
+                variant="outlined"
+                onClick={() => firestoreAdd({ uid, name, avatarURL, isOnline })}
+              >
+                メッセージを送る
+              </Button>
+            )}
+            <CloseIcon
+              fontSize="large"
+              className={classes.closeIcon}
+              onClick={handleClose}
+            />
           </Typography>
-          <Typography className={classes.sub_title}>実務経験</Typography>
-          <Typography className={classes.input}>
-            {message && message.experience === "yes" ? "あり" : "なし"}
-          </Typography>
-          <Typography className={classes.sub_title}>
-            実務で使っている言語
-          </Typography>
-          <Typography className={classes.input}>
-            {message &&
-              message.useLanguage.map((language, index) => {
-                if (index + 1 === message.useLanguage.length) {
-                  return <span key={index}>{language}</span>;
-                } else {
-                  return <span key={index}>{language}&#44;&nbsp;</span>;
-                }
-              })}
-          </Typography>
-          <Typography className={classes.sub_title}>勉強中の言語</Typography>
-          <Typography className={classes.input}>
-            {message &&
-              message.willLanguage.map((language, index) => {
-                if (index + 1 === message.willLanguage.length) {
-                  return <span key={index}>{language}</span>;
-                } else {
-                  return <span key={index}>{language}&#44;&nbsp;</span>;
-                }
-              })}
-          </Typography>
-        </Stack>
-      </Box>
-    </Modal>
+          <div className={classes.img_wrapper}>
+            <Avatar
+              src={(message && message.avatarURL) || null}
+              sx={{
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                position: "relative",
+                top: "20px",
+              }}
+            />
+          </div>
+          <Stack spacing={2}>
+            <Typography className={classes.sub_title_name}>名前</Typography>
+            <Typography className={classes.input}>
+              {message && message.name}
+            </Typography>
+            <Typography className={classes.sub_title}>実務経験</Typography>
+            <Typography className={classes.input}>
+              {message && message.experience === "yes" ? "あり" : "なし"}
+            </Typography>
+            <Typography className={classes.sub_title}>
+              実務で使っている言語
+            </Typography>
+            <Typography className={classes.input}>
+              {message &&
+                message.useLanguage.map((language, index) => {
+                  if (index + 1 === message.useLanguage.length) {
+                    return <span key={index}>{language}</span>;
+                  } else {
+                    return <span key={index}>{language}&#44;&nbsp;</span>;
+                  }
+                })}
+            </Typography>
+            <Typography className={classes.sub_title}>勉強中の言語</Typography>
+            <Typography className={classes.input}>
+              {message &&
+                message.willLanguage.map((language, index) => {
+                  if (index + 1 === message.willLanguage.length) {
+                    return <span key={index}>{language}</span>;
+                  } else {
+                    return <span key={index}>{language}&#44;&nbsp;</span>;
+                  }
+                })}
+            </Typography>
+          </Stack>
+        </Box>
+      </Modal>
+    </>
   );
 };
 

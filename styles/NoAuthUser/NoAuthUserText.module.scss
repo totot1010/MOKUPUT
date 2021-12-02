@@ -1,0 +1,22 @@
+.button_container {
+  display: flex;
+  justify-content: space-between;
+
+  a:first-child {
+    background: rgba(52, 165, 240, 0.8);
+    color: white;
+    margin: 16px 32px 0;
+    border-radius: 8px;
+    width: 30%;
+    padding: 8px 0;
+  }
+
+  a:last-child {
+    background: rgba(85, 196, 0, 0.8);
+    color: white;
+    margin: 16px 32px 0;
+    border-radius: 8px;
+    padding: 8px 0;
+    width: 30%;
+  }
+}

@@ -14,6 +14,7 @@ import HomeForm from "./HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
+import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
 
 const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
@@ -165,15 +166,33 @@ const Homebody: React.FC = () => {
   return (
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
-        <div className={classes.sidebar_channel} onClick={handleChat}>
-          <MailOutlineIcon className={classes.message_icon} />
-          <h3>メッセージ</h3>
-        </div>
+        {auth.currentUser === null ? (
+          <div className={classes.sidebar_channel}>
+            <MailOutlineIcon className={classes.message_icon} />
+            <h3>
+              <NoAuthUserText name="メッセージ" />
+            </h3>
+          </div>
+        ) : (
+          <div className={classes.sidebar_channel} onClick={handleChat}>
+            <MailOutlineIcon className={classes.message_icon} />
+            <h3>メッセージ</h3>
+          </div>
+        )}
         <hr />
-        <div className={classes.addchannels_container} onClick={addChannel}>
-          <AddIcon className={classes.add_icon} />
-          <h3>チャンネルを追加</h3>
-        </div>
+        {auth.currentUser === null ? (
+          <div className={classes.addchannels_container}>
+            <AddIcon className={classes.add_icon} />
+            <h3>
+              <NoAuthUserText name="チャンネルを追加" />
+            </h3>
+          </div>
+        ) : (
+          <div className={classes.addchannels_container} onClick={addChannel}>
+            <AddIcon className={classes.add_icon} />
+            <h3>チャンネルを追加</h3>
+          </div>
+        )}
         <hr />
         <div className={classes.channels}>
           {channels &&
