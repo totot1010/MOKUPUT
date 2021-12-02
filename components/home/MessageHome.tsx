@@ -18,6 +18,8 @@ import TextField from "@mui/material/TextField";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
+import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
 
 interface Props {
   message: {
@@ -48,6 +50,8 @@ const MessageHome: React.FC<Props> = (props) => {
   const [countMessage, setCountMessage] = useState<Array<string>>();
   const [userLikes, setUserLikes] = useState<Array<string>>();
   const [user, setUser] = useState<any>();
+  const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
+
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId: any = router.query.channelId;
@@ -236,6 +240,9 @@ const MessageHome: React.FC<Props> = (props) => {
     Router.push(`/home/${channelId}/${message.documentId}`);
   };
 
+  const HandleOpenNoAuthUserModal = () => setOpenNoAuthUserModal(true);
+  const HandleCloseNoAuthUserModal = () => setOpenNoAuthUserModal(false);
+
   return (
     <>
       <div className={classes.message_container} ref={scrollRef}>
@@ -261,43 +268,50 @@ const MessageHome: React.FC<Props> = (props) => {
             </span>
           </h4>
           <div>
-            <Button
-              id="basic-button"
-              aria-controls="basic-menu"
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              詳細
-            </Button>
-            {auth.currentUser === null ? null : (
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem
-                  onClick={messageDelete}
-                  disabled={auth.currentUser.uid !== message.uid}
-                  style={{ color: "rgb(224, 33, 92)" }}
+            {auth.currentUser === null ? (
+              <div className={classes.no_user_modal_container}>
+                <NoAuthUserText name="詳細" />
+              </div>
+            ) : (
+              <>
+                <Button
+                  id="basic-button"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  sx={{ fontSize: "14px", marginLeft: "20px" }}
                 >
-                  メッセージを削除する
-                </MenuItem>
-                <MenuItem
-                  onClick={messageEdit}
-                  disabled={auth.currentUser.uid !== message.uid}
-                  style={{ color: "rgb(27, 196, 125)" }}
+                  詳細
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
                 >
-                  メッセージを編集する
-                </MenuItem>
-                <MenuItem onClick={handleReplyPage}>
-                  メッセージに返信する
-                </MenuItem>
-              </Menu>
+                  <MenuItem
+                    onClick={messageDelete}
+                    disabled={auth.currentUser.uid !== message.uid}
+                    style={{ color: "rgb(224, 33, 92)" }}
+                  >
+                    メッセージを削除する
+                  </MenuItem>
+                  <MenuItem
+                    onClick={messageEdit}
+                    disabled={auth.currentUser.uid !== message.uid}
+                    style={{ color: "rgb(27, 196, 125)" }}
+                  >
+                    メッセージを編集する
+                  </MenuItem>
+                  <MenuItem onClick={handleReplyPage}>
+                    メッセージに返信する
+                  </MenuItem>
+                </Menu>
+              </>
             )}
           </div>
         </div>
@@ -358,14 +372,22 @@ const MessageHome: React.FC<Props> = (props) => {
             />
             <div className={classes.sub_function_wrapper}>
               <div>
-                <ChatBubbleOutlineIcon
-                  className={`${classes.message_icon} ${
-                    countMessage &&
-                    countMessage.length !== 0 &&
-                    classes.count_message_icon
-                  }`}
-                  onClick={handleReplyPage}
-                />
+                {auth.currentUser === null ? (
+                  <ChatBubbleOutlineIcon
+                    className={`${classes.message_icon}`}
+                    onClick={HandleOpenNoAuthUserModal}
+                  />
+                ) : (
+                  <ChatBubbleOutlineIcon
+                    className={`${classes.message_icon} ${
+                      countMessage &&
+                      countMessage.length !== 0 &&
+                      classes.count_message_icon
+                    }`}
+                    onClick={handleReplyPage}
+                  />
+                )}
+
                 <span>
                   {countMessage && countMessage.length === 0
                     ? ""
@@ -373,15 +395,21 @@ const MessageHome: React.FC<Props> = (props) => {
                 </span>
               </div>
               <div>
-                <FavoriteBorderIcon
-                  className={`${classes.like_icon} ${
-                    auth.currentUser !== null &&
-                    userLikes &&
-                    userLikes.includes(auth.currentUser.uid) &&
-                    classes.selected_icon
-                  }`}
-                  onClick={handleLike}
-                />
+                {auth.currentUser === null ? (
+                  <FavoriteBorderIcon
+                    className={classes.like_icon}
+                    onClick={HandleOpenNoAuthUserModal}
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    className={`${classes.like_icon} ${
+                      userLikes &&
+                      userLikes.includes(auth.currentUser.uid) &&
+                      classes.selected_icon
+                    }`}
+                    onClick={handleLike}
+                  />
+                )}
                 <span>
                   {userLikes && userLikes.length === 0
                     ? ""
@@ -391,6 +419,12 @@ const MessageHome: React.FC<Props> = (props) => {
             </div>
           </>
         )}
+        <NoAuthUserIcon
+          openNoAuthUserModal={openNoAuthUserModal}
+          setOpenNoAuthUserModal={setOpenNoAuthUserModal}
+          HandleOpenNoAuthUserModal={HandleOpenNoAuthUserModal}
+          HandleCloseNoAuthUserModal={HandleCloseNoAuthUserModal}
+        />
         <UserDetailModal
           handleClose={handleModalClose}
           message={message}

@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Homebody from "../components/home/Homebody";
 import SearchUsers from "../components/home/SearchUsers";
-
-import List from "@mui/material/List";
-
 import classes from "../styles/home/home.module.scss";
 import algoliasearch from "algoliasearch";
 
@@ -36,7 +33,7 @@ const Home = () => {
         searchText={searchText}
         setSearchText={setSearchText}
       />
-      <List
+      <div
         className={classes.list}
         sx={{ width: "100%", maxWidth: 400, bgcolor: "background.paper" }}
       >
@@ -54,7 +51,7 @@ const Home = () => {
               />
             );
           })}
-      </List>
+      </div>
       <Homebody className={classes.home_body} />
     </>
   );

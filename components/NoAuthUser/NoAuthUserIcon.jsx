@@ -61,20 +61,20 @@ const style = {
   textAlign: "center",
 };
 
-const NoAuthUserText = ({ name }) => {
-  const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
-  const handleOpen = () => setOpenNoAuthUserModal(true);
-  const handleClose = () => setOpenNoAuthUserModal(false);
+const NoAuthUserIcon = (props) => {
+  const {
+    openNoAuthUserModal,
+    setOpenNoAuthUserModal,
+    HandleOpenNoAuthUserModal,
+    HandleCloseNoAuthUserModal,
+  } = props;
   return (
     <>
-      <p onClick={handleOpen} style={{ marginLeft: "10px" }} variant="outlined">
-        {name}
-      </p>
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         open={openNoAuthUserModal}
-        onClose={handleClose}
+        onClose={HandleCloseNoAuthUserModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -112,4 +112,4 @@ const NoAuthUserText = ({ name }) => {
   );
 };
 
-export default NoAuthUserText;
+export default NoAuthUserIcon;
