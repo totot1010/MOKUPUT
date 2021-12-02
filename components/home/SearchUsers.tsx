@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import { useAllUsers } from "../../hooks/useAllUsers";
+import NoAuthCurrentUser from "../NoAuthUser/NoAuthUserButton";
 
 interface Props {
   id: string;
@@ -26,8 +27,6 @@ const SearchUser: React.FC<Props> = (props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<any>();
 
-  const user1 = auth.currentUser.uid;
-
   useEffect(() => {
     getUsers();
   }, []);
@@ -44,11 +43,14 @@ const SearchUser: React.FC<Props> = (props) => {
 
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
   const firestoreAdd = async ({ id, name, avatarURL, isOnline }) => {
-    const newId = user1 > id ? `${user1 + id}` : `${id + user1}`;
+    const newId =
+      auth.currentUser.uid > id
+        ? `${auth.currentUser.uid + id}`
+        : `${id + auth.currentUser.uid}`;
 
     await db
       .collection("users")
-      .doc(user1)
+      .doc(auth.currentUser.uid)
       .collection("chatUser")
       .doc(id)
       .set(
@@ -104,16 +106,20 @@ const SearchUser: React.FC<Props> = (props) => {
           <Box className={classes.detail_user_box}>
             <Typography variant="h6" className={classes.detail_user_title}>
               ユーザー詳細
-              <Link href={`/chat/${user1}/${id}`}>
-                <button
-                  className={classes.message_button}
-                  onClick={() =>
-                    firestoreAdd({ id, name, avatarURL, isOnline })
-                  }
-                >
-                  メッセージを送る
-                </button>
-              </Link>
+              {auth.currentUser === null ? (
+                <NoAuthCurrentUser name="メッセージを送る" />
+              ) : (
+                <Link href={`/chat/${auth.currentUser.uid}/${id}`}>
+                  <a
+                    className={classes.message_button}
+                    onClick={() =>
+                      firestoreAdd({ id, name, avatarURL, isOnline })
+                    }
+                  >
+                    メッセージを送る
+                  </a>
+                </Link>
+              )}
               <CloseIcon
                 fontSize="large"
                 className={classes.closeIcon}
