@@ -2,6 +2,7 @@ import React, { useState, useCallback, useContext, useEffect } from "react";
 import { db, storage, auth } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
+import Link from "next/link";
 import Router from "next/router";
 import Camera from "./svg/Camera";
 import Delete from "./svg/Delete";
@@ -15,7 +16,6 @@ import InputBase from "@mui/material/InputBase";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
@@ -339,9 +339,10 @@ const Header: React.FC<Props> = (props) => {
               noWrap
               component="div"
               sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
-              onClick={returnHomePage}
             >
-              MOKUPUT
+              <Link href={"/home/3fSVoNmwFQWi9zYg63Fw"}>
+                <a>MOKUPUT</a>
+              </Link>
             </Typography>
             <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
@@ -364,28 +365,39 @@ const Header: React.FC<Props> = (props) => {
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Avatar
-                  src={selectedAvatarURL}
-                  sx={{ width: "50px", height: "50px" }}
-                />
-                <Badge
-                  badgeContent={notifications && notifications.length}
-                  color="error"
-                  sx={{
-                    position: "relative",
-                    top: "-16px",
-                  }}
-                />
-              </IconButton>
+              {auth.currentUser === null ? (
+                <div className={classes.button_container}>
+                  <Link href="/signin">
+                    <a>ログイン</a>
+                  </Link>
+                  <Link href="/signup">
+                    <a>新規登録</a>
+                  </Link>
+                </div>
+              ) : (
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar
+                    src={selectedAvatarURL}
+                    sx={{ width: "50px", height: "50px" }}
+                  />
+                  <Badge
+                    badgeContent={notifications && notifications.length}
+                    color="error"
+                    sx={{
+                      position: "relative",
+                      top: "-16px",
+                    }}
+                  />
+                </IconButton>
+              )}
             </Box>
           </Toolbar>
         </AppBar>
