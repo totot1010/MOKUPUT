@@ -48,14 +48,6 @@
   padding: 24px 32px;
 }
 
-// .search_user_avatar {
-//   width: 60px;
-//   height: 60px;
-//   border-radius: 50%;
-//   margin-right: 8px;
-//   text-align: center;
-// }
-
 .detail_user_title {
   font-family: Georgia, serif;
   letter-spacing: 4px;
@@ -80,11 +72,11 @@
 }
 
 .message_button {
-  margin-left: 80px;
-  padding: 6px 12px;
+  margin-left: 50px;
+  padding: 6px 10px;
   font-size: 16px;
   border-radius: 8px;
-  border-color: #1976d2;
+  border: 1px solid #1976d2;
   color: #1976d2;
   background: white;
   cursor: pointer;
