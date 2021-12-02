@@ -110,10 +110,9 @@ const Header: React.FC<Props> = (props) => {
   const [notifications, setNotifications] = useState<any>();
   const isMenuOpen = Boolean(anchorEl);
 
-  const user1 = auth.currentUser.uid;
-
   useEffect(() => {
-    const docRef = db.collection("users").doc(user.uid);
+    if (auth.currentUser === null) return;
+    const docRef = db.collection("users").doc(auth.currentUser.uid);
     docRef.get().then(function (doc) {
       if (doc.exists) {
         setSelectedName(doc.data().name);
@@ -126,7 +125,7 @@ const Header: React.FC<Props> = (props) => {
     });
 
     db.collection("notifications")
-      .doc(user1)
+      .doc(auth.currentUser.uid)
       .collection("notice")
       .where("unread", "in", [true])
       .get()
@@ -280,6 +279,10 @@ const Header: React.FC<Props> = (props) => {
     Router.push("/home/notifications");
   };
 
+  const returnHomePage = () => {
+    Router.push("/home/3fSVoNmwFQWi9zYg63Fw");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -331,20 +334,12 @@ const Header: React.FC<Props> = (props) => {
       <Box sx={{ flexGrow: 1 }} className={classes.header_container}>
         <AppBar position="static" style={{ height: "64px" }}>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography
-              variant="h6"
+              variant="h5"
               noWrap
               component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
+              sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
+              onClick={returnHomePage}
             >
               MOKUPUT
             </Typography>
