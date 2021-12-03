@@ -62,12 +62,7 @@ const style = {
 };
 
 const NoAuthUserIcon = (props) => {
-  const {
-    openNoAuthUserModal,
-    setOpenNoAuthUserModal,
-    HandleOpenNoAuthUserModal,
-    HandleCloseNoAuthUserModal,
-  } = props;
+  const { openNoAuthUserModal, HandleCloseNoAuthUserModal } = props;
   return (
     <>
       <Modal
