@@ -20,6 +20,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
 import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
+import { DockTwoTone } from "@mui/icons-material";
 
 interface Props {
   message: {
@@ -55,6 +56,8 @@ const MessageHome: React.FC<Props> = (props) => {
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId: any = router.query.channelId;
+  // console.log(countMessage);
+  // console.log(userLikes);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,8 +71,13 @@ const MessageHome: React.FC<Props> = (props) => {
   }, [message.image, message.text]);
 
   useEffect(() => {
+    getFirestore();
+  }, []);
+
+  const getFirestore = async () => {
     //投稿に対しての返信の数をfirestoreから取得する
-    db.collection("channels")
+    await db
+      .collection("channels")
       .doc(channelId)
       .collection("chat")
       .doc(message.documentId)
@@ -81,9 +89,11 @@ const MessageHome: React.FC<Props> = (props) => {
         });
         setCountMessage(counts);
       });
+    console.log(message.documentId);
 
     //投稿に対してのいいねの数をfiestoreから取得する
-    db.collection("channels")
+    await db
+      .collection("channels")
       .doc(channelId)
       .collection("chat")
       .doc(message.documentId)
@@ -98,12 +108,13 @@ const MessageHome: React.FC<Props> = (props) => {
 
     //現在のユーザーのデータをfirestoreから取得
     if (auth.currentUser === null) return;
-    db.collection("users")
+    await db
+      .collection("users")
       .doc(auth.currentUser.uid)
       .onSnapshot((snapshot) => {
         setUser(snapshot.data());
       });
-  }, []);
+  };
 
   const pickEmoji = (e, { emoji }) => {
     const ref: any = editRef.current;
@@ -421,8 +432,6 @@ const MessageHome: React.FC<Props> = (props) => {
         )}
         <NoAuthUserIcon
           openNoAuthUserModal={openNoAuthUserModal}
-          setOpenNoAuthUserModal={setOpenNoAuthUserModal}
-          HandleOpenNoAuthUserModal={HandleOpenNoAuthUserModal}
           HandleCloseNoAuthUserModal={HandleCloseNoAuthUserModal}
         />
         <UserDetailModal

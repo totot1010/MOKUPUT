@@ -65,13 +65,13 @@ const Homebody: React.FC = () => {
           texts.push({ documentId: doc.id, ...doc.data() });
         });
         setMessages(texts);
-        setLoading(false);
       });
 
     db.collection("users")
       .doc(auth.currentUser.uid)
       .onSnapshot((snapshot) => {
         setUser(snapshot.data() as AuthUserType);
+        setLoading(false);
       });
   };
 
@@ -102,7 +102,7 @@ const Homebody: React.FC = () => {
           texts.push({ documentId: doc.id, ...doc.data() });
         });
         setMessages(texts);
-        setLoading(false);
+        // setLoading(false);
       });
   };
 
@@ -132,7 +132,7 @@ const Homebody: React.FC = () => {
       setMessages(texts);
     });
 
-    (await channel) && Router.push(`/home/${channel.documentId}`);
+    await Router.push(`/home/${channel.documentId}`);
   };
 
   //画像とテキストを送信した時の挙動

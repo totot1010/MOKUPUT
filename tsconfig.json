@@ -29,7 +29,8 @@
     "pages/signin.jsx",
     "components/Header.tsx",
     "pages/signup/[id].tsx",
-    "pages/chat/[uid]/[id].jsx"
+    "pages/chat/[uid]/[id].jsx",
+    "components/home/MessageHome.jsx"
   ],
   "exclude": ["node_modules"]
 }
