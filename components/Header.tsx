@@ -1,5 +1,10 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import { db, storage, auth } from "../firebase/firebase";
+import {
+  db,
+  storage,
+  auth,
+  signinWithEmailAndPassword,
+} from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
 import classes from "../styles/Header.module.scss";
 import Link from "next/link";
@@ -35,7 +40,7 @@ import Button from "@mui/material/Button";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 import algoliasearch from "algoliasearch";
 
 const Search = styled("div")(({ theme }) => ({
@@ -274,7 +279,28 @@ const Header: React.FC<Props> = (props) => {
   };
 
   const returnHomePage = () => {
-    Router.push("/home/3fSVoNmwFQWi9zYg63Fw");
+    Router.push("/home");
+    // window.location.reload();
+  };
+
+  const handleLogout = async () => {
+    auth.currentUser.uid &&
+      (await db
+        .collection("users")
+        .doc(auth.currentUser.uid)
+        .update({ isOnline: false }));
+    await auth.signOut();
+    Router.push("/signin");
+  };
+
+  const handleGuestSignin = async (e) => {
+    e.preventDefault();
+    const result = await signinWithEmailAndPassword("bbb@gmail.com", "123123");
+    window.location.reload();
+    await db
+      .collection("users")
+      .doc(result.user.uid)
+      .update({ isOnline: true });
   };
 
   const menuId = "primary-search-account-menu";
@@ -299,8 +325,8 @@ const Header: React.FC<Props> = (props) => {
         プロフィール
       </MenuItem>
       <MenuItem onClick={handleSettingPage}>
-        <SettingsApplicationsIcon sx={{ marginRight: "8px" }} />
-        <p style={{ marginLeft: "29px" }}>設定</p>
+        <SettingsApplicationsIcon />
+        <p style={{ margin: "auto" }}>設定</p>
       </MenuItem>
       <MenuItem onClick={handleNotifications}>
         <Badge
@@ -310,6 +336,10 @@ const Header: React.FC<Props> = (props) => {
           <NotificationsIcon />
         </Badge>
         <p style={{ margin: "auto" }}>通知</p>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        <LogoutIcon />
+        <p style={{ margin: "auto" }}>ログアウト</p>
       </MenuItem>
     </Menu>
   );
@@ -334,9 +364,7 @@ const Header: React.FC<Props> = (props) => {
               component="div"
               sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
             >
-              <Link href={"/home/3fSVoNmwFQWi9zYg63Fw"}>
-                <a>MOKUPUT</a>
-              </Link>
+              <span onClick={returnHomePage}>MOKUPUT</span>
             </Typography>
             <Search className={classes.search_wrapper}>
               <SearchIconWrapper>
@@ -361,6 +389,7 @@ const Header: React.FC<Props> = (props) => {
             <Box>
               {auth.currentUser === null ? (
                 <div className={classes.button_container}>
+                  <a onClick={handleGuestSignin}>ゲストログイン</a>
                   <Link href="/signin">
                     <a>ログイン</a>
                   </Link>

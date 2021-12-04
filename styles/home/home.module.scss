@@ -8,3 +8,171 @@
   left: 0;
   padding: 0;
 }
+
+//Homebody---------
+.homebody {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+}
+
+//Sidebar---------
+.sidebar_container {
+  background-color: #1976d2;
+  height: calc(100vh - 64px);
+  max-width: 350px;
+  color: white;
+
+  h3 {
+    font-size: 16px;
+    margin-left: 6px;
+  }
+}
+
+.sidebar_close {
+  display: none;
+}
+
+.sidebar_channel {
+  display: flex;
+  padding-left: 16px;
+  border-top: 1px solid white;
+  padding: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: skyblue;
+  }
+
+  .message_icon {
+    margin-left: 4px;
+  }
+}
+
+.addchannels_container {
+  display: flex;
+  padding: 14px;
+  cursor: pointer;
+  &:hover {
+    background-color: skyblue;
+  }
+
+  .add_icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+  }
+}
+.sm_sidebar_container {
+  display: none;
+}
+
+//channel
+
+.channel_container {
+  display: flex;
+  padding: 8px 0;
+  cursor: pointer;
+
+  &:hover {
+    background: skyblue;
+  }
+
+  span {
+    padding: 15px;
+  }
+
+  .channel_icon {
+    position: relative;
+    top: 8px;
+  }
+
+  h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+//チャンネルの選択テキスト
+
+.open_sidebar {
+  display: none;
+}
+
+.select_channel_text {
+  position: relative;
+
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+//レスポンシブ-----------------------
+@media screen and (max-width: 680px) {
+  //Sidebar---------
+  .sidebar_container {
+    display: none;
+  }
+
+  .sidebar_close_button {
+    display: block;
+    display: flex;
+    padding-left: 16px;
+    border-top: 1px solid white;
+    padding: 16px;
+    cursor: pointer;
+    &:hover {
+      background-color: skyblue;
+    }
+
+    .sidebar_close_icon {
+      margin-left: 4px;
+    }
+  }
+
+  .sm_sidebar_container {
+    display: none;
+  }
+
+  .sm_sidebar_container.sidebar_close {
+    display: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    background-color: #1976d2;
+    flex: 30%;
+    height: calc(100vh - 64px);
+    max-width: 300px;
+    color: white;
+    z-index: 5;
+
+    h3 {
+      font-size: 16px;
+      margin-left: 6px;
+    }
+  }
+
+  .select_channel_text {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .open_sidebar {
+      display: inline-block;
+      position: relative;
+      top: 6px;
+      margin-right: 24px;
+      color: #1976d2;
+      font-size: 48px;
+      cursor: pointer;
+      &:hover {
+        background: rgba(25, 118, 210, 0.2);
+        border-radius: 50%;
+      }
+    }
+  }
+}

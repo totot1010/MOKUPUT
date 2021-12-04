@@ -89,27 +89,29 @@
 
 .button_container {
   display: flex;
-  // justify-content: space-between;
 
   a:first-child {
-    width: 90px;
+    width: 125px;
     text-align: center;
     color: white;
     border-radius: 8px;
-    padding: 8px 8px;
+    padding: 4px 6px;
+    margin: auto 0;
+    cursor: pointer;
     &:hover {
-      background: rgba(52, 165, 240, 0.6);
+      background: rgba(85, 196, 0, 0.6);
     }
   }
 
-  a:last-child {
-    width: 90px;
+  a {
+    width: 75px;
     text-align: center;
     color: white;
     border-radius: 8px;
-    padding: 8px 8px;
+    padding: 4px 4px;
+    margin: auto 0;
     &:hover {
-      background: rgba(85, 196, 0, 0.6);
+      background: rgba(52, 165, 240, 0.6);
     }
   }
 }

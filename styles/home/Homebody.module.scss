@@ -369,9 +369,15 @@
       position: relative;
       top: 6px;
       margin-right: 24px;
+      font-size: 48px;
       color: #1976d2;
       font-size: 32px;
       cursor: pointer;
+
+      &:hover {
+        background: rgba(25, 118, 210, 0.2);
+        border-radius: 50%;
+      }
     }
   }
   //messagehome-------
