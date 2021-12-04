@@ -36,6 +36,7 @@ interface Props {
     from: string;
     text: string;
     likes: any;
+    replies: any;
     image?: string;
     documentId: string;
     experience?: string;
@@ -54,15 +55,12 @@ const MessageHome: React.FC<Props> = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [edit, setEdit] = useState<boolean>(false);
   const [text, setText] = useState<string>(message.text);
-  const [countMessage, setCountMessage] = useState<Array<string>>();
-  const [userLikes, setUserLikes] = useState<Array<string>>();
   const [user, setUser] = useState<any>();
   const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
 
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId: any = router.query.channelId;
-
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,7 +78,6 @@ const MessageHome: React.FC<Props> = (props) => {
   }, []);
 
   const getFirestore = async () => {
-
     //現在のユーザーのデータをfirestoreから取得
     if (auth.currentUser === null) return;
     await db
@@ -193,9 +190,8 @@ const MessageHome: React.FC<Props> = (props) => {
       (await message.likes) &&
       message.likes.find((like) => like === auth.currentUser.uid);
 
-
     //uidが返ってこない時
-    if (!authLikeUser) {
+    if (message.likes && !authLikeUser) {
       await db
         .collection("channels")
         .doc(channelId)
@@ -389,8 +385,8 @@ const MessageHome: React.FC<Props> = (props) => {
                 ) : (
                   <ChatBubbleOutlineIcon
                     className={`${classes.message_icon} ${
-                      countMessage &&
-                      countMessage.length !== 0 &&
+                      message.replies &&
+                      message.replies > 0 &&
                       classes.count_message_icon
                     }`}
                     onClick={handleReplyPage}
@@ -398,9 +394,9 @@ const MessageHome: React.FC<Props> = (props) => {
                 )}
 
                 <span>
-                  {countMessage && countMessage.length === 0
-                    ? ""
-                    : countMessage && countMessage.length}
+                  {message.replies && message.replies > 0
+                    ? message.replies
+                    : ""}
                 </span>
               </div>
               <div>
@@ -414,7 +410,6 @@ const MessageHome: React.FC<Props> = (props) => {
                     className={`${classes.like_icon} ${
                       message.likes &&
                       message.likes.includes(auth.currentUser.uid) &&
-
                       classes.selected_icon
                     }`}
                     onClick={handleLike}

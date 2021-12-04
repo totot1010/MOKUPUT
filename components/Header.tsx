@@ -94,7 +94,6 @@ const Header: React.FC<Props> = (props) => {
   const { onSearch, setSearchUsers, searchText, setSearchText } = props;
   const { user } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [selectedName, setSelectedName] = useState<string>("");
   const [selectedExperience, setSelectedExperience] = useState<string>();
   const [selectedUseLanguage, setSelectedUseLanguage] = useState([]);
@@ -193,13 +192,8 @@ const Header: React.FC<Props> = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const profileClick = () => {
