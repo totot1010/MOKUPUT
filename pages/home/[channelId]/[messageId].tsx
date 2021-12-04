@@ -79,7 +79,23 @@ const ReplyMessage: React.FC = () => {
         isOnline: user.isOnline,
       });
 
-    db.collection("notifications")
+    await db
+      .collection("channels")
+      .doc(channelId)
+      .collection("chat")
+      .doc(messageId)
+      .set(
+        {
+          replies: firebase.firestore.FieldValue.increment(1),
+        },
+        { merge: true }
+      );
+
+    setText("");
+
+    if (mainMessage.uid == auth.currentUser.uid) return;
+    await db
+      .collection("notifications")
       .doc(mainMessage.uid)
       .collection("notice")
       .add({
@@ -93,7 +109,6 @@ const ReplyMessage: React.FC = () => {
         notification: `${user.name}さんからあなたの投稿に対して📤返信しました。`,
         createdAt: firebase.firestore.Timestamp.now(),
       });
-    setText("");
   };
 
   return (

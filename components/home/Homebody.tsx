@@ -102,7 +102,7 @@ const Homebody: React.FC = () => {
           texts.push({ documentId: doc.id, ...doc.data() });
         });
         setMessages(texts);
-        // setLoading(false);
+        setLoading(false);
       });
   };
 
