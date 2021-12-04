@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 import { AuthContext } from "../context/auth";
@@ -25,6 +25,10 @@ const Home = () => {
     await auth.signOut();
     Router.push("/");
   };
+
+  useEffect(() => {
+    Router.push("/home");
+  }, []);
 
   return (
     <>

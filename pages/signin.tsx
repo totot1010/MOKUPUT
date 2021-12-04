@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signinWithEmailAndPassword, signout, db } from "../firebase/firebase";
+import { signinWithEmailAndPassword, db } from "../firebase/firebase";
 import Link from "next/link";
 import Router from "next/router";
 import classes from "../styles/signin/signin.module.scss";
