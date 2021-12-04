@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, createRef } from "react";
+import React, {
+  useLayoutEffect,
+  useEffect,
+  useRef,
+  useState,
+  createRef,
+} from "react";
 import { db, auth } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import anchorme from "anchorme";
@@ -20,7 +26,6 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
 import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
-import { DockTwoTone } from "@mui/icons-material";
 
 interface Props {
   message: {
@@ -30,6 +35,7 @@ interface Props {
     avatarURL?: string;
     from: string;
     text: string;
+    likes: any;
     image?: string;
     documentId: string;
     experience?: string;
@@ -56,8 +62,6 @@ const MessageHome: React.FC<Props> = (props) => {
   const open = Boolean(anchorEl);
   const router = useRouter();
   const channelId: any = router.query.channelId;
-  // console.log(countMessage);
-  // console.log(userLikes);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,44 +72,13 @@ const MessageHome: React.FC<Props> = (props) => {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ block: "end" });
-  }, [message.image, message.text]);
+  }, [message.text, message.image]);
 
   useEffect(() => {
     getFirestore();
   }, []);
 
   const getFirestore = async () => {
-    //投稿に対しての返信の数をfirestoreから取得する
-    await db
-      .collection("channels")
-      .doc(channelId)
-      .collection("chat")
-      .doc(message.documentId)
-      .collection("reply")
-      .onSnapshot((querySnapshot) => {
-        const counts = [];
-        querySnapshot.forEach((doc) => {
-          counts.push(doc.data().uid);
-        });
-        setCountMessage(counts);
-      });
-    console.log(message.documentId);
-
-    //投稿に対してのいいねの数をfiestoreから取得する
-    await db
-      .collection("channels")
-      .doc(channelId)
-      .collection("chat")
-      .doc(message.documentId)
-      .collection("like")
-      .onSnapshot((querySnapshot) => {
-        const likeUsers = [];
-        querySnapshot.forEach((doc) => {
-          likeUsers.push(doc.data().uid);
-        });
-        setUserLikes(likeUsers);
-      });
-
     //現在のユーザーのデータをfirestoreから取得
     if (auth.currentUser === null) return;
     await db
@@ -197,10 +170,26 @@ const MessageHome: React.FC<Props> = (props) => {
   };
 
   const handleLike = async () => {
+    if (!message.likes) {
+      await db
+        .collection("channels")
+        .doc(channelId)
+        .collection("chat")
+        .doc(message.documentId)
+        .set(
+          {
+            likes: firebase.firestore.FieldValue.arrayUnion(
+              auth.currentUser.uid
+            ),
+          },
+          { merge: true }
+        );
+    }
+
     //いいね押したユーザーの中から自分のuidを取ってくる
-    const authLikeUser = await userLikes.find(
-      (userLike) => userLike === auth.currentUser.uid
-    );
+    const authLikeUser =
+      (await message.likes) &&
+      message.likes.find((like) => like === auth.currentUser.uid);
 
     //uidが返ってこない時
     if (!authLikeUser) {
@@ -209,8 +198,14 @@ const MessageHome: React.FC<Props> = (props) => {
         .doc(channelId)
         .collection("chat")
         .doc(message.documentId)
-        .collection("like")
-        .add({ uid: user.uid });
+        .set(
+          {
+            likes: firebase.firestore.FieldValue.arrayUnion(
+              auth.currentUser.uid
+            ),
+          },
+          { merge: true }
+        );
 
       if (message.uid === auth.currentUser.uid) return;
       await db
@@ -235,14 +230,14 @@ const MessageHome: React.FC<Props> = (props) => {
         .doc(channelId)
         .collection("chat")
         .doc(message.documentId)
-        .collection("like")
-        .where("uid", "==", auth.currentUser.uid)
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            doc.ref.delete();
-          });
-        });
+        .set(
+          {
+            likes: firebase.firestore.FieldValue.arrayRemove(
+              auth.currentUser.uid
+            ),
+          },
+          { merge: true }
+        );
     }
   };
 
@@ -414,17 +409,17 @@ const MessageHome: React.FC<Props> = (props) => {
                 ) : (
                   <FavoriteBorderIcon
                     className={`${classes.like_icon} ${
-                      userLikes &&
-                      userLikes.includes(auth.currentUser.uid) &&
+                      message.likes &&
+                      message.likes.includes(auth.currentUser.uid) &&
                       classes.selected_icon
                     }`}
                     onClick={handleLike}
                   />
                 )}
                 <span>
-                  {userLikes && userLikes.length === 0
-                    ? ""
-                    : userLikes && userLikes.length}
+                  {message.likes && message.likes.length > 0
+                    ? message.likes.length
+                    : ""}
                 </span>
               </div>
             </div>
