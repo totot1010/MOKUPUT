@@ -123,7 +123,7 @@ const ReplyMessage: React.FC = () => {
               <span>
                 {mainMessage &&
                   format(
-                    new Date(mainMessage.createdAt?.toDate()),
+                    new Date(mainMessage.createdAt.toDate()),
                     "yyyy年MM月dd日 H:mm",
                     { locale: ja }
                   )}
