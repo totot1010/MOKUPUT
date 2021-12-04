@@ -169,28 +169,54 @@ const DirectChat = () => {
         });
 
         /**一番最後に行われたメッセージをfirestoreに保存する */
-        db.collection("lastMessage").doc(newId).set({
-          text,
-          from: user1,
-          to: id,
-          createdAt: firebase.firestore.Timestamp.now(),
-          media: URL,
-          unread: true,
-        });
-
-        db.collection("notifications")
-          .doc(id)
-          .collection("notice")
-          .add({
-            text,
-            uid: user1,
-            media: URL,
-            avatarURL: authUser.avatarURL || null,
-            unread: true,
-            chat: true,
-            notification: `${authUser.name}さんから新しい📤メッセージが届きました。`,
+        if (text === "") {
+          db.collection("lastMessage").doc(newId).set({
+            text: "画像が送信されました。",
+            from: user1,
+            to: id,
             createdAt: firebase.firestore.Timestamp.now(),
+            media: URL,
+            unread: true,
           });
+
+          db.collection("notifications")
+            .doc(id)
+            .collection("notice")
+            .add({
+              text: "画像が送信されました。",
+              uid: user1,
+              media: URL,
+              avatarURL: authUser.avatarURL || null,
+              unread: true,
+              chat: true,
+              notification: `${authUser.name}さんから新しい📤メッセージが届きました。`,
+              createdAt: firebase.firestore.Timestamp.now(),
+            });
+        } else {
+          db.collection("lastMessage").doc(newId).set({
+            text,
+            from: user1,
+            to: id,
+            createdAt: firebase.firestore.Timestamp.now(),
+            media: URL,
+            unread: true,
+          });
+
+          db.collection("notifications")
+            .doc(id)
+            .collection("notice")
+            .add({
+              text,
+              uid: user1,
+              media: URL,
+              avatarURL: authUser.avatarURL || null,
+              unread: true,
+              chat: true,
+              notification: `${authUser.name}さんから新しい📤メッセージが届きました。`,
+              createdAt: firebase.firestore.Timestamp.now(),
+            });
+        }
+
         setText("");
         setImg("");
       });
@@ -232,46 +258,44 @@ const DirectChat = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <div className={classes.grid_container}>
-          <div className={classes.users_container}>
-            <div style={{ display: "flex" }}>
-              <Link href="/home/3fSVoNmwFQWi9zYg63Fw">
-                <a className={classes.back_home_wrapper}>
-                  <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
-                </a>
-              </Link>
-            </div>
-            <hr />
-            {users.map((user, index) => (
-              <ChatUser
-                key={index}
-                user={user}
-                selectedUser={selectedUser}
-                user1={user1}
-                chatUser={chatUser}
-              />
-            ))}
+      <div className={classes.grid_container}>
+        <div className={classes.users_container}>
+          <div style={{ display: "flex" }}>
+            <Link href="/home/3fSVoNmwFQWi9zYg63Fw">
+              <a className={classes.back_home_wrapper}>
+                <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
+              </a>
+            </Link>
           </div>
-          <div className={classes.messages_container}>
-            <div className={classes.messages}>
-              {messages.length
-                ? messages.map((message, index) => (
-                    <Message key={index} message={message} user1={user1} />
-                  ))
-                : null}
-            </div>
-            <div style={{ width: "100%" }}>
-              <DirectChatForm
-                handleSubmit={handleSubmit}
-                text={text}
-                setText={setText}
-                setImg={setImg}
-              />
-            </div>
+          <hr />
+          {users.map((user, index) => (
+            <ChatUser
+              key={index}
+              user={user}
+              selectedUser={selectedUser}
+              user1={user1}
+              chatUser={chatUser}
+            />
+          ))}
+        </div>
+        <div className={classes.messages_container}>
+          <div className={classes.messages}>
+            {messages.length
+              ? messages.map((message, index) => (
+                  <Message key={index} message={message} user1={user1} />
+                ))
+              : null}
+          </div>
+          <div style={{ width: "100%" }}>
+            <DirectChatForm
+              handleSubmit={handleSubmit}
+              text={text}
+              setText={setText}
+              setImg={setImg}
+            />
           </div>
         </div>
-      </Box>
+      </div>
     </>
   );
 };

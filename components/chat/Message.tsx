@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from "react";
 import { db } from "../../firebase/firebase";
 import anchorme from "anchorme";
 import { filterXSS } from "xss";
-
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 import Moment from "react-moment";
 import classes from "../../styles/chat/Message.module.scss";
 
@@ -109,7 +110,11 @@ const Message: React.FC<Props> = (props) => {
               }`}
             >
               <small>
-                <Moment fromNow>{message.createdAt.toDate()}</Moment>
+                {format(
+                  new Date(message.createdAt?.toDate()),
+                  "yyyy年MM月dd日 H:mm",
+                  { locale: ja }
+                )}
               </small>
             </div>
           </>
@@ -140,7 +145,11 @@ const Message: React.FC<Props> = (props) => {
               }`}
             >
               <small>
-                <Moment fromNow>{message.createdAt.toDate()}</Moment>
+                {format(
+                  new Date(message.createdAt?.toDate()),
+                  "yyyy年MM月dd日 H:mm",
+                  { locale: ja }
+                )}
               </small>
             </div>
           </>
