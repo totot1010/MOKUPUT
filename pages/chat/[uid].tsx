@@ -164,30 +164,30 @@ const Messages = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <div className={classes.grid_container}>
-          <div className={classes.users_container}>
-            <div style={{ display: "flex" }}>
-              <Link href="/home/3fSVoNmwFQWi9zYg63Fw">
-                <a className={classes.back_wrapper}>
-                  <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
-                </a>
-              </Link>
-            </div>
-            <hr />
-            {users.map((user, index) => (
-              <ChatUser
-                key={index}
-                user={user}
-                selectedUser={selectedUser}
-                user1={user1}
-                chatUser={chatUser}
-              />
-            ))}
+      <div className={classes.grid_container}>
+        <div className={classes.users_container}>
+          <div style={{ display: "flex" }}>
+            <Link href="/home/3fSVoNmwFQWi9zYg63Fw">
+              <a className={classes.back_wrapper}>
+                <ArrowBackIcon color="primary" sx={{ ml: 2, fontSize: 40 }} />
+              </a>
+            </Link>
           </div>
-          <h3>メッセージ</h3>
+          <hr />
+          {users.map((user, index) => (
+            <ChatUser
+              key={index}
+              user={user}
+              selectedUser={selectedUser}
+              user1={user1}
+              chatUser={chatUser}
+            />
+          ))}
         </div>
-      </Box>
+        <div className={classes.select_user_text}>
+          <h1>メッセージを送るユーザーを選択してください。</h1>
+        </div>
+      </div>
     </>
   );
 };
