@@ -63,6 +63,7 @@ const MessageHome: React.FC<Props> = (props) => {
   const router = useRouter();
   const channelId: any = router.query.channelId;
 
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -79,6 +80,7 @@ const MessageHome: React.FC<Props> = (props) => {
   }, []);
 
   const getFirestore = async () => {
+
     //現在のユーザーのデータをfirestoreから取得
     if (auth.currentUser === null) return;
     await db
@@ -190,6 +192,7 @@ const MessageHome: React.FC<Props> = (props) => {
     const authLikeUser =
       (await message.likes) &&
       message.likes.find((like) => like === auth.currentUser.uid);
+
 
     //uidが返ってこない時
     if (!authLikeUser) {
@@ -411,6 +414,7 @@ const MessageHome: React.FC<Props> = (props) => {
                     className={`${classes.like_icon} ${
                       message.likes &&
                       message.likes.includes(auth.currentUser.uid) &&
+
                       classes.selected_icon
                     }`}
                     onClick={handleLike}
