@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Channel from "../components/home/Channel";
 import Router from "next/router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import NoAuthUserText from "../components/NoAuthUser/NoAuthUserText";
+import NoAuthUser from "../components/NoAuthUser/NoAuthUser";
 
 const ALGOLIA_INDEX_NAME = "study-app";
 const client = algoliasearch("77WZ20O6OE", "60af8ce0883b0f3a5ae5612e6bbf239f");
@@ -23,6 +23,7 @@ const Home = () => {
   const [channel, setChannel] = useState();
   const [channels, setChannels] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
 
   useEffect(() => {
     db.collection("channels").onSnapshot((snapshot) => {
@@ -86,6 +87,11 @@ const Home = () => {
     await Router.push(`/home/${channel.documentId}`);
   };
 
+  const HandleOpenNoAuthUserModal = (e) => {
+    setOpenNoAuthUserModal(true);
+  };
+  const HandleCloseNoAuthUserModal = () => setOpenNoAuthUserModal(false);
+
   return (
     <>
       <Header
@@ -116,11 +122,12 @@ const Home = () => {
       <div className={classes.homebody}>
         <div className={classes.sidebar_container}>
           {auth.currentUser === null ? (
-            <div className={classes.sidebar_channel}>
+            <div
+              className={classes.sidebar_channel}
+              onClick={HandleOpenNoAuthUserModal}
+            >
               <MailOutlineIcon className={classes.message_icon} />
-              <h3>
-                <NoAuthUserText name="メッセージ" />
-              </h3>
+              <h3>メッセージ</h3>
             </div>
           ) : (
             <div className={classes.sidebar_channel} onClick={handleChat}>
@@ -130,11 +137,12 @@ const Home = () => {
           )}
           <hr />
           {auth.currentUser === null ? (
-            <div className={classes.addchannels_container}>
+            <div
+              className={classes.addchannels_container}
+              onClick={HandleOpenNoAuthUserModal}
+            >
               <AddIcon className={classes.add_icon} />
-              <h3>
-                <NoAuthUserText name="チャンネルを追加" />
-              </h3>
+              <h3>チャンネルを追加</h3>
             </div>
           ) : (
             <div className={classes.addchannels_container} onClick={addChannel}>
@@ -195,6 +203,10 @@ const Home = () => {
           <h1>チャンネルを選択してください。</h1>
         </div>
       </div>
+      <NoAuthUser
+        openNoAuthUserModal={openNoAuthUserModal}
+        HandleCloseNoAuthUserModal={HandleCloseNoAuthUserModal}
+      />
     </>
   );
 };

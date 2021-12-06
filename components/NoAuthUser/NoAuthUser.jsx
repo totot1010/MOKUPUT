@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from "../../styles/NoAuthUser/NoAuthUserText.module.scss";
+import classes from "../../styles/NoAuthUser/NoAuthUser.module.scss";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";

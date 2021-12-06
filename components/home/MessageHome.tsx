@@ -25,7 +25,7 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
-import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
+import NoAuthUserIcon from "../NoAuthUser/NoAuthUser";
 
 interface Props {
   message: {

@@ -14,8 +14,7 @@ import HomeForm from "./HomeForm";
 import Router from "next/router";
 import MessageHome from "./MessageHome";
 import { useRouter } from "next/router";
-import NoAuthUserText from "../NoAuthUser/NoAuthUserText";
-import NoAuthUserIcon from "../NoAuthUser/NoAuthUserIcon";
+import NoAuthUser from "../NoAuthUser/NoAuthUser";
 
 const Homebody: React.FC = () => {
   const [channel, setChannel] = useState<any>();
@@ -210,11 +209,12 @@ const Homebody: React.FC = () => {
     <div className={classes.homebody}>
       <div className={classes.sidebar_container}>
         {auth.currentUser === null ? (
-          <div className={classes.sidebar_channel}>
+          <div
+            className={classes.sidebar_channel}
+            onClick={HandleOpenNoAuthUserModal}
+          >
             <MailOutlineIcon className={classes.message_icon} />
-            <h3>
-              <NoAuthUserText name="メッセージ" />
-            </h3>
+            <h3 style={{ marginLeft: "16px" }}>メッセージ</h3>
           </div>
         ) : (
           <div className={classes.sidebar_channel} onClick={handleChat}>
@@ -224,10 +224,13 @@ const Homebody: React.FC = () => {
         )}
         <hr />
         {auth.currentUser === null ? (
-          <div className={classes.addchannels_container}>
+          <div
+            className={classes.addchannels_container}
+            onClick={HandleOpenNoAuthUserModal}
+          >
             <AddIcon className={classes.add_icon} />
             <h3>
-              <NoAuthUserText name="チャンネルを追加" />
+              <h3 style={{ marginLeft: "16px" }}>チャンネルを追加</h3>
             </h3>
           </div>
         ) : (
@@ -323,10 +326,8 @@ const Homebody: React.FC = () => {
                 setImg={setImg}
               />
             )}
-            <NoAuthUserIcon
+            <NoAuthUser
               openNoAuthUserModal={openNoAuthUserModal}
-              setOpenNoAuthUserModal={setOpenNoAuthUserModal}
-              HandleOpenNoAuthUserModal={HandleOpenNoAuthUserModal}
               HandleCloseNoAuthUserModal={HandleCloseNoAuthUserModal}
             />
           </>
