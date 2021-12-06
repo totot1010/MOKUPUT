@@ -16,7 +16,7 @@
  #### ・MOKUPUTのURL  
  <p><a href="https://study-app-fa3lby950-yutocreate.vercel.app/home/3fSVoNmwFQWi9zYg63Fw" target="_blank">MOKUPUT</a></p>
  
-  アプリ右上にゲストログインがありますので、そちらからログインして下さい！
+  ※アプリ右上にゲストログインがありますので、そちらからログインして下さい！
 　
 #### ・ターゲット  
 プログラミング学習者（経験者、未経験者問わない）
