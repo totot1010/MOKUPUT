@@ -94,12 +94,12 @@
 
 //チャンネルの選択テキスト
 
-.open_sidebar {
-  display: none;
-}
-
 .select_channel_text {
   position: relative;
+
+  .open_sidebar {
+    display: none;
+  }
 
   h1 {
     position: absolute;
