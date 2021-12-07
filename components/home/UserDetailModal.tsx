@@ -96,14 +96,14 @@ const UserDetailModal: React.FC<Props> = (props) => {
               実務で使っている言語
             </Typography>
             <Typography className={classes.input}>
-              {message &&
+              {message && message.useLanguage.length === 0 ? (
+                <span>なし</span>
+              ) : (
+                message &&
                 message.useLanguage.map((language, index) => {
-                  if (index + 1 === message.useLanguage.length) {
-                    return <span key={index}>{language}</span>;
-                  } else {
-                    return <span key={index}>{language}&#44;&nbsp;</span>;
-                  }
-                })}
+                  return <span key={index}>{language}&#44;&nbsp;</span>;
+                })
+              )}
             </Typography>
             <Typography className={classes.sub_title}>勉強中の言語</Typography>
             <Typography className={classes.input}>

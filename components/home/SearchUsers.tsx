@@ -152,14 +152,14 @@ const SearchUser: React.FC<Props> = (props) => {
                 実務で使っている言語
               </Typography>
               <Typography className={classes.input_text}>
-                {selectedUser &&
+                {selectedUser && selectedUser.useLanguage.length === 0 ? (
+                  <span>なし</span>
+                ) : (
+                  selectedUser &&
                   selectedUser.useLanguage.map((language, index) => {
-                    if (index + 1 === selectedUser.useLanguage.length) {
-                      return <span key={index}>{language}</span>;
-                    } else {
-                      return <span key={index}>{language}&#44;&nbsp;</span>;
-                    }
-                  })}
+                    return <span key={index}>{language}&#44;&nbsp;</span>;
+                  })
+                )}
               </Typography>
               <Typography className={classes.typography}>
                 勉強中の言語
