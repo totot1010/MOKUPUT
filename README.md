@@ -14,7 +14,7 @@
 　数ヶ月のプログラミング学習を通して、お互いが分からないことを教え合うことの大切さを痛感し、同時にこの教え合う文化は本当に素敵な文化だと感じています。教えてもらったら恩返ししたいと思いますし、教え合うこと、情報や技術を共有することはスキルアップにもつながると思っています。  
  
  #### ・MOKUPUTのURL  
- <p><a href="https://study-app-fa3lby950-yutocreate.vercel.app/home/3fSVoNmwFQWi9zYg63Fw" target="_blank">MOKUPUT</a></p>
+ <p><a href="https://study-app-hq86mjiil-yutocreate.vercel.app/home/3fSVoNmwFQWi9zYg63Fw" target="_blank">MOKUPUT</a></p>
  
   ※アプリ右上にゲストログインがありますので、そちらからログインして下さい！
 　
