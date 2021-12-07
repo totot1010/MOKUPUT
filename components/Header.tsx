@@ -284,13 +284,14 @@ const Header: React.FC<Props> = (props) => {
   };
 
   const handleLogout = async () => {
+    Router.push("/signin");
+    setAnchorEl(null);
     auth.currentUser.uid &&
       (await db
         .collection("users")
         .doc(auth.currentUser.uid)
         .update({ isOnline: false }));
     await auth.signOut();
-    Router.push("/signin");
   };
 
   const handleGuestSignin = async (e) => {
