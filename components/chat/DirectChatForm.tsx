@@ -21,7 +21,7 @@ const DirectChatForm: React.FC<Props> = (props) => {
   const [showEmojis, setShowEmojis] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>();
 
-  //handleSubmitが何回もレンダリングされている。
+  //Ctrl+Enterで送信を可能に
   const handleDown = (e) => {
     if (e.keyCode == 13 && e.ctrlKey) {
       document.getElementById("submit").click();
@@ -29,6 +29,7 @@ const DirectChatForm: React.FC<Props> = (props) => {
     }
   };
 
+  //絵文字をクリックした際のrefの位置を指定
   const pickEmoji = (e, { emoji }): void => {
     const ref = inputRef.current;
     ref.focus();

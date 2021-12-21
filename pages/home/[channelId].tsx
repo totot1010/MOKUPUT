@@ -13,7 +13,6 @@ const index = client.initIndex(ALGOLIA_INDEX_NAME);
 const ChannelId: React.FC = () => {
   const [searchUsers, setSearchUsers] = useState([]);
   const [searchText, setSearchText] = useState<string>("");
-  const router = useRouter();
 
   const onSearch = async (e) => {
     await setSearchText(e.target.value);

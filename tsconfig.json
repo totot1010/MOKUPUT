@@ -30,7 +30,9 @@
     "components/Header.tsx",
     "pages/signup/[id].tsx",
     "pages/chat/[uid]/[id].jsx",
-    "components/home/MessageHome.jsx"
+    "components/home/MessageHome.jsx",
+    "components/NoAuthUser/NoAuthUserButton.jsx",
+    "components/NoAuthUser/NoAuthUser.jsx"
   ],
   "exclude": ["node_modules"]
 }
