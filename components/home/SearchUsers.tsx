@@ -43,11 +43,6 @@ const SearchUser: React.FC<Props> = (props) => {
 
   //メッセージ送信を押した時にそれぞれのユーザーをフィールドに追加
   const firestoreAdd = async ({ id, name, avatarURL, isOnline }) => {
-    const newId =
-      auth.currentUser.uid > id
-        ? `${auth.currentUser.uid + id}`
-        : `${id + auth.currentUser.uid}`;
-
     await db
       .collection("users")
       .doc(auth.currentUser.uid)

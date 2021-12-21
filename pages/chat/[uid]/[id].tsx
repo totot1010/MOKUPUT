@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { db, auth, storage } from "../../../firebase/firebase";
 import firebase from "firebase/app";
-import { AuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
 import { AuthUserType } from "../../../types/user";
 import Router from "next/router";
@@ -10,7 +9,6 @@ import ChatUser from "../../../components/chat/ChatUser";
 import DirectChatForm from "../../../components/chat/DirectChatForm";
 import Message from "../../../components/chat/Message";
 import classes from "../../../styles/chat/ChatUser.module.scss";
-import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const DirectChat = () => {
@@ -21,7 +19,6 @@ const DirectChat = () => {
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState<string | string[]>("");
   const [authUser, setAuthUser] = useState<AuthUserType>();
-  const { user } = useContext(AuthContext);
   const router = useRouter();
   const id: any = router.query.id;
 

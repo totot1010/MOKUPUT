@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { db, auth } from "../../firebase/firebase";
 import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
 import classes from "../../styles/home/Notifications.module.scss";
 import Router from "next/router";
 import { format } from "date-fns";

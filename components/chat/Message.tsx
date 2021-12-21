@@ -4,7 +4,6 @@ import anchorme from "anchorme";
 import { filterXSS } from "xss";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
-import Moment from "react-moment";
 import classes from "../../styles/chat/Message.module.scss";
 
 interface Props {

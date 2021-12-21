@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import SearchUsers from "../components/home/SearchUsers";
 import classes from "../styles/home/home.module.scss";
 import algoliasearch from "algoliasearch";
-import { db, auth, storage } from "../firebase/firebase";
+import { db, auth } from "../firebase/firebase";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,8 +19,6 @@ const index = client.initIndex(ALGOLIA_INDEX_NAME);
 const Home = () => {
   const [searchUsers, setSearchUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [channel, setChannel] = useState();
   const [channels, setChannels] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [openNoAuthUserModal, setOpenNoAuthUserModal] = useState(false);
@@ -70,20 +68,6 @@ const Home = () => {
 
   //チャンネルを選択した時の挙動
   const selectedChannel = async (channel) => {
-    setChannel(channel);
-
-    const messagesRef = await db
-      .collection("channels")
-      .doc(channel.documentId)
-      .collection("chat");
-    messagesRef.orderBy("createdAt").onSnapshot((querySnapshot) => {
-      const texts = [];
-      querySnapshot.forEach((doc) => {
-        texts.push({ ...doc.data(), documentId: doc.id });
-      });
-      setMessages(texts);
-    });
-
     await Router.push(`/home/${channel.documentId}`);
   };
 

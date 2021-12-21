@@ -37,6 +37,7 @@ const setting: React.FC = () => {
     getFirestore();
   }, []);
 
+  //firestoreからauthUserを取得
   const getFirestore = async () => {
     await db
       .collection("users")
